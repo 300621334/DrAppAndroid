@@ -85,25 +85,31 @@
         android:id="@+id/btn_CreateAcc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="clk_CreateAccount"
         android:text="Create Account" />
 
- <!--   <Button
-        android:id="@+id/btnAllPref"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:onClick="btnClk_DisplayAllPref"
-        android:text="Display All Preferences"
-        android:visibility="invisible" />
-
     <Button
-        android:id="@+id/btnDelDb"
+        android:id="@+id/btnTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="DeleteWholeDB"
-        android:text="Delete Database"
-        android:visibility="invisible" />-->
+        android:text="Map"
+        android:onClick="clk_btnTest"/>
+
+    <!--   <Button
+           android:id="@+id/btnAllPref"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="50dp"
+           android:onClick="btnClk_DisplayAllPref"
+           android:text="Display All Preferences"
+           android:visibility="invisible" />
+
+       <Button
+           android:id="@+id/btnDelDb"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:onClick="DeleteWholeDB"
+           android:text="Delete Database"
+           android:visibility="invisible" />-->
 
 
 

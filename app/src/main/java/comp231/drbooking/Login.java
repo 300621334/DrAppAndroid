@@ -96,9 +96,10 @@ public class Login extends AppCompatActivity {
                 .build();
 
         //filter places e.g. clinics etc
-
         PlaceFilter placeFilter = new PlaceFilter();
         placeFilter.equals(TYPE_DOCTOR | TYPE_HOSPITAL);//int Place_IDs permitted : https://developers.google.com/android/reference/com/google/android/gms/location/places/Place
+
+
 
         //go to PlacePicker : https://www.youtube.com/watch?v=Rh9x90lqPHc
         PlacePicker.IntentBuilder iBuilder = new PlacePicker.IntentBuilder(); //compile 'com.google.android.gms:play-services-places:9.2.0'
@@ -124,11 +125,6 @@ public class Login extends AppCompatActivity {
 
 
 
-/*
-        //go to MapActivity
-        Intent i = new Intent(this, MapsActivity.class);
-        startActivity(i);
-*/
 
 
     }
@@ -152,5 +148,20 @@ public class Login extends AppCompatActivity {
 
 
         }
+    }
+
+    public void clk_btnTest(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btnTest:
+
+
+                break;
+        }
+        //go to MapActivity
+        Intent i = new Intent(this, MapsActivity.class);
+        startActivity(i);
+
     }
 }
