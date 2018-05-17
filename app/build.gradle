@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    //version discrepancy bw app & test-app:
     //https://stackoverflow.com/questions/36561037/conflict-with-dependency-com-android-supportsupport-annotations-resolved-ver?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     configurations.all {
         resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
@@ -17,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,7 +32,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.google.android.gms:play-services-maps:11.4.0'//15.0.1' is bad version & causes PlacePicker to close soon aft launch
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //PlacePicker : https://stackoverflow.com/questions/38063648/cannot-import-google-places-placepicker-into-android-project?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    implementation 'com.google.android.gms:play-services-location:11.4.0'//9.2.0'
+    implementation 'com.google.android.gms:play-services-places:11.4.0'//9.2.0'
+
+
+
+    //https://stackoverflow.com/questions/40268805/how-to-update-google-play-service-on-emulator-android-studio/40375645#40375645
+    //compile 'com.google.android.gms:play-services-maps:9.6.0'
+    //Do as 1st answer here:https://stackoverflow.com/questions/35476182/updating-google-play-services-in-emulator
 }

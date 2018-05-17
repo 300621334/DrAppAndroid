@@ -4,22 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="comp231.drbooking.Login">
+    tools:context="comp231.drbooking.Login"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+<!--    <RadioGroup
+        android:id="@+id/radGp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Student" />
+
+        <RadioButton
+            android:id="@+id/radAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:text="Faculty" />
+    </RadioGroup>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/userName" />
+
+        <EditText
+            android:id="@+id/txtLoginName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/userName"
+            android:text="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/password" />
+
+        <EditText
+            android:id="@+id/txtLoginPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_weight="3"
+            android:hint="@string/password"
+            android:text="Name" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button" />
+        android:text="Log In"
+        android:onClick="clk_Login"/>
+
+    <Button
+        android:id="@+id/btn_CreateAcc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clk_CreateAccount"
+        android:text="Create Account" />
+
+ <!--   <Button
+        android:id="@+id/btnAllPref"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="btnClk_DisplayAllPref"
+        android:text="Display All Preferences"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btnDelDb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="DeleteWholeDB"
+        android:text="Delete Database"
+        android:visibility="invisible" />-->
+
+
 
 </LinearLayout>
