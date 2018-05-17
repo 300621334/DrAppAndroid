@@ -152,16 +152,12 @@ public class Login extends AppCompatActivity {
 
     public void clk_btnTest(View v)
     {
-        switch (v.getId())
-        {
-            case R.id.btnTest:
 
-
-                break;
-        }
         //go to MapActivity
         Intent i = new Intent(this, MapsActivity.class);
         startActivity(i);
 
     }
+
+
 }

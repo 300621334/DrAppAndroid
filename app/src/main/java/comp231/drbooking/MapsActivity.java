@@ -1,7 +1,9 @@
 package comp231.drbooking;
 
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -9,6 +11,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -18,6 +23,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
 
 //http://androidmastermind.blogspot.ca/2016/06/android-google-maps-show-current.html
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -140,5 +148,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    public void onClick(View v)
+    {
+        Toast.makeText(this, "onClick fn entered", Toast.LENGTH_LONG).show();
 
+        switch (v.getId())
+        {
+            case R.id.B_search:
+                EditText tf_location =  findViewById(R.id.TF_location);
+                String location = tf_location.getText().toString();
+                List<Address> addressList;
+
+                if(!location.equals(""))
+                {
+                    Geocoder geocoder = new Geocoder(this);
+
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 5);
+
+                        if(addressList != null)
+                        {
+                            for(int i = 0;i<addressList.size();i++)
+                            {
+                                LatLng latLng = new LatLng(addressList.get(i).getLatitude() , addressList.get(i).getLongitude());
+                                MarkerOptions markerOptions = new MarkerOptions();
+                                markerOptions.position(latLng);
+                                markerOptions.title(location);
+                                mMap.addMarker(markerOptions);
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case R.id.B_hopistals:
+
+                break;
+            case R.id.B_restaurants:
+
+                break;
+            case R.id.B_schools:
+
+                break;
+        }
+    }
 }
