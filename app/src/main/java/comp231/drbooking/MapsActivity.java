@@ -23,13 +23,50 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
 
 import java.io.IOException;
 import java.util.List;
-
+/*JSON result looks like:
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=43.7811609,-79.229795&radius=1000&type=hospital&sensor=true&key=AIzaSyBDV5k9vHipVPgZimt0zMZnodMHmvWXa3Q
+{
+   "html_attributions" : [],
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 43.7775918,
+               "lng" : -79.231882
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 43.7789138302915,
+                  "lng" : -79.2306659197085
+               },
+               "southwest" : {
+                  "lat" : 43.7762158697085,
+                  "lng" : -79.23336388029151
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.png",
+         "id" : "ddda02d9b3a7f2a7a6ce41afb2e32792cf68e4ae",
+         "name" : "Walk In Medical Clinic",
+         "place_id" : "ChIJW2f_2vfQ1IkRJSptdou-1Y4",
+         "reference" : "CmRSAAAA6u_OJYX7FtmxO8QrPfeJ6ShT2m-fZtK8uOYTEv3bV0qq5awZ4AQx3QtY7vhxPReUoQgv5GUfgWyLAIgXmDH9_YS7ZhocjeqDk9J6JlPWJrwQjmL1EB0odwu_qVUP-r9qEhB7my7GrdwGGZ_Z9zEykF4CGhRZi_9oTh_aqlXeWBtggYajM4_DuQ",
+         "scope" : "GOOGLE",
+         "types" : [ "hospital", "point_of_interest", "establishment" ],
+         "vicinity" : "1209 Markham Road, Scarborough"
+      }
+   ],
+   "status" : "OK"
+}
+*/
 //http://androidmastermind.blogspot.ca/2016/06/android-google-maps-show-current.html
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
+    int PROXIMITY_RADIUS = 2000;
+    double longitude, latitude;
     private GoogleMap mMap;
     private static final String TAG = "CurrentLocation";
     protected LocationManager locationManager;
@@ -124,8 +161,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override    public void onLocationChanged(Location location) {
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
+         latitude = location.getLatitude();
+         longitude = location.getLongitude();
 
         LatLng currentLocation = new LatLng(latitude, longitude);
         mMap.addMarker(new MarkerOptions().position(currentLocation).title("My Location"));
@@ -150,8 +187,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void onClick(View v)
     {
-        Toast.makeText(this, "onClick fn entered", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "onClick fn entered", Toast.LENGTH_LONG).show();
 
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        Object dataTransfer[] = new Object[2];//will hold 2 objs
+
+
+        //
         switch (v.getId())
         {
             case R.id.B_search:
@@ -185,14 +227,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 break;
             case R.id.B_hopistals:
+                mMap.clear();
+                String hospital = "hospital";
+                String url = getUrl(latitude, longitude, hospital);
+                dataTransfer[0] = mMap;
+                dataTransfer[1] = url;
 
+                getNearbyPlacesData.execute(dataTransfer);//AsyncTask.execute();
+
+                Toast.makeText(this, "Showing nearby hospitals", Toast.LENGTH_LONG).show();
                 break;
             case R.id.B_restaurants:
+                mMap.clear();
+                String school = "school";
+                url = getUrl(latitude, longitude, school);
+                dataTransfer[0] = mMap;
+                dataTransfer[1] = url;
+
+                getNearbyPlacesData.execute(dataTransfer);//AsyncTask.execute();
+
+                Toast.makeText(this, "Showing nearby schools", Toast.LENGTH_LONG).show();
 
                 break;
             case R.id.B_schools:
+                mMap.clear();
+                String restaurants = "restaurant";
+                url = getUrl(latitude, longitude, restaurants);
+                dataTransfer[0] = mMap;
+                dataTransfer[1] = url;
+
+                getNearbyPlacesData.execute(dataTransfer);//AsyncTask.execute();
+
+                Toast.makeText(this, "Showing nearby restaurants", Toast.LENGTH_LONG).show();
 
                 break;
         }
+    }
+
+    //fn
+    private String getUrl(double latitude, double longitude, String nearbyPlace)//
+    {
+        //https://developers.google.com/places/web-service/search
+        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlaceUrl.append("location=" + latitude + "," + longitude);
+        googlePlaceUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlaceUrl.append("&type=" + nearbyPlace);
+        googlePlaceUrl.append("&sensor=true");
+        googlePlaceUrl.append("&key=" + "AIzaSyBDV5k9vHipVPgZimt0zMZnodMHmvWXa3Q");//diff key for Place search than from Map API
+
+        Log.d("MapsActivity", "url = "+googlePlaceUrl.toString());
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=0.0,0.0&radius=10000&type=hospital&sensor=true&key=AIzaSyBDV5k9vHipVPgZimt0zMZnodMHmvWXa3Q
+
+        return googlePlaceUrl.toString();
+
     }
 }

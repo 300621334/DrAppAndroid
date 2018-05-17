@@ -10,11 +10,11 @@
         android:id="@+id/TF_location"
         android:layout_width="290dp"
         android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:text="940 progress Ave Toronto" />
 
     <Button
         android:id="@+id/B_search"
