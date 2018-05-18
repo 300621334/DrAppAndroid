@@ -234,13 +234,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 markerOptions.position(latLng);
                                 markerOptions.title(location);
                                 mMap.addMarker(markerOptions);
+
                                 //---------custom Info Window-------
+                                //https://stackoverflow.com/questions/18567563/google-map-v2-custom-infowindow-with-two-clickable-buttons-or-imageview?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                                //https://developers.google.com/maps/documentation/android-sdk/infowindows
+
+
+
+
                                 mMap.setInfoWindowAdapter(infoWinAdapter);
                                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                     @Override
                                     public void onInfoWindowClick(Marker marker)
                                     {
                                         Intent i = new Intent(getApplicationContext(), BookingDetails.class);
+                                        i.putExtra("infoWinTitle", marker.getTitle());//address included here!!
+                                        i.putExtra("infoWinAddress", marker.getSnippet());//null !!!
+
                                         startActivity(i);
 
 
