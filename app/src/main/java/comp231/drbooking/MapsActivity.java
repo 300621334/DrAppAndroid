@@ -1,6 +1,12 @@
 package comp231.drbooking;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -22,12 +28,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 
 import java.io.IOException;
 import java.util.List;
-/*JSON result looks like:
+/*JSON result looks like : change radius=2000 to see more results.
 https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=43.7811609,-79.229795&radius=1000&type=hospital&sensor=true&key=AIzaSyBDV5k9vHipVPgZimt0zMZnodMHmvWXa3Q
 {
    "html_attributions" : [],
@@ -71,6 +78,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = "CurrentLocation";
     protected LocationManager locationManager;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    //Bitmap bmp;
+    InfoWinAdapter infoWinAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +97,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        //-----------custom Info Window----------
+        //bmp = null; //BitmapFactory.decodeResource(getResources(), R.id.);//if using adapter
+        infoWinAdapter = new InfoWinAdapter(getLayoutInflater()/*, bmp*/);//custom info window adapter
+
     }
 
 
@@ -217,6 +234,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 markerOptions.position(latLng);
                                 markerOptions.title(location);
                                 mMap.addMarker(markerOptions);
+                                //---------custom Info Window-------
+                                mMap.setInfoWindowAdapter(infoWinAdapter);
+                                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                    @Override
+                                    public void onInfoWindowClick(Marker marker)
+                                    {
+                                        Intent i = new Intent(getApplicationContext(), BookingDetails.class);
+                                        startActivity(i);
+
+
+                                    }
+                                });
+                                //----------------------------
+
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
                             }
@@ -263,6 +294,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
     }
+
+    /*//custom listener for InfoWindow
+    class MyClkListener implements View.OnClickListener
+    {
+        String userIdStr;
+        //ViewHolder vh;
+        Context ctx;
+        int userId;
+
+        //constructor to pass user ID to listener for each btn
+        public MyClkListener(int userId)
+        {
+            this.userIdStr = String.valueOf(userId);
+            this.userId = userId;
+        }
+
+        @Override
+        public void onClick(View view)
+        {
+            ctx = view.getContext();
+
+            Intent i = new Intent(ctx, BookingDetails.class);
+            SharedPreferences prefs = ctx.getSharedPreferences("login",0);
+            prefs.edit().putInt("userId", userId).commit();
+            ctx.startActivity(i);
+            ((Activity)ctx).finish();
+        }
+    }*/
+
+
 
     //fn
     private String getUrl(double latitude, double longitude, String nearbyPlace)//
