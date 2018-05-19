@@ -129,10 +129,10 @@ public class Login extends AppCompatActivity {
             //
         //endregion
 
-        //region (Step-3)go to Dashboard - on successful login
+/*        //region (Step-3)go to Dashboard - on successful login
             Intent i = new Intent(this, Dashboard.class);
             startActivity(i);
-        //endregion
+        //endregion*/
 
 
 

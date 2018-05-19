@@ -1,6 +1,7 @@
 package comp231.drbooking;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -68,7 +69,21 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     @Override
     protected void onPostExecute(String s)//JSON string passed
     {
-        Toast.makeText(ctx, jsonResponse, Toast.LENGTH_LONG).show();
+        //region (Step-3)go to Dashboard - on successful login
+        if(!jsonResponse.equals("0"))
+        {
+            Toast.makeText(ctx, jsonResponse + " Login Successful", Toast.LENGTH_LONG).show();
+
+            Intent i = new Intent(ctx, Dashboard.class);
+            ctx.startActivity(i);
+        }
+        else
+        {
+            Toast.makeText(ctx, jsonResponse + " Login Failed", Toast.LENGTH_LONG).show();
+
+        }
+
+        //endregion
     }
 
 }

@@ -21,6 +21,8 @@ public class SendToUrl
         HttpURLConnection conn=null;
 
         try {
+            //alternate to below using HttpClient & HttpPost : https://stackoverflow.com/questions/4361601/reading-httppost-response?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
             URL url = new URL(myUrl);//alt+ent => surround w try/catch
             conn = (HttpURLConnection) url.openConnection();//alt+enter => add catch clause
             conn.setRequestMethod("POST");
