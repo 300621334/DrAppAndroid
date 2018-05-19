@@ -1,36 +1,17 @@
 package comp231.drbooking;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Api;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceFilter;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.Dash;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.gson.Gson;
 
 import java.util.Map;
-
-import static com.google.android.gms.location.places.Place.TYPE_DOCTOR;
-import static com.google.android.gms.location.places.Place.TYPE_HOSPITAL;
 
 public class Login extends AppCompatActivity {
 
@@ -91,8 +72,8 @@ public class Login extends AppCompatActivity {
     public void clk_Login(View view)
     {
         //get form data into class
-        LoginCredential lc = new LoginCredential();
-        lc.login = uNameView.getText().toString();
+        Model_User lc = new Model_User();
+        lc.loginName = uNameView.getText().toString();
         lc.pw = uPassView.getText().toString();
 
         //convert obj to JSON str: https://github.com/google/gson/blob/master/README.md
