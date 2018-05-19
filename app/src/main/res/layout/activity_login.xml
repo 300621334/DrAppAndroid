@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:hint="@string/userName"
-            android:text="Name" />
+            android:text="name" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,10 +68,10 @@
             android:id="@+id/txtLoginPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
             android:layout_weight="3"
             android:hint="@string/password"
-            android:text="Name" />
+            android:inputType="textPassword"
+            android:text="name" />
     </LinearLayout>
 
     <Button

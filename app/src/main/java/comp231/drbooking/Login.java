@@ -25,6 +25,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.gson.Gson;
 
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class Login extends AppCompatActivity {
     Map<String, ?> allPrefs;
     int numOfPrefs, uName_uPass_pairs;// counter = 1;
     //int PLACE_PICKER_REQUEST = 1;
-    String uName, uPass, uNameEntered, uPassEntered;
+    String uName, uPass, uNameEntered, uPassEntered, formData;
     //double longitude,latitude;
     //endregion
 
@@ -89,16 +90,31 @@ public class Login extends AppCompatActivity {
     //Login btn clk
     public void clk_Login(View view)
     {
+        //get form data into class
+        LoginCredential lc = new LoginCredential();
+        lc.login = uNameView.getText().toString();
+        lc.pw = uPassView.getText().toString();
+
+        //convert obj to JSON str: https://github.com/google/gson/blob/master/README.md
+        Gson gson = new Gson();
+        formData = gson.toJson(lc);
+
+
         //region (Step-1)Send Object[ApiUri , params] to AsyncTask to read DB to verify login+pw
             //init AsyncTack class
             DbAdapter dbAdapter = new DbAdapter(this);
 
             //create API's URI
-            Object paramsApiUri[] = new Object[2];
-            //paramsApiUri[0] = "http://localhost:50036/api/values";
-            paramsApiUri[0] = "http://10.0.2.2:45455/api/values";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
-            //paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
+            Object paramsApiUri[] = new Object[3];//[uri , form-data , Http-Method e.g POST ]
 
+            //API's URI gets access issues
+            //https://stackoverflow.com/questions/6760585/accessing-localhostport-from-android-emulator?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+            //paramsApiUri[0] = "http://localhost:50036/api/values";
+            paramsApiUri[0] = "http://10.0.2.2:45455/api/values/login?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+            //paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
+            paramsApiUri[1] = formData;
+            paramsApiUri[2] = "POST";
 
 
         //pass args to AsyncTask to read db

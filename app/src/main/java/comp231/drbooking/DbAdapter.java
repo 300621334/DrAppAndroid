@@ -9,7 +9,7 @@ import java.io.IOException;
 public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progress,result>
 {
     //region Class Variables
-    String jsonResult, url;
+    String jsonResponse, url, formData, httpMethod;
     Context ctx;
     //endregion
 
@@ -27,6 +27,25 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     {
         //get URI for API from params
         url = (String)objects[0];
+        formData = (String) objects[1];
+        httpMethod = (String) objects[2];
+
+        if(httpMethod.equals("POST"))
+        {
+            SendToUrl sendToUrl  = new SendToUrl();
+
+            try
+            {
+                jsonResponse = sendToUrl.sendToUrl(url, formData);//POST to and receive reply from server
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            return jsonResponse;
+        }//exe stops here if POST
+        
 
         //obj to send http request to API
         DownloadUrl downloadUrl = new DownloadUrl();
@@ -34,7 +53,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
         //API request
         try
         {
-            jsonResult = (String) downloadUrl.readUrl(url);
+            jsonResponse = (String) downloadUrl.readUrl(url);
         }
         catch (IOException e)
         {
@@ -42,14 +61,14 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
         }
 
         //return JSON string returned from API
-        return jsonResult;
+        return jsonResponse;
     }
 
     //process the result(JSON) from API(db)
     @Override
     protected void onPostExecute(String s)//JSON string passed
     {
-        Toast.makeText(ctx, jsonResult, Toast.LENGTH_LONG).show();
+        Toast.makeText(ctx, jsonResponse, Toast.LENGTH_LONG).show();
     }
 
 }

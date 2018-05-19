@@ -9,13 +9,16 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceFilter;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,6 +29,7 @@ import static com.google.android.gms.location.places.Place.TYPE_HOSPITAL;
 
 public class Dashboard extends AppCompatActivity {
 
+    private static final String TAG = "Catch Block says: ";
     //region >>> Class Variables
     int PLACE_PICKER_REQUEST = 1;
     double longitude,latitude;
@@ -62,12 +66,36 @@ public class Dashboard extends AppCompatActivity {
         PlaceFilter placeFilter = new PlaceFilter();
         placeFilter.equals(TYPE_DOCTOR | TYPE_HOSPITAL);//int Place_IDs permitted : https://developers.google.com/android/reference/com/google/android/gms/location/places/Place
 
+        //region Only Autocomplete widget - NO map
+        //https://en.proft.me/2017/05/18/android-google-places-api-tutorial/
+
+/*        try {
+            PlaceAutocomplete.IntentBuilder builder = new PlaceAutocomplete.
+                    IntentBuilder(PlaceAutocomplete.MODE_OVERLAY);
+            Intent intent = builder.build(this);
+            startActivityForResult(intent, PLACE_PICKER_REQUEST);
+        } catch ( GooglePlayServicesRepairableException e) {
+            Log.d(TAG, "GooglePlayServicesRepairableException thrown");
+        } catch ( GooglePlayServicesNotAvailableException e) {
+            Log.d(TAG, "GooglePlayServicesNotAvailableException thrown");
+        }*/
+        //endregion
 
 
+        //region PlacePicker with map - but NO filtering of results supported yet
         //go to PlacePicker : https://www.youtube.com/watch?v=Rh9x90lqPHc
         PlacePicker.IntentBuilder iBuilder = new PlacePicker.IntentBuilder(); //compile 'com.google.android.gms:play-services-places:9.2.0'
         //iBuilder.setLatLngBounds(MapUtils.getLatLngBounds(new LatLng((double) latitude, (double) longitude)));
         Intent i;
+
+        //region AUtocpmplete Filter ONLY can work with autocom widget - NOT w PlacePicker
+/*        //set filter type by country 'CANADA'
+        //https://stackoverflow.com/questions/30852349/how-to-set-types-in-google-place-placepicker-in-android?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa#_=_
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(50) //50 = hospitals //or : .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES) //codes here : https://developers.google.com/android/reference/com/google/android/gms/location/places/Place
+                .setCountry("CA")
+                .build();*/
+        //endregion
 
         try
         {
@@ -85,6 +113,7 @@ public class Dashboard extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+        //endregion
     }
 
     public void clk_allAppointments(View view)
