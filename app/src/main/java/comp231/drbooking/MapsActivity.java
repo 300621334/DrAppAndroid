@@ -229,10 +229,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         {
                             for(int i = 0;i<addressList.size();i++)
                             {
+                                //https://developer.android.com/reference/android/location/Address
+                                /*
+                                    street_address = getThoroughfare() e.g. "1600 Ampitheater Parkway"
+                                    city = addresses.get(0).getLocality(); e.g. Toronto
+                                    //--------------------------------------
+                                    address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                                    city = addresses.get(0).getLocality();
+                                    state = addresses.get(0).getAdminArea();
+                                    country = addresses.get(0).getCountryName();
+                                    postalCode = addresses.get(0).getPostalCode();
+                                    knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                                    */
+
                                 LatLng latLng = new LatLng(addressList.get(i).getLatitude() , addressList.get(i).getLongitude());
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(latLng);
                                 markerOptions.title(location);
+                                markerOptions.snippet(addressList.get(i).getFeatureName() + " " + addressList.get(i).getThoroughfare() +" "+ addressList.get(i).getLocality() +" "+ addressList.get(i).getAdminArea()+" "+addressList.get(i).getCountryName());
                                 mMap.addMarker(markerOptions);
 
                                 //---------custom Info Window-------
@@ -249,7 +263,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     {
                                         Intent i = new Intent(getApplicationContext(), BookingDetails.class);
                                         i.putExtra("infoWinTitle", marker.getTitle());//address included here!!
-                                        i.putExtra("infoWinAddress", marker.getSnippet());//null !!!
+                                        //i.putExtra("infoWinAddress", marker.getSnippet());//null !!!
 
                                         startActivity(i);
 

@@ -16,6 +16,6 @@ public class BookingDetails extends AppCompatActivity {
         TextView txtV = findViewById(R.id.txtBookingActivity);
 
         //get Extras passed from InfoWindow of marker
-        txtV.setText("Name: " + getIntent().getStringExtra("infoWinTitle") + "\n\n\nAddress: " + getIntent().getStringExtra("infoWinAddress"));
+        txtV.setText("Address : " + getIntent().getStringExtra("infoWinTitle") /*+ "\n\n\nAddress: " + getIntent().getStringExtra("infoWinAddress")*/);
     }
 }

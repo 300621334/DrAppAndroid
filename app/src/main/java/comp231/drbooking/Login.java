@@ -21,6 +21,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceFilter;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
@@ -40,9 +41,10 @@ public class Login extends AppCompatActivity {
     SharedPreferences prefs;
     Intent intent;
     Map<String, ?> allPrefs;
-    int PLACE_PICKER_REQUEST = 1, numOfPrefs, uName_uPass_pairs;// counter = 1;
+    int numOfPrefs, uName_uPass_pairs;// counter = 1;
+    //int PLACE_PICKER_REQUEST = 1;
     String uName, uPass, uNameEntered, uPassEntered;
-    double longitude,latitude;
+    //double longitude,latitude;
     //endregion
 
     @Override
@@ -62,7 +64,7 @@ public class Login extends AppCompatActivity {
 
     private void getCurrentLoc() //grant permissions for "Location" from phone/emulator
     {
-        //https://stackoverflow.com/questions/2227292/how-to-get-latitude-and-longitude-of-the-mobile-device-in-android
+/*        //https://stackoverflow.com/questions/2227292/how-to-get-latitude-and-longitude-of-the-mobile-device-in-android
         //More detailed Criteris : https://stackoverflow.com/questions/2699215/get-the-current-location-gps-wifi
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ////if no permission then assign some default location like downtown or Centennial college
@@ -80,13 +82,19 @@ public class Login extends AppCompatActivity {
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         longitude = location.getLongitude();
         latitude = location.getLatitude();
-        Toast.makeText(this, longitude +"---"+ latitude, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, longitude +"---"+ latitude, Toast.LENGTH_LONG).show();*/
     }
 
     //Login btn clk
     public void clk_Login(View view)
     {
-        getCurrentLoc();
+        //go to Dashboard - on successful login
+        Intent i = new Intent(this, Dashboard.class);
+        startActivity(i);
+
+
+
+        /*getCurrentLoc();
 
         //top-left & bottom-right corners of what PlacePicker will display
         //use this site to get coords : https://www.latlong.net
@@ -121,19 +129,14 @@ public class Login extends AppCompatActivity {
         } catch (GooglePlayServicesNotAvailableException e)
         {
             e.printStackTrace();
-        }
-
-
-
-
-
+        }*/
     }
 
     //get PlacePicker returned data
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)//err if no 'protected'
     {
-        if(requestCode == PLACE_PICKER_REQUEST )//i made this constant so we can id returned result w our request
+ /*       if(requestCode == PLACE_PICKER_REQUEST )//i made this constant so we can id returned result w our request
         {
             if(resultCode==RESULT_OK)//'RESULT_OK' is default constant of activity class
             {
@@ -147,17 +150,10 @@ public class Login extends AppCompatActivity {
             }
 
 
-        }
+        }*/
     }
 
-    public void clk_btnTest(View v)
-    {
 
-        //go to MapActivity
-        Intent i = new Intent(this, MapsActivity.class);
-        startActivity(i);
-
-    }
 
 
 }

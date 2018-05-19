@@ -87,12 +87,12 @@
         android:layout_height="wrap_content"
         android:text="Create Account" />
 
-    <Button
+<!--    <Button
         android:id="@+id/btnTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Map"
-        android:onClick="clk_btnTest"/>
+        android:onClick="clk_btnTest"/>-->
 
     <!--   <Button
            android:id="@+id/btnAllPref"
