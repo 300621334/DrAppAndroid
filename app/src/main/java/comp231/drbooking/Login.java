@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceFilter;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -88,9 +89,34 @@ public class Login extends AppCompatActivity {
     //Login btn clk
     public void clk_Login(View view)
     {
-        //go to Dashboard - on successful login
-        Intent i = new Intent(this, Dashboard.class);
-        startActivity(i);
+        //region (Step-1)Send Object[ApiUri , params] to AsyncTask to read DB to verify login+pw
+            //init AsyncTack class
+            DbAdapter dbAdapter = new DbAdapter(this);
+
+            //create API's URI
+            Object paramsApiUri[] = new Object[2];
+            //paramsApiUri[0] = "http://localhost:50036/api/values";
+            //paramsApiUri[0] = "http://10.0.2.2:50036/api/values";
+            paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
+
+
+
+        //pass args to AsyncTask to read db
+            dbAdapter.execute(paramsApiUri);
+
+            //Store user_id in Shared-Prefs
+
+        //endregion
+
+        //region (Step-2)verify that login+pw are correct
+            //
+            //
+        //endregion
+
+        //region (Step-3)go to Dashboard - on successful login
+            Intent i = new Intent(this, Dashboard.class);
+            startActivity(i);
+        //endregion
 
 
 

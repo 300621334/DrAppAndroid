@@ -13,6 +13,7 @@ import java.net.URL;
 public class DownloadUrl //class will retrive data using httpUrl connection & file-handling methods
 {
 
+    ////JSON string returned from API
     public String readUrl(String myUrl) throws IOException
     {
         String data = "";

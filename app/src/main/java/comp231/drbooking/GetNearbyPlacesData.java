@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class GetNearbyPlacesData extends AsyncTask<Object, String, String>
+public class GetNearbyPlacesData extends AsyncTask<Object, String, String>//args,progress,result
 {
     //Class Variables
     String googlePlacesData, url;
@@ -25,7 +25,8 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>
 
         DownloadUrl downloadUrl = new DownloadUrl();
 
-        try {
+        try
+        {
             googlePlacesData = downloadUrl.readUrl(url);//get JSON string
         }
         catch (IOException e)
