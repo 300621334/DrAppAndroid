@@ -96,8 +96,8 @@ public class Login extends AppCompatActivity {
             //create API's URI
             Object paramsApiUri[] = new Object[2];
             //paramsApiUri[0] = "http://localhost:50036/api/values";
-            //paramsApiUri[0] = "http://10.0.2.2:50036/api/values";
-            paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
+            paramsApiUri[0] = "http://10.0.2.2:45455/api/values";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+            //paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
 
 
 

@@ -128,6 +128,10 @@ public class Dashboard extends AppCompatActivity {
                 String clinicAddress = String.format("Place: %s", place.getAddress());
                 String clinicName = String.format("Place: %s", place.getName());
 
+                //display selected address
+                Toast.makeText(this, "Name: " + clinicName
+                + "\nAddress: " + clinicAddress, Toast.LENGTH_LONG).show();
+
                 getSupportActionBar().setTitle(clinicAddress);
 
 
