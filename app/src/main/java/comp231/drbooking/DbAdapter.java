@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
@@ -98,8 +99,12 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
             case "NewUserRegister":
                 if(jsonResponse.equals("0"))
                 {
-                    //NewUserRegister.AfterAsyncTask(jsonResponse, ctx);
-                    Log.d("Server Returned ==>>", jsonResponse);
+
+                    //NewUserRegister.AfterAsyncTask(jsonResponse, ctx);//callbk to calling thread
+                    Log.e("Server Returned ==>>", jsonResponse);
+                    //
+                    //Snackbar.make(((Activity)ctx)., "Loading Weather", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
                     Toast.makeText(ctx.getApplicationContext(), jsonResponse + " Login-Name already exists!", Toast.LENGTH_LONG).show();
                 }
                 else if(jsonResponse.equals(""))

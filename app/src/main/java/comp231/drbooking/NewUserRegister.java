@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.design.widget.Snackbar;//implementation  'com.android.support:design:26.1.0'
 
 import com.google.gson.Gson;
 
@@ -99,10 +100,15 @@ public class NewUserRegister extends AppCompatActivity {
         dbAdapter.execute(paramsApiUri);//if uName already exists, a TOAST will b displayed. If not then Dashboard launched & User_Id stored in Prefs
         //err (the task has already been executed (a task can be executed only once) => due to re-using same instance of AsyncTask so create a new instance on ea clk.
         //err causing Login scrn to load was => TextView.getText()' on a null object reference
+
+        //Snackbar.make(view, "Loading Weather", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
     }
     static void AfterAsyncTask(String jsonResponse, Context ctx)
     {
-        Toast.makeText(ctx, jsonResponse + " Login-Name already exists!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(ctx, jsonResponse + " Login-Name already exists!", Toast.LENGTH_LONG).show();
+
+        //import android.support.design.widget.Snackbar;//implementation  'com.android.support:design:26.1.0'
     }
 
 }

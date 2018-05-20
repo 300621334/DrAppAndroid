@@ -29,6 +29,7 @@ public class SendToUrl
             conn.setRequestProperty("Content-Type","application/json");//https://stackoverflow.com/questions/40574892/how-to-send-post-request-with-x-www-form-urlencoded-body?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
             conn.setDoInput(true);
             conn.setDoOutput(true);
+            conn.setConnectTimeout(1000);//or else actual device takes for-ever to show TOAST (emulator works fine wout this)!!
             //conn.connect();
 
             //Write form-data to conn's request-body

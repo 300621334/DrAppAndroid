@@ -45,6 +45,9 @@ dependencies {
     //JSON conversions
     implementation 'com.google.code.gson:gson:2.8.0'
 
+    //Snackbar
+    implementation  'com.android.support:design:26.1.0'
+
     //https://stackoverflow.com/questions/40268805/how-to-update-google-play-service-on-emulator-android-studio/40375645#40375645
     //compile 'com.google.android.gms:play-services-maps:9.6.0'
     //Do as 1st answer here:https://stackoverflow.com/questions/35476182/updating-google-play-services-in-emulator
