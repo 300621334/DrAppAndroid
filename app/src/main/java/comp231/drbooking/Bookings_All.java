@@ -8,6 +8,6 @@ public class Bookings_All extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appoints_all);
+        setContentView(R.layout.activity_bookings_all);
     }
 }

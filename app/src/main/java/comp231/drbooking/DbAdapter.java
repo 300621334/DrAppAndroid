@@ -86,6 +86,12 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
             else if(jsonResponse.equals(""))
             {
                 Toast.makeText(ctx, jsonResponse + " No Response From Server!", Toast.LENGTH_LONG).show();
+
+                //------------For testing without login server---
+                //go to Dashboard
+                i = new Intent(ctx, Dashboard.class);
+                ctx.startActivity(i);
+                //----------------------------------------------
             }
             else
             {
@@ -110,6 +116,13 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 else if(jsonResponse.equals(""))
                 {
                     Toast.makeText(ctx, jsonResponse + " No Response From Server!", Toast.LENGTH_LONG).show();
+
+                    //------------For testing without login server---
+                    //go to Dashboard
+                    i = new Intent(ctx, Dashboard.class);
+                    ctx.startActivity(i);
+                    //----------------------------------------------
+
                 }
                 else
                 {
