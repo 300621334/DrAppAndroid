@@ -3,11 +3,14 @@ package comp231.drbooking;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -17,14 +20,23 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     String jsonResponse, url, formData, httpMethod;
     Context ctx;
     Intent i;
+    SharedPreferences prefs;
+    ICallBackFromDbAdapter callBk;
     //endregion
 
     //constructor just to receive ctx needed for TOAST
 
 
+    //constructor # 1
     public DbAdapter(Context ctx)
     {
         this.ctx = ctx;
+    }
+    //constructor # 2 = pass a callBack fn
+    public DbAdapter(Context ctx, ICallBackFromDbAdapter callBk)
+    {
+        this.ctx = ctx;
+        this.callBk = callBk;
     }
 
     //read db via API in bg
@@ -96,14 +108,18 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
             else
             {
                 Toast.makeText(ctx, jsonResponse + " Login Successful", Toast.LENGTH_LONG).show();
-
+                //save User_Id
+                prefs = ctx.getSharedPreferences("prefs" , 0);
+                String UserId_Prefs = jsonResponse.equals("")?"1":jsonResponse;//if server not up, code returns empty "". So replace User_Id w "1" in such case.
+                prefs.edit().putString("Id_User", jsonResponse).commit();
+                //Go to dashboard
                 i = new Intent(ctx, Dashboard.class);
                 ctx.startActivity(i);
             }
             break;
             //
             case "NewUserRegister":
-                if(jsonResponse.equals("0"))
+                if(jsonResponse.equals("0"))//user already exists
                 {
 
                     //NewUserRegister.AfterAsyncTask(jsonResponse, ctx);//callbk to calling thread
@@ -113,7 +129,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
 
                     Toast.makeText(ctx.getApplicationContext(), jsonResponse + " Login-Name already exists!", Toast.LENGTH_LONG).show();
                 }
-                else if(jsonResponse.equals(""))
+                else if(jsonResponse.equals(""))//server NOT up - code returns empty ""
                 {
                     Toast.makeText(ctx, jsonResponse + " No Response From Server!", Toast.LENGTH_LONG).show();
 
@@ -124,10 +140,10 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     //----------------------------------------------
 
                 }
-                else
+                else//User created successfully
                 {
                     //go to Dashboard
-                    Toast.makeText(ctx, jsonResponse + " User Created", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx, jsonResponse + " User Created", Toast.LENGTH_LONG).show();//jsonResponse is user_id
                     i = new Intent(ctx, Dashboard.class);
                     ctx.startActivity(i);
                 }
@@ -143,6 +159,34 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     }
                 }*/
             break;
+            case "BookingDetails":
+                if(jsonResponse.equals("0"))//booking time unavailable
+                {
+                    Toast.makeText(ctx.getApplicationContext(), jsonResponse + " Appointment unavailable, Choose another time!", Toast.LENGTH_LONG).show();
+                }
+                else if(jsonResponse.equals(""))//server NOT up - code returns empty ""
+                {
+                    Toast.makeText(ctx, jsonResponse + " No Response From Server!", Toast.LENGTH_LONG).show();
+
+                    //------------For testing go to ALL bookings if server is not up---
+                    //go to Dashboard
+                    i = new Intent(ctx, Bookings_All.class);
+                    ctx.startActivity(i);
+                    //----------------------------------------------
+
+                }
+                else//Appointment created successfully
+                {
+                    //go to Dashboard
+                    Toast.makeText(ctx, jsonResponse + " Appointment Created", Toast.LENGTH_LONG).show();//jsonResponse is Appoint_id
+                    i = new Intent(ctx, Bookings_All.class);
+                    ctx.startActivity(i);
+                }
+
+                break;
+                case "Bookings_All":
+                    callBk.onResponseFromServer(jsonResponse, ctx);
+                    break;
             default:
                 Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
                 break;

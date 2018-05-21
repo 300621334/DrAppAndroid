@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="DrNames" >
+        <item>~~~~~Select a Doctor~~~~~</item>
+        <item>Doctor 1</item>
+        <item>Lady Doctor 1</item>
+        <item>John Doe</item>
+        <item>Surgeon</item>
+        <item>Physician</item>
+        <item>Pediatrician</item>
+    </string-array>
+
+</resources>

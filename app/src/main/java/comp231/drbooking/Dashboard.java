@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -23,6 +24,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.gson.Gson;
 
 import static com.google.android.gms.location.places.Place.TYPE_DOCTOR;
 import static com.google.android.gms.location.places.Place.TYPE_HOSPITAL;
@@ -33,6 +35,12 @@ public class Dashboard extends AppCompatActivity {
     //region >>> Class Variables
     int PLACE_PICKER_REQUEST = 1;
     double longitude,latitude;
+ /*   String formData;
+    DbAdapter dbAdapter;
+    Model_Booking bModel;
+    Gson gson;
+    Object[] paramsApiUri;*/
+
     //endregion
 
 
@@ -40,6 +48,7 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        getSupportActionBar().setTitle("Dashboard");
     }
 
 
@@ -118,6 +127,8 @@ public class Dashboard extends AppCompatActivity {
 
     public void clk_allAppointments(View view)
     {
+        Intent i = new Intent(this, Bookings_All.class);
+        startActivity(i);
     }
 
 

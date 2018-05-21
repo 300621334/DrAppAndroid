@@ -12,12 +12,25 @@
         android:id="@+id/txtBookingActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:background="@color/dashboard_segment1"
+        android:text=""
+        android:hint="Hospital Name &amp; Address Appears Here"
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:gravity="top|left"
+
+        />
 
     <Spinner
         android:id="@+id/spinDrList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/dashboard_segment4_h"
+        android:entries="@array/DrNames"
+        tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
  <!--   <LinearLayout
         android:orientation="vertical"
@@ -33,56 +46,65 @@
     </LinearLayout>-->
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".07">
+        android:layout_weight=".07"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtDate"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:hint="Wed,4 Apr 2018"
-                android:textSize="24sp"
                 android:layout_gravity="center_vertical"
-                android:textAlignment="center"
+                android:layout_weight="0.5"
                 android:background="@color/dashboard_segment3"
-                />
+                android:hint="Wed,4 Apr 2018"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtTime"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:hint="hh:mm  AM/PM"
-                android:textSize="24sp"
                 android:layout_gravity="center_vertical"
-                android:textAlignment="center"
+                android:layout_weight="0.5"
                 android:background="@color/dashboard_segment4"
-                />
+                android:hint="hh:mm  AM/PM"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnBookApp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.05"
-            android:text="S A V E" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnCancelApp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel Appointment" />
+            <Button
+                android:id="@+id/btnBookApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="S A V E"
+                android:onClick="clk_SaveAppoint"/>
+
+            <Button
+                android:id="@+id/btnCancelApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel Appointment"
+                android:onClick="clk_CancelAppoint"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
