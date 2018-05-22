@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,12 +29,13 @@ public class BookingDetails extends AppCompatActivity {
 
     //region Variables
     TextView dateTxtV, timeTxtV, txtV;
+    Button btnCancelApp;
     Spinner spinDrList;
     Calendar cal;
     String formData, dateStr, timeStr,AppointmentTime, dateTimeStr, descriptionStr;
     Long dateTimeUnix, rowsIdCreated, rowsAffected;
     DbAdapter dbAdapter;
-    Model_Booking bModel;
+    Model_Booking bModel, app;//app is Model_Booking sent via Intent from list of all bookings = used to decide whether to save a new app or edit an existing one
     Gson gson;
     Object[] paramsApiUri;
     String[] DrNamesArray;
@@ -55,6 +57,7 @@ public class BookingDetails extends AppCompatActivity {
         //ref to views
         txtV = findViewById(R.id.txtBookingActivity);
         spinDrList = findViewById(R.id.spinDrList);
+        btnCancelApp = (Button)findViewById(R.id.btnCancelApp);
 
 
         //get Extras passed from InfoWindow of marker
@@ -132,12 +135,13 @@ public class BookingDetails extends AppCompatActivity {
         });
         //endregion
 
-        //if editing existing booking sent from Booking_All
+        //
+        //region if editing existing booking sent from Booking_All
         String jsonAppointment = getIntent().getStringExtra("appointment");
-        Model_Booking app = gson.fromJson(jsonAppointment, Model_Booking.class);
+        app = gson.fromJson(jsonAppointment, Model_Booking.class);
         if(app != null)//i.e. activity launched from clicking on List of all appointments
         {
-
+            btnCancelApp.setVisibility(View.VISIBLE);
             txtV.setText(app.Clinic);
 
             SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa");
@@ -157,8 +161,8 @@ public class BookingDetails extends AppCompatActivity {
             spinDrList.setSelection(Arrays.asList(DrNamesArray).indexOf(app.Doctor));
 
             cal.setTimeInMillis(dt.getTime());
-
         }
+        //endregion
 
         updateDateTxtV();//set current date as soon as activity loads
         updateTimeTxtV();
@@ -191,41 +195,49 @@ public class BookingDetails extends AppCompatActivity {
 
     public void clk_SaveAppoint(View view)
     {
-        dbAdapter = new DbAdapter(this);
-
-        //covert unix-datetime (in seconds) to string
-        Date appointTime = new Date(dateTimeUnix * 1000L);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa");
-        AppointmentTime = sdf.format(appointTime);
-
-        //bind model
-        bModel = new Model_Booking();
-        String userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
-        int userIdInt = Integer.parseInt(userIdStr);//default appointments go to user # 1
-        bModel.Id_User = userIdInt;
-        bModel.AppointmentTime = this.AppointmentTime;
-        bModel.Clinic = txtV.getText().toString();
-        bModel.CreationTime = sdf.format( Calendar.getInstance().getTime() );
-        if(spinDrList.getSelectedItemPosition() == 0)//chk if a doc was selected
+        if (app == null) //i.e. non-existing booking, so create a new one
         {
-            Snackbar.make(view, "Select a doctor", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        bModel.Doctor = (String) spinDrList.getSelectedItem();
+            dbAdapter = new DbAdapter(this);
 
-        //make json from model
-        formData = gson.toJson(bModel);
+            //covert unix-datetime (in seconds) to string
+            Date appointTime = new Date(dateTimeUnix * 1000L);
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa");
+            AppointmentTime = sdf.format(appointTime);
+
+            //bind model
+            bModel = new Model_Booking();
+            String userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
+            int userIdInt = Integer.parseInt(userIdStr);//default appointments go to user # 1
+            bModel.Id_User = userIdInt;
+            bModel.AppointmentTime = this.AppointmentTime;
+            bModel.Clinic = txtV.getText().toString();
+            bModel.CreationTime = sdf.format( Calendar.getInstance().getTime() );
+            if(spinDrList.getSelectedItemPosition() == 0)//chk if a doc was selected
+            {
+                Snackbar.make(view, "Select a doctor", Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            bModel.Doctor = (String) spinDrList.getSelectedItem();
+
+            //make json from model
+            formData = gson.toJson(bModel);
 
         /*//Sample JSON appointment sent to server
         {"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
         */
 
-        //
-        paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newAppointment";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
-        paramsApiUri[1] = formData;
-        paramsApiUri[2] = "POST";
-        //pass args to AsyncTask to read db
-        dbAdapter.execute(paramsApiUri);
+            //
+            paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newAppointment";
+            //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newAppointment";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+            paramsApiUri[1] = formData;
+            paramsApiUri[2] = "POST";
+            //pass args to AsyncTask to read db
+            dbAdapter.execute(paramsApiUri);
+        }
+        else //existing booking being displayed, hence SAVE btn should NOT create a duplicate rather save any changes to existing booking
+        {
+                //
+        }
 
     }
 

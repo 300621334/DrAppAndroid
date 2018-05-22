@@ -93,8 +93,8 @@ public class NewUserRegister extends AppCompatActivity {
         //make json from model
         formData = gson.toJson(uModel);
         //prep args
-        //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
-        paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newUser?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+        paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
+        //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newUser?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
         paramsApiUri[1] = formData;
         paramsApiUri[2] = "POST";
         //pass args to AsyncTask to read db
