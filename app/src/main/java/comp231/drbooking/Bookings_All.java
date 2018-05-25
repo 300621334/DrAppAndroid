@@ -149,8 +149,10 @@ public class Bookings_All extends AppCompatActivity implements ICallBackFromDbAd
     {
         dbAdapter = new DbAdapter(Bookings_All.this, new Bookings_All());//new Bookings_All() just to give access to DbAdapter to onResponseFromServer()
 
-        paramsApiUri[0] = "http://10.0.2.2:45455/api/values/Appointments/" + "1";
+        //At college WiFi, IP given by Conveyer extendion of VS is different than the one from ipconfig. Use latter ip but use port from Conveyer.
+        //paramsApiUri[0] = "http://10.24.72.180:45455/api/values/Appointments/" + "1";
         //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/Appointments/" + "1";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/Appointments/" + "1";
         paramsApiUri[1] = "";//formData not needed for this GET req since user_id is appended to URL
         paramsApiUri[2] = "GET";
         //pass args to AsyncTask to read db

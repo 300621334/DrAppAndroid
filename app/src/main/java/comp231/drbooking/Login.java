@@ -91,11 +91,13 @@ public class Login extends AppCompatActivity {
             //API's URI gets access issues
             //https://stackoverflow.com/questions/6760585/accessing-localhostport-from-android-emulator?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
-            //paramsApiUri[0] = "http://localhost:50036/api/values";
-            //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
-            paramsApiUri[0] = "http://192.168.1.6:45455/api/values/login?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+        //At college WiFi, IP given by Conveyer extendion of VS is different than the one from ipconfig. Use latter ip but use port from Conveyer.
+            //paramsApiUri[0] = "http://localhost:50036/api/values/login";
+            //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/login"; //emulator uses this
+            //paramsApiUri[0] = "http://10.24.72.180:45455/api/values/login?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
             //paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
-            paramsApiUri[1] = formData;
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/login";
+        paramsApiUri[1] = formData;
             paramsApiUri[2] = "POST";
 
 
