@@ -123,7 +123,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 {
 
                     //NewUserRegister.AfterAsyncTask(jsonResponse, ctx);//callbk to calling thread
-                    Log.e("Server Returned ==>>", jsonResponse);
+                    Log.e("Server-NewUser ==>>", jsonResponse);
                     //
                     //Snackbar.make(((Activity)ctx)., "Loading Weather", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 

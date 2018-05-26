@@ -150,8 +150,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         Criteria criteria = new Criteria();
+
         String bestProvider = locationManager.getBestProvider(criteria, true);
-        Location location = locationManager.getLastKnownLocation(bestProvider);
+        Location location = locationManager.getLastKnownLocation(bestProvider);//returns NULL after re-installing app. Need to enable GPS & then surf Inbuilt Maps for few locations then try DrApp again.
 
         if (location != null) {
             onLocationChanged(location);
@@ -161,6 +162,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
 
     }
+
+
 
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();

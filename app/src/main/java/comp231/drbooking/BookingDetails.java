@@ -48,6 +48,7 @@ public class BookingDetails extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+
         //
         paramsApiUri = new Object[3];
         gson = new Gson();//util to convert JSON
@@ -58,6 +59,7 @@ public class BookingDetails extends AppCompatActivity {
         txtV = findViewById(R.id.txtBookingActivity);
         spinDrList = findViewById(R.id.spinDrList);
         btnCancelApp = (Button)findViewById(R.id.btnCancelApp);
+        btnCancelApp.setVisibility(View.INVISIBLE);
 
 
         //get Extras passed from InfoWindow of marker
@@ -142,6 +144,8 @@ public class BookingDetails extends AppCompatActivity {
         if(app != null)//i.e. activity launched from clicking on List of all appointments
         {
             btnCancelApp.setVisibility(View.VISIBLE);
+
+            getSharedPreferences("prefs", 0).edit().putInt("Id_Appointment", app.Id_Appointment).commit();
             txtV.setText(app.Clinic);
 
             SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa");
@@ -195,55 +199,74 @@ public class BookingDetails extends AppCompatActivity {
 
     public void clk_SaveAppoint(View view)
     {
-        if (app == null) //i.e. non-existing booking, so create a new one
+        dbAdapter = new DbAdapter(this);
+
+        //covert unix-datetime (in seconds) to string
+        Date appointTime = new Date(dateTimeUnix * 1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa");
+        AppointmentTime = sdf.format(appointTime);
+
+        //bind model
+        bModel = new Model_Booking();
+        String userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
+        int userIdInt = Integer.parseInt(userIdStr);//default appointments go to user # 1
+        bModel.Id_User = userIdInt;
+        bModel.AppointmentTime = this.AppointmentTime;
+        bModel.Clinic = txtV.getText().toString();
+        bModel.CreationTime = sdf.format( Calendar.getInstance().getTime() );
+        if(spinDrList.getSelectedItemPosition() == 0)//chk if a doc was selected
         {
-            dbAdapter = new DbAdapter(this);
+            Snackbar.make(view, "Select a doctor", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        bModel.Doctor = (String) spinDrList.getSelectedItem();
 
-            //covert unix-datetime (in seconds) to string
-            Date appointTime = new Date(dateTimeUnix * 1000L);
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy hh:mm aaa");
-            AppointmentTime = sdf.format(appointTime);
+        //make json from model
+        formData = gson.toJson(bModel);
 
-            //bind model
-            bModel = new Model_Booking();
-            String userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
-            int userIdInt = Integer.parseInt(userIdStr);//default appointments go to user # 1
-            bModel.Id_User = userIdInt;
-            bModel.AppointmentTime = this.AppointmentTime;
-            bModel.Clinic = txtV.getText().toString();
-            bModel.CreationTime = sdf.format( Calendar.getInstance().getTime() );
-            if(spinDrList.getSelectedItemPosition() == 0)//chk if a doc was selected
-            {
-                Snackbar.make(view, "Select a doctor", Snackbar.LENGTH_LONG).show();
-                return;
-            }
-            bModel.Doctor = (String) spinDrList.getSelectedItem();
-
-            //make json from model
-            formData = gson.toJson(bModel);
-
+        //chk if u r coming from List of appoints or from Map
+        if (app == null) //i.e. Coming from Map, hence a non-existing booking, so create a new one
+        {
         /*//Sample JSON appointment sent to server
         {"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
         */
 
             //At college WiFi, IP given by Conveyer extendion of VS is different than the one from ipconfig. Use latter ip but use port from Conveyer.
             //paramsApiUri[0] = "http://10.24.72.180:45455/api/values/newAppointment";
-            //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newAppointment";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+            //paramsApiUri[0] = "http://192.168.1.3:45455/api/values/newAppointment";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
             paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newAppointment";
             paramsApiUri[1] = formData;
             paramsApiUri[2] = "POST";
-            //pass args to AsyncTask to read db
-            dbAdapter.execute(paramsApiUri);
         }
         else //existing booking being displayed, hence SAVE btn should NOT create a duplicate rather save any changes to existing booking
         {
-                //
+            int appointId = getSharedPreferences("prefs", 0).getInt("Id_Appointment", 0);
+            //bModel.Id_Appointment = appointId;
+            //formData = gson.toJson(bModel);
+
+            //paramsApiUri[0] = "http://192.168.1.3:45455/api/values/UpdateAppoint/" + appointId;
+            paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/UpdateAppoint/" + appointId;
+            paramsApiUri[1] = formData;
+            paramsApiUri[2] = "POST";
         }
+
+        //pass args to AsyncTask to read db
+        dbAdapter.execute(paramsApiUri);
 
     }
 
 
     public void clk_CancelAppoint(View view)
     {
+        dbAdapter = new DbAdapter(this);
+        int appointId = getSharedPreferences("prefs", 0).getInt("Id_Appointment", 0);
+        //paramsApiUri[0] = "http://192.168.1.3:45455/api/values/DeleteAppointment/" + appointId;
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/DeleteAppointment/" + appointId;
+        paramsApiUri[1] = formData = "";
+        paramsApiUri[2] = "POST";
+        dbAdapter.execute(paramsApiUri);
+
+
+
     }
 }
