@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: User can login or register
+ */
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;

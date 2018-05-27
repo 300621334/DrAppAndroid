@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Main portal for user to see existing bookings or to create a new booking
+ */
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;

@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: From Google Places response (JSON), extract details of each place
+ */
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

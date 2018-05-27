@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Display a list of all bookings for a logged-in user. User can click any one booking to see details of it or to edit/cancel it
+ */
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Model class used for data-binding when reading or writing to db
+ */
 public class Model_Booking
 {
     int Id_Appointment;//PK

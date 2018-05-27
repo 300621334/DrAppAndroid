@@ -1,5 +1,9 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Send "POST" request to API hosted in Azure, and receive response from any given URL in background.
+ * This class is used by "DbAdapter" which itself is AsyncTask, which in turn is used by Login, Bookings_All, BookingDetails, & NewUserRegister classes to send POST calls to API.
+ */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

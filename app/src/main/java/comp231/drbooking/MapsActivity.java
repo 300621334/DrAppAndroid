@@ -1,4 +1,9 @@
 package comp231.drbooking;
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Displays the map. If GPS is on then Map centers itself.
+ * User can search nearby clinics on this activity.
+ */
 
 import android.app.Activity;
 import android.content.Context;

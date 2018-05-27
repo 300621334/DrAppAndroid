@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Async db read/write operations, in background thread
+ */
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

@@ -1,5 +1,9 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Send "GET" request to and receive response from any given URL in background
+ * This class is used by "GetNearbyPlacesData" which itself is AsyncTask
+ */
 import android.net.UrlQuerySanitizer;
 
 import java.io.BufferedReader;

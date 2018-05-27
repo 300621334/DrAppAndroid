@@ -1,5 +1,8 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Activity to either display a new booking details or existing booking details once user clicks on an item in list of all bookings
+ */
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.support.design.widget.Snackbar;

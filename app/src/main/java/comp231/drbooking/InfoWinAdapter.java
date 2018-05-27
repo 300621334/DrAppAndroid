@@ -1,5 +1,9 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Customized InfoWindow for Maps. Displays name & address of a clinic.
+ * Allows clicking on InfoWindow to fire BookingDetails activity & passes on the data about that Place as well.
+ */
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

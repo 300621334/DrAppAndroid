@@ -1,5 +1,9 @@
 package comp231.drbooking;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: Display nearby hospitals in Map.
+ * It's AsyncTask & uses DownloadUri class to send HTTP request. And uses DataParser to parse JSON response from that call.
+ */
 import android.os.AsyncTask;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
