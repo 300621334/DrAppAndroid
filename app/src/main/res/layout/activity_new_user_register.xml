@@ -157,6 +157,34 @@
             android:text="Name" />
     </LinearLayout>
 
+    <RadioGroup
+        android:id="@+id/radGrpRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radRolePt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="Patient" />
+
+        <RadioButton
+            android:id="@+id/radRoleDr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="Provider" />
+
+        <RadioButton
+            android:id="@+id/radRoleAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:text="Admin" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnCreateNewUser"
         android:layout_width="match_parent"

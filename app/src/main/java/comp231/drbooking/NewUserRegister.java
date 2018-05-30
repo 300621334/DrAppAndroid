@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.Snackbar;//implementation  'com.android.support:design:26.1.0'
@@ -27,13 +29,15 @@ import java.util.Random;
 public class NewUserRegister extends AppCompatActivity {
 
     //region Class Variables
-    String txtVeriCode,formData, uName, uPass,fName, lName, add, city, postC, isAdmin, key_uName, key_uPass;
+    String ROLE_CODE = "0", txtVeriCode,formData, uName, uPass,fName, lName, add, city, postC, isAdmin, key_uName, key_uPass;
     SharedPreferences pref;
     Map<String, ?> allPrefs;
     int numOfPrefs;
     long rowID;
     TextView uNameV;
     EditText txtVeriCodeV, txtVerifyEmailV;
+    RadioButton radRoleDr, radRoleAdmin;
+    RadioGroup radGrpRole;
     LinearLayout lay;
     DbAdapter dbAdapter;
     Model_User uModel;
@@ -55,6 +59,31 @@ public class NewUserRegister extends AppCompatActivity {
         lay = (LinearLayout) findViewById(R.id.layNewUser);
         btnVerifyEmail = (Button)findViewById(R.id.btnVerifyEmail);
         txtVerifyEmailV = (EditText)findViewById(R.id.txtVerifyEmail);
+        radGrpRole = (RadioGroup)findViewById(R.id.radGrpRole);
+
+        //listener for RadioGroup
+        radGrpRole.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int id_of_radBtn)
+            {
+                switch (id_of_radBtn)
+                {
+                    case R.id.radRolePt:
+                        ROLE_CODE = "1";//Patient
+                        break;
+                    case R.id.radRoleDr:
+                        ROLE_CODE = "2";//Care Provider
+                        break;
+                    case R.id.radRoleAdmin:
+                    ROLE_CODE = "3";//Admin
+                        break;
+                        default:
+                            ROLE_CODE = "0";//guest
+                            break;
+                }
+            }
+        });
 
         //db adapter
         //dbAdapter = new DbAdapter(this);////err (the task has already been executed (a task can be executed only once) => due to re-using same instance of AsyncTask so create a new instance on ea clk.
@@ -169,6 +198,7 @@ public class NewUserRegister extends AppCompatActivity {
             uModel.address = add     = ((EditText)findViewById(R.id.txtAdd)).getText().toString();
             uModel.email = ((EditText)findViewById(R.id.txtEmail)).getText().toString();
             uModel.phone = ((EditText)findViewById(R.id.txtPhone)).getText().toString();
+            uModel.role = ROLE_CODE;
 
 
             //city    = ((EditText)findViewById(R.id.txtCity)).getText().toString();
@@ -183,7 +213,7 @@ public class NewUserRegister extends AppCompatActivity {
             //prep args
             //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
             //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newUser?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
-            paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newUser";
+                paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newUser";
             paramsApiUri[1] = formData;
             paramsApiUri[2] = "POST";
             //pass args to AsyncTask to read db
