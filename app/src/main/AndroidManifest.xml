@@ -44,7 +44,9 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".Dashboard" />
         <activity android:name=".NewUserRegister" />
-        <activity android:name=".Bookings_All"></activity>
+        <activity android:name=".Bookings_All" />
+        <activity android:name=".Settings" />
+        <activity android:name=".VerifyEmail"></activity>
     </application>
 
 </manifest>

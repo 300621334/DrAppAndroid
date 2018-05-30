@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NewUserRegister"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/layNewUser">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -161,6 +162,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="btnClk_CreateNewUser"
-        android:text="Create New User" />
+        android:text="Create New User"
+        />
+
+    <Button
+        android:id="@+id/btnVerifyEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Verify Email"
+        android:onClick="clk_verifyEmail"
+        android:enabled="false"/>
+
+    <EditText
+        android:id="@+id/txtVerifyEmail"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:hint="Enter code sent to your email"
+        android:inputType="number"
+        android:enabled="false"/>
 
 </LinearLayout>

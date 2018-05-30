@@ -26,11 +26,19 @@
         android:onClick="clk_newAppMap"/>
 
     <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:onClick="clk_Settings"/>
+
+    <Button
         android:id="@+id/btnPlacePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="30dp"
+        android:onClick="clk_newAppPlacePicker"
         android:text="New Appointment - PlacePicker"
-        android:onClick="clk_newAppPlacePicker"/>
+        android:visibility="gone" />
 </LinearLayout>

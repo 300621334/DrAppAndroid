@@ -12,5 +12,6 @@ public class Model_User
     String address;
     String email;
     String phone;
+    String role = "1";// 1 = patient, 2 = Dr, 3 = admin, 0 = guest
     boolean isLoggedIn = false;
 }

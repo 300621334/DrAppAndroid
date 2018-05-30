@@ -38,6 +38,7 @@ public class Dashboard extends AppCompatActivity {
     //region >>> Class Variables
     int PLACE_PICKER_REQUEST = 1;
     double longitude,latitude;
+    Intent i;
  /*   String formData;
     DbAdapter dbAdapter;
     Model_Booking bModel;
@@ -58,7 +59,7 @@ public class Dashboard extends AppCompatActivity {
     public void clk_newAppMap(View v)
     {
         //go to MapActivity
-        Intent i = new Intent(this, MapsActivity.class);
+        i = new Intent(this, MapsActivity.class);
         startActivity(i);
 
     }
@@ -98,7 +99,7 @@ public class Dashboard extends AppCompatActivity {
         //go to PlacePicker : https://www.youtube.com/watch?v=Rh9x90lqPHc
         PlacePicker.IntentBuilder iBuilder = new PlacePicker.IntentBuilder(); //compile 'com.google.android.gms:play-services-places:9.2.0'
         //iBuilder.setLatLngBounds(MapUtils.getLatLngBounds(new LatLng((double) latitude, (double) longitude)));
-        Intent i;
+        //Intent i;
 
         //region AUtocpmplete Filter ONLY can work with autocom widget - NOT w PlacePicker
 /*        //set filter type by country 'CANADA'
@@ -130,7 +131,7 @@ public class Dashboard extends AppCompatActivity {
 
     public void clk_allAppointments(View view)
     {
-        Intent i = new Intent(this, Bookings_All.class);
+        i = new Intent(this, Bookings_All.class);
         startActivity(i);
     }
 
@@ -182,5 +183,11 @@ public class Dashboard extends AppCompatActivity {
 
 
         }
+    }
+
+    public void clk_Settings(View view)
+    {
+        i = new Intent(this, Settings.class);
+        startActivity(i);
     }
 }
