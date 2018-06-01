@@ -182,7 +182,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:text="Admin" />
+            android:text="Admin"
+            android:visibility="gone"/>
     </RadioGroup>
 
     <Button

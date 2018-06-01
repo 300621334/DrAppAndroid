@@ -106,6 +106,7 @@ public class BookingDetails extends AppCompatActivity {
         timeTxtV = (TextView)findViewById(R.id.txtTime);
         //Create Listener for DatePicker
         final TimePickerDialog.OnTimeSetListener timeChangeListener = new TimePickerDialog.OnTimeSetListener()
+        //final CustomTimePickerDialog.OnTimeSetListener timeChangeListener = new CustomTimePickerDialog.OnTimeSetListener()
         {
             @Override
             public void onTimeSet(TimePicker timePicker, int _24hr, int min)
@@ -127,10 +128,12 @@ public class BookingDetails extends AppCompatActivity {
             }
         };
         //Assign Listener to dateTxtV
-        timeTxtV.setOnClickListener(new View.OnClickListener() {
+        timeTxtV.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
-                new TimePickerDialog
+                //new TimePickerDialog
+                new CustomTimePickerDialog
                         (
                                 BookingDetails.this,
                                 timeChangeListener,
@@ -195,6 +198,7 @@ public class BookingDetails extends AppCompatActivity {
     {
         String timeFormat ="hh:mm aaa";//12:08 PM
         SimpleDateFormat stf = new SimpleDateFormat(timeFormat, Locale.CANADA);
+        cal.set(Calendar.MINUTE, 0);//round off minutes
         timeStr = stf.format(cal.getTime());
         timeTxtV.setText(timeStr);
 
