@@ -191,7 +191,6 @@ public class NewUserRegister extends AppCompatActivity {
 
             //references to EditText & bind model
             uModel.loginName = uName  = ((EditText)findViewById(R.id.txtUserName)).getText().toString();
-            uModel.pw = uPass   = ((EditText)findViewById(R.id.txtPass)).getText().toString();
             fName   = ((EditText)findViewById(R.id.txtFName)).getText().toString();
             lName   = ((EditText)findViewById(R.id.txtLName)).getText().toString();
             uModel.nameOfUser = fName;
@@ -199,7 +198,15 @@ public class NewUserRegister extends AppCompatActivity {
             uModel.email = ((EditText)findViewById(R.id.txtEmail)).getText().toString();
             uModel.phone = ((EditText)findViewById(R.id.txtPhone)).getText().toString();
             uModel.role = ROLE_CODE;
-
+            //encrypt pw
+            try
+            {
+                uModel.pw = uPass   = AESCrypt.encrypt(((EditText)findViewById(R.id.txtPass)).getText().toString());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
             //city    = ((EditText)findViewById(R.id.txtCity)).getText().toString();
             //postC   = ((EditText)findViewById(R.id.txtPostC)).getText().toString();

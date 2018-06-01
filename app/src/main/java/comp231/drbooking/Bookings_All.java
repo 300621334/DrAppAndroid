@@ -31,6 +31,8 @@ public class Bookings_All extends AppCompatActivity implements ICallBackFromDbAd
     Gson gson;
     Object[] paramsApiUri;
     ListView listAllAppV;
+    String userIdStr, roleStr;
+
     //endregion
 
     @Override
@@ -40,9 +42,19 @@ public class Bookings_All extends AppCompatActivity implements ICallBackFromDbAd
         listAllAppV = (ListView)findViewById(R.id.listAllAppoints);
         gson = new Gson();
         paramsApiUri = new Object[3];
+        userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
+        roleStr = getSharedPreferences("prefs", 0).getString("role", "1");
 
+switch (roleStr)
+{
+    case "1":
+        LoadAllAppoints();//all appoints for
+        break;
+    case "2":
+        LoadAllAppointsForDr();
+        break;
+}
 
-        LoadAllAppoints();
 
     }
 
@@ -86,6 +98,49 @@ public class Bookings_All extends AppCompatActivity implements ICallBackFromDbAd
                 b.AppointmentTime =  j.getString("AppointmentTime");
                 b.CreationTime =  j.getString("CreationTime");
 
+                //list for Docs has 1 extra prop "PatientName". List for patients doesn't. See sample JSON fo Docs below:
+                //if(null != j.getString("PatientName"))//this always throw excep for patient's json bcos NO "PatientName" key - so ch for key using "has"
+                if(j.has("PatientName"))
+                {
+                    b.User = j.getString("PatientName");//name of patient
+                }
+                //region sample JSON fo Docs below - NOTE it's an ARRAY : API : http://drappapi.azurewebsites.net/api/values/AppointmentsForDr/111
+/*
+                [
+                    {
+                        "Appointments": [
+                            {
+                                "Id_Appointment": 1,
+                                "Id_User": 1,
+                                "Clinic": "test clinic",
+                                "Doctor": "Lady Doctor 1",
+                                "AppointmentTime": "Wed, 30 May 2018 11:27 AM",
+                                "CreationTime": "Wed, 30 May 2018 11:27 AM",
+                                "PatientName": "John Doe"
+                            },
+                            {
+                                "Id_Appointment": 2,
+                                "Id_User": 1,
+                                "Clinic": "Address : 940 progress Ave Toronto",
+                                "Doctor": "Lady Doctor 1",
+                                "AppointmentTime": "Sun, 20 May 2018 10:27 PM",
+                                "CreationTime": "Sun, 20 May 2018 10:27 PM",
+                                "PatientName": "John Doe"
+                            },
+                            {
+                                "Id_Appointment": 6,
+                                "Id_User": 2,
+                                "Clinic": "Address : 940 progress Ave Toronto",
+                                "Doctor": "Lady Doctor 1",
+                                "AppointmentTime": "Sat, 30 Jun 2018 07:14 PM",
+                                "CreationTime": "Thu, 31 May 2018 07:14 PM",
+                                "PatientName": "Name1"
+                            }
+                        ]
+                    }
+                ]
+*/
+                //endregion
                 allAppList.add(b);
             }
 
@@ -155,10 +210,27 @@ public class Bookings_All extends AppCompatActivity implements ICallBackFromDbAd
         //At college WiFi, IP given by Conveyer extendion of VS is different than the one from ipconfig. Use latter ip but use port from Conveyer.
         //paramsApiUri[0] = "http://10.24.72.180:45455/api/values/Appointments/" + "1";
         //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/Appointments/" + "1";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
-        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/Appointments/" + "1";
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/Appointments/" + userIdStr;
         paramsApiUri[1] = "";//formData not needed for this GET req since user_id is appended to URL
         paramsApiUri[2] = "GET";
         //pass args to AsyncTask to read db
         dbAdapter.execute(paramsApiUri);
     }
+
+    private void LoadAllAppointsForDr()
+    {
+        dbAdapter = new DbAdapter(Bookings_All.this, new Bookings_All());//new Bookings_All() just to give access to DbAdapter to onResponseFromServer()
+
+        //At college WiFi, IP given by Conveyer extendion of VS is different than the one from ipconfig. Use latter ip but use port from Conveyer.
+        //paramsApiUri[0] = "http://10.24.72.180:45455/api/values/Appointments/" + "1";
+        //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/Appointments/" + "1";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/AppointmentsForDr/" + userIdStr;
+        paramsApiUri[1] = "";//formData not needed for this GET req since user_id is appended to URL
+        paramsApiUri[2] = "GET";
+        //pass args to AsyncTask to read db
+        dbAdapter.execute(paramsApiUri);
+    }
+
+
+
 }

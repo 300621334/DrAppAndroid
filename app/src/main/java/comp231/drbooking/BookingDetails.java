@@ -27,7 +27,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
+/*Model_Booking sample JSON:
+{"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
+* */
 public class BookingDetails extends AppCompatActivity {
 
     //region Variables

@@ -25,6 +25,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     Intent i;
     SharedPreferences prefs;
     ICallBackFromDbAdapter callBk;
+    Gson gson;
     //endregion
 
     //constructor just to receive ctx needed for TOAST
@@ -34,12 +35,14 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     public DbAdapter(Context ctx)
     {
         this.ctx = ctx;
+        gson = new Gson();
     }
     //constructor # 2 = pass a callBack fn
     public DbAdapter(Context ctx, ICallBackFromDbAdapter callBk)
     {
         this.ctx = ctx;
         this.callBk = callBk;
+        gson = new Gson();
     }
 
     //read db via API in bg
@@ -110,11 +113,17 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
             }
             else
             {
-                Toast.makeText(ctx, jsonResponse + " Login Successful", Toast.LENGTH_LONG).show();
+                //https://www.mkyong.com/java/how-do-convert-java-object-to-from-json-format-gson-api/
+                Model_User u = gson.fromJson(jsonResponse, Model_User.class);//jsonResponse is user-obj as JSON
+                //
+
+
+                Toast.makeText(ctx, "User ID: " + u.Id_User + " Login Successful", Toast.LENGTH_LONG).show();
                 //save User_Id
                 prefs = ctx.getSharedPreferences("prefs" , 0);
-                String UserId_Prefs = jsonResponse.equals("")?"1":jsonResponse;//if server not up, code returns empty "". So replace User_Id w "1" in such case.
-                prefs.edit().putString("Id_User", jsonResponse).commit();
+                String UserIdStr = jsonResponse.equals("")?"1":String.valueOf(u.Id_User);//if server not up, code returns empty "". So replace User_Id w "1" in such case.
+                String roleStr = jsonResponse.equals("")?"1":String.valueOf(u.role);
+                prefs.edit().putString("Id_User", UserIdStr).putString("role", roleStr).commit();
                 //Go to dashboard
                 i = new Intent(ctx, Dashboard.class);
                 ctx.startActivity(i);

@@ -15,7 +15,9 @@ import android.widget.RadioGroup;
 import com.google.gson.Gson;
 
 import java.util.Map;
-
+/*Model_User JSON sample:
+{"role":"1","pw":"DnVELRcAZH97k+lj5ivzYQ\u003d\u003d","loginName":"name","isLoggedIn":false,"Id_User":0}
+*/
 public class Login extends AppCompatActivity {
 
     //region >>> Variables
@@ -77,7 +79,14 @@ public class Login extends AppCompatActivity {
         //get form data into class
         Model_User uModel = new Model_User();
         uModel.loginName = uNameView.getText().toString();
-        uModel.pw = uPassView.getText().toString();
+        //encrypt pw
+        try {
+            uModel.pw = AESCrypt.encrypt(uPassView.getText().toString());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         //convert obj to JSON str: https://github.com/google/gson/blob/master/README.md
         Gson gson = new Gson();
