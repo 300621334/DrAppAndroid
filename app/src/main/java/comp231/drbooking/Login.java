@@ -48,8 +48,6 @@ public class Login extends AppCompatActivity {
         //String dummyForBreakPoint = "";
     }
 
-
-
     private void getCurrentLoc() //grant permissions for "Location" from phone/emulator
     {
 /*        //https://stackoverflow.com/questions/2227292/how-to-get-latitude-and-longitude-of-the-mobile-device-in-android

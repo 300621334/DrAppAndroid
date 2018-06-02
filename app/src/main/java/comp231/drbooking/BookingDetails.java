@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,9 +25,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 /*Model_Booking sample JSON:
 {"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
@@ -53,16 +57,21 @@ public class BookingDetails extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
-
         //
         paramsApiUri = new Object[3];
         gson = new Gson();//util to convert JSON
-        DrNamesArray = getResources().getStringArray(R.array.DrNames);
 
+        //get list of all Drs from API
+        //DrNamesArray = getResources().getStringArray(R.array.DrNames);
+        GetDrArray();//populate static array of names of Drs loc in VariablesGlobal.java
+        //List<String> DrNamesArrayList = VariablesGlobal.DrNamesList;
 
         //ref to views
         txtV = findViewById(R.id.txtBookingActivity);
         spinDrList = findViewById(R.id.spinDrList);
+        VariablesGlobal.spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, VariablesGlobal.DrNamesList);
+        spinDrList.setAdapter(VariablesGlobal.spinAdapter);
+
         btnCancelApp = (Button)findViewById(R.id.btnCancelApp);
         btnCancelApp.setVisibility(View.INVISIBLE);
 
@@ -170,7 +179,8 @@ public class BookingDetails extends AppCompatActivity {
             dateTxtV.setText(sdf.format(dt));
             sdf = new SimpleDateFormat("hh:mm aaa");
             timeTxtV.setText(sdf.format(dt));
-            spinDrList.setSelection(Arrays.asList(DrNamesArray).indexOf(app.Doctor));
+            //spinDrList.setSelection(Arrays.asList(DrNamesArray).indexOf(app.Doctor));
+            spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
 
             cal.setTimeInMillis(dt.getTime());
         }
@@ -179,6 +189,16 @@ public class BookingDetails extends AppCompatActivity {
         updateDateTxtV();//set current date as soon as activity loads
         updateTimeTxtV();
 
+    }
+
+    private void GetDrArray()
+    {
+        //List<String> arrDrNames = new ArrayList<String>();
+        dbAdapter = new DbAdapter(this, "GetDrNamesArray");
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/doctors";
+        paramsApiUri[1] = formData = "";
+        paramsApiUri[2] = "GET";
+        dbAdapter.execute(paramsApiUri);
     }
 
     //Update Date in text field

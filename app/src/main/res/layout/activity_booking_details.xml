@@ -23,13 +23,14 @@
 
         />
 
+
+    <!--android:entries="@array/DrNames"-->
     <Spinner
         android:id="@+id/spinDrList"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:background="@color/dashboard_segment4_h"
-        android:entries="@array/DrNames"
         tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
  <!--   <LinearLayout

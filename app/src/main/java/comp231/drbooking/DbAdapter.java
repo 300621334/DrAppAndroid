@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
+import java.util.List;
 
 public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progress,result>
 {
@@ -26,6 +30,8 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     SharedPreferences prefs;
     ICallBackFromDbAdapter callBk;
     Gson gson;
+    //String[] DrNamesList;
+    boolean isGettingDrList = false;
     //endregion
 
     //constructor just to receive ctx needed for TOAST
@@ -42,6 +48,19 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     {
         this.ctx = ctx;
         this.callBk = callBk;
+        gson = new Gson();
+    }
+
+    //constructor # 3 = To pass extra data like array-of-Dr names = Java doesn't support optiona params so we're stuch w overloading constructors
+    public DbAdapter(Context ctx, String purpose)
+    {
+        switch (purpose)
+        {
+            case "GetDrNamesArray":
+                isGettingDrList = true;
+                break;
+        }
+        this.ctx = ctx;
         gson = new Gson();
     }
 
@@ -92,6 +111,28 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     @Override
     protected void onPostExecute(String s)//JSON string passed
     {
+        if(isGettingDrList)
+        {
+            try
+            {
+                //https://stackoverflow.com/questions/3395729/convert-json-array-to-normal-java-array?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+                JSONArray jsonArrDrNames = new JSONArray(jsonResponse);
+                int len = jsonArrDrNames.length();
+                VariablesGlobal.DrNamesList.clear();//clear dummy Dr names like "Un-Known Doctor"
+                VariablesGlobal.DrNamesList.add("~~ Please Select a Doctor ~~");
+                for (int j = 0; j < len; j++)
+                {
+                    VariablesGlobal.DrNamesList.add(jsonArrDrNames.get(j).toString());
+                }
+                VariablesGlobal.spinAdapter.notifyDataSetChanged();
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return;
+        }
+
         //region
         switch (ctx.getClass().getSimpleName())
         {
@@ -159,7 +200,8 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     i = new Intent(ctx, Dashboard.class);
                     ctx.startActivity(i);
                 }
-/*               //uName already exists => 0 is returned. If not then create a new user_id & return it
+            /*
+            //uName already exists => 0 is returned. If not then create a new user_id & return it
                 if(!jsonResponse.equals(0))
                 {
                     Button btn = ((Activity)ctx).findViewById(R.id.btnCreateNewUser);
@@ -169,7 +211,8 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                         //enable 'Create New User' btn
                         btn.setEnabled(true);
                     }
-                }*/
+                }
+                */
             break;
             case "BookingDetails":
                 if(jsonResponse.equals("0"))//booking time unavailable
@@ -194,9 +237,8 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     i = new Intent(ctx, Bookings_All.class);
                     ctx.startActivity(i);
                 }
-
                 break;
-                case "Bookings_All":
+                case "Bookings_All"://calling ctx was "Bookings_All"
                     callBk.onResponseFromServer(jsonResponse, ctx);
                     break;
             default:
