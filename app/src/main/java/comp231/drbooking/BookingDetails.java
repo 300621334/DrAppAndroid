@@ -5,6 +5,7 @@ package comp231.drbooking;
  */
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,8 @@ import java.util.Locale;
 /*Model_Booking sample JSON:
 {"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
 * */
-public class BookingDetails extends AppCompatActivity {
+public class BookingDetails extends AppCompatActivity implements ICallBackFromDbAdapter
+{
 
     //region Variables
     TextView dateTxtV, timeTxtV, txtV;
@@ -180,7 +182,18 @@ public class BookingDetails extends AppCompatActivity {
             sdf = new SimpleDateFormat("hh:mm aaa");
             timeTxtV.setText(sdf.format(dt));
             //spinDrList.setSelection(Arrays.asList(DrNamesArray).indexOf(app.Doctor));
-            spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
+            spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));//GetDrArray() is slower so this line of code fixed selected index to '0' unless return bk to list of appoints & come bk
+
+            //region >>> trying to get correct dr selected on spinner - doesn't work
+            /*spinDrList.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
+            {
+                @Override
+                public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7)
+                {
+                    spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
+                }
+            });*/
+            //endregion
 
             cal.setTimeInMillis(dt.getTime());
         }
@@ -191,10 +204,11 @@ public class BookingDetails extends AppCompatActivity {
 
     }
 
+
     private void GetDrArray()
     {
         //List<String> arrDrNames = new ArrayList<String>();
-        dbAdapter = new DbAdapter(this, "GetDrNamesArray");
+        dbAdapter = new DbAdapter(this, "GetDrNamesArray", this);
         paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/doctors";
         paramsApiUri[1] = formData = "";
         paramsApiUri[2] = "GET";
@@ -218,7 +232,7 @@ public class BookingDetails extends AppCompatActivity {
     {
         String timeFormat ="hh:mm aaa";//12:08 PM
         SimpleDateFormat stf = new SimpleDateFormat(timeFormat, Locale.CANADA);
-        cal.set(Calendar.MINUTE, 0);//round off minutes
+        //cal.set(Calendar.MINUTE, 0);//round off minutes
         timeStr = stf.format(cal.getTime());
         timeTxtV.setText(timeStr);
 
@@ -249,6 +263,7 @@ public class BookingDetails extends AppCompatActivity {
             return;
         }
         bModel.Doctor = (String) spinDrList.getSelectedItem();
+        bModel.DRAVAILABLE = "1";
 
         //make json from model
         formData = gson.toJson(bModel);
@@ -298,4 +313,12 @@ public class BookingDetails extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onResponseFromServer(String result, Context ctx)
+    {
+        if(app != null)
+        {
+            spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
+        }    }
 }

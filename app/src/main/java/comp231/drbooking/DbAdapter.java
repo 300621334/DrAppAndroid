@@ -52,7 +52,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     }
 
     //constructor # 3 = To pass extra data like array-of-Dr names = Java doesn't support optiona params so we're stuch w overloading constructors
-    public DbAdapter(Context ctx, String purpose)
+    public DbAdapter(Context ctx, String purpose, ICallBackFromDbAdapter callBk)
     {
         switch (purpose)
         {
@@ -62,6 +62,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
         }
         this.ctx = ctx;
         gson = new Gson();
+        this.callBk = callBk;
     }
 
     //read db via API in bg
@@ -111,6 +112,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     @Override
     protected void onPostExecute(String s)//JSON string passed
     {
+        //region >>> if fetching list of Drs names
         if(isGettingDrList)
         {
             try
@@ -125,6 +127,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     VariablesGlobal.DrNamesList.add(jsonArrDrNames.get(j).toString());
                 }
                 VariablesGlobal.spinAdapter.notifyDataSetChanged();
+                callBk.onResponseFromServer(null, ctx);//reset Dr name on spinner
             }
             catch (JSONException e)
             {
@@ -132,8 +135,9 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
             }
             return;
         }
+        //endregion
 
-        //region
+        //region >>> chk which activity called for API
         switch (ctx.getClass().getSimpleName())
         {
             //Go to Dashboard - on successful login

@@ -1,0 +1,15 @@
+select * from users
+select * from doctors
+select * from appointments
+
+alter table appointments add Id_Doc int;
+alter table appointments add DRAVAILABLE nvarchar(1);
+
+update appointments set id_doc = 2 where doctor = 'Doctor 1';
+update appointments set DRAVAILABLE = '1' where doctor = 'Doctor 1'
+
+dbcc checkident ('users', reseed, 5)
+insert into users values('admin', 'admin', 'PGytuvRI/Jmicfl8uOgxqQ==', 'admin', 'admin@e.e', '000', '3')
+insert into doctors values(444, 'Physician', '444', 'doc4@e.e')
+
+delete from appointments where id_appointment = 10
