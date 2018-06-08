@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Bookings_All extends AppCompatActivity implements ICallBackFromDbAdapter
+public class Bookings_All extends BaseActivity implements ICallBackFromDbAdapter
 {
 
     //region Vars

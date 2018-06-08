@@ -18,7 +18,7 @@ import java.util.Map;
 /*Model_User JSON sample:
 {"role":"1","pw":"DnVELRcAZH97k+lj5ivzYQ\u003d\u003d","loginName":"name","isLoggedIn":false,"Id_User":0}
 */
-public class Login extends AppCompatActivity {
+public class Login extends BaseActivity {
 
     //region >>> Variables
     boolean isFaculty = false, isFacultyRadChecked = true;

@@ -32,7 +32,7 @@ import com.google.gson.Gson;
 import static com.google.android.gms.location.places.Place.TYPE_DOCTOR;
 import static com.google.android.gms.location.places.Place.TYPE_HOSPITAL;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends BaseActivity {
 
     private static final String TAG = "Catch Block says: ";
     //region >>> Class Variables

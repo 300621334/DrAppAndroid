@@ -5,6 +5,11 @@ package comp231.drbooking;
  * User can search nearby clinics on this activity.
  */
 
+/*
+To use maps in WebView on devices wout Play-Services => use Play Service "Library" : https://stackoverflow.com/questions/29747390/develop-google-map-program-without-using-google-play-service
+or AirBnb library : https://github.com/airbnb/AirMapView/blob/master/README.md#how-to-use
+*/
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

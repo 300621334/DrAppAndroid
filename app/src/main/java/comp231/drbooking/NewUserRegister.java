@@ -26,7 +26,7 @@ import java.sql.SQLNonTransientConnectionException;
 import java.util.Map;
 import java.util.Random;
 
-public class NewUserRegister extends AppCompatActivity {
+public class NewUserRegister extends BaseActivity {
 
     //region Class Variables
     String ROLE_CODE = "0", txtVeriCode,formData, uName, uPass,fName, lName, add, city, postC, isAdmin, key_uName, key_uPass;

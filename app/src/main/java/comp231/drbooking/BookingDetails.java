@@ -6,6 +6,7 @@ package comp231.drbooking;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ import java.util.Locale;
 /*Model_Booking sample JSON:
 {"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
 * */
-public class BookingDetails extends AppCompatActivity implements ICallBackFromDbAdapter
+public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapter
 {
 
     //region Variables
@@ -242,6 +243,15 @@ public class BookingDetails extends AppCompatActivity implements ICallBackFromDb
 
     public void clk_SaveAppoint(View view)
     {
+        //chk if user is logged in:
+        String userIdStr = getSharedPreferences("prefs",0).getString("Id_User", "");
+        if(userIdStr.equals(""))
+        {
+            Intent i = new Intent(this, Login.class);
+            startActivity(i);
+            return;
+        }
+
         dbAdapter = new DbAdapter(this);
 
         //covert unix-datetime (in seconds) to string
@@ -251,7 +261,7 @@ public class BookingDetails extends AppCompatActivity implements ICallBackFromDb
 
         //bind model
         bModel = new Model_Booking();
-        String userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
+        userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
         int userIdInt = Integer.parseInt(userIdStr);//default appointments go to user # 1
         bModel.Id_User = userIdInt;
         bModel.AppointmentTime = this.AppointmentTime;
