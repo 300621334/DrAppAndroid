@@ -15,7 +15,8 @@ public class CustomTimePickerDialog extends TimePickerDialog
 //http://chandelashwini.blogspot.com/2013/01/timepickerdialog-15-minutes-interval.html
     public CustomTimePickerDialog(Context arg0, OnTimeSetListener callBack, int hourOfDay, int minute, boolean is24HourView)
     {
-        super(arg0, callBack, hourOfDay, minute, is24HourView);
+        //Newer TimePicket w round dial doesn't work well with 30min interval thing esp w my BlackBerry (works on Emulator thou!!!). So set theme to old SPINNER style picker : TimePickerDialog.THEME_HOLO_LIGHT
+        super(arg0, TimePickerDialog.THEME_HOLO_LIGHT, callBack, hourOfDay, minute, is24HourView);
         // TODO Auto-generated constructor stub
     }
 
@@ -39,7 +40,7 @@ public class CustomTimePickerDialog extends TimePickerDialog
 
             //ignore any change made while TimePicker is being set
             mIgnoreEvent=true;
-            view.setCurrentMinute(minute);
+            view.setCurrentMinute(minute);//works - but deprecated : newer one is://view.setMinute(minute);
             mIgnoreEvent=false;
         }
     }

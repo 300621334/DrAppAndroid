@@ -200,6 +200,8 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         }
         //endregion
 
+        //set min to 00 so that TimePicker never launches to show any other min
+        cal.set(Calendar.MINUTE, 0);
         updateDateTxtV();//set current date as soon as activity loads
         updateTimeTxtV();
 
