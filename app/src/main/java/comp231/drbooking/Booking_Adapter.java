@@ -115,6 +115,7 @@ public class Booking_Adapter extends ArrayAdapter<Model_Booking>
             Intent i = new Intent(context, BookingDetails.class);
             i.putExtra("appointment", gson.toJson(app));
             context.startActivity(i);
+            //context.finish();
         }
     }
 }

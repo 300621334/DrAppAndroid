@@ -11,6 +11,8 @@ import android.view.MenuItem;
  */
 public class BaseActivity extends AppCompatActivity
 {
+    Intent i;
+
     //https://stackoverflow.com/questions/3270206/same-option-menu-in-all-activities-in-android?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -30,8 +32,17 @@ public class BaseActivity extends AppCompatActivity
                 getSharedPreferences("prefs",0).edit().putString("Id_User", "").commit();//logout by removing logged-in user's ID
 
                 //taken back to Login screen
-                Intent i = new Intent(this, Login.class);
+                i = new Intent(this, Login.class);
                 startActivity(i);
+                finish();
+                break;
+            case R.id.menuDashboard:
+                //only if logged-in then show Dashboard
+                if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
+                    break;
+                i = new Intent(this, Dashboard.class);
+                startActivity(i);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -231,6 +231,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     //go to Dashboard
                     i = new Intent(ctx, Bookings_All.class);
                     ctx.startActivity(i);
+                    ((Activity)ctx).finish();
                     //----------------------------------------------
 
                 }
@@ -240,6 +241,9 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     Toast.makeText(ctx, jsonResponse + " Appointment Created", Toast.LENGTH_LONG).show();//jsonResponse is Appoint_id
                     i = new Intent(ctx, Bookings_All.class);
                     ctx.startActivity(i);
+                    /*((Activity)ctx).finish();//this causes flash-back to last-activity before Bookings_All is launched bcoz db call takes some tome for latter.
+                    so rather use STATIC.instance for all acts & .finish em once newer act onCreates
+                    https://stackoverflow.com/a/37248558*/
                 }
                 break;
                 case "Bookings_All"://calling ctx was "Bookings_All"

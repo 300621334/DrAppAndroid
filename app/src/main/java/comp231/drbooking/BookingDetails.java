@@ -51,7 +51,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     Gson gson;
     Object[] paramsApiUri;
     String[] DrNamesArray;
-
+    public static BookingDetails instance;
 
     //endregion
 
@@ -60,6 +60,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+        instance = this;
         //
         paramsApiUri = new Object[3];
         gson = new Gson();//util to convert JSON
@@ -251,6 +252,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         {
             Intent i = new Intent(this, Login.class);
             startActivity(i);
+            finish();
             return;
         }
 
@@ -308,7 +310,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
 
         //pass args to AsyncTask to read db
         dbAdapter.execute(paramsApiUri);
-
+        Bookings_All.instance.finish();
     }
 
 
@@ -321,7 +323,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         paramsApiUri[1] = formData = "";
         paramsApiUri[2] = "POST";
         dbAdapter.execute(paramsApiUri);
-
+        Bookings_All.instance.finish();
 
 
     }

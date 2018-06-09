@@ -16,6 +16,7 @@ public class CustomTimePickerDialog extends TimePickerDialog
     public CustomTimePickerDialog(Context arg0, OnTimeSetListener callBack, int hourOfDay, int minute, boolean is24HourView)
     {
         //Newer TimePicket w round dial doesn't work well with 30min interval thing esp w my BlackBerry (works on Emulator thou!!!). So set theme to old SPINNER style picker : TimePickerDialog.THEME_HOLO_LIGHT
+        //https://stackoverflow.com/questions/24449723/is-it-possible-to-change-the-style-of-an-android-l-timepickerdialog?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
         super(arg0, TimePickerDialog.THEME_HOLO_LIGHT, callBack, hourOfDay, minute, is24HourView);
         // TODO Auto-generated constructor stub
     }

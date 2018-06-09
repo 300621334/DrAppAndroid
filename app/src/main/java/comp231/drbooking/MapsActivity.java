@@ -82,6 +82,7 @@ https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=43.7811609
 //http://androidmastermind.blogspot.ca/2016/06/android-google-maps-show-current.html
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
+    //region >>> Vars
     int PROXIMITY_RADIUS = 2000;
     double longitude, latitude;
     private GoogleMap mMap;
@@ -90,12 +91,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     //Bitmap bmp;
     InfoWinAdapter infoWinAdapter;
+    public static MapsActivity instance = null;
+    //endregion
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         //chk if service available
         if (!isGooglePlayServicesAvailable()) {
             return;

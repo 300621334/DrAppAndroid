@@ -39,6 +39,7 @@ public class Dashboard extends BaseActivity {
     int PLACE_PICKER_REQUEST = 1;
     double longitude,latitude;
     Intent i;
+    public static Dashboard instance;
  /*   String formData;
     DbAdapter dbAdapter;
     Model_Booking bModel;
@@ -52,6 +53,7 @@ public class Dashboard extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        instance = this;
         getSupportActionBar().setTitle("Dashboard");
     }
 
@@ -61,6 +63,7 @@ public class Dashboard extends BaseActivity {
         //go to MapActivity
         i = new Intent(this, MapsActivity.class);
         startActivity(i);
+
 
     }
 

@@ -32,13 +32,14 @@ public class Bookings_All extends BaseActivity implements ICallBackFromDbAdapter
     Object[] paramsApiUri;
     ListView listAllAppV;
     String userIdStr, roleStr;
-
+    public static Bookings_All instance;
     //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings_all);
+        instance = this;
         listAllAppV = (ListView)findViewById(R.id.listAllAppoints);
         gson = new Gson();
         paramsApiUri = new Object[3];
@@ -54,6 +55,9 @@ switch (roleStr)
         LoadAllAppointsForDr();
         break;
 }
+
+BookingDetails.instance.finish();
+MapsActivity.instance.finish();
 
 
     }
