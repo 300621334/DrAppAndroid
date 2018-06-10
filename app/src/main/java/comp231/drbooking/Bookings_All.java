@@ -44,7 +44,7 @@ public class Bookings_All extends BaseActivity implements ICallBackFromDbAdapter
         gson = new Gson();
         paramsApiUri = new Object[3];
         userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
-        roleStr = getSharedPreferences("prefs", 0).getString("role", "1");
+        roleStr = getSharedPreferences("prefs", 0).getString("role", "");
 
 switch (roleStr)
 {
@@ -54,10 +54,18 @@ switch (roleStr)
     case "2":
         LoadAllAppointsForDr();
         break;
+    case "":
+        break;
+}
+if(BookingDetails.instance != null)
+{
+    BookingDetails.instance.finish();
 }
 
-BookingDetails.instance.finish();
-MapsActivity.instance.finish();
+        if (MapsActivity.instance != null)
+        {
+            MapsActivity.instance.finish();
+        }
 
 
     }

@@ -19,9 +19,15 @@ public class BaseActivity extends AppCompatActivity
     {
         MenuInflater inflator = getMenuInflater();
         inflator.inflate(R.menu.menuoptions, menu);
+        //alter bw "Login / Register" & "Logout" on menu item; based on whether user is loggedin or not
+        MenuItem logInOutItem = menu.findItem(R.id.menuLogout);
+        logInOutItem.setTitle(getSharedPreferences("prefs",0).getString("Id_User", "").equals("")?"Login / Register":"Logout");
+
         return true;
         //return super.onCreateOptionsMenu(menuoptions);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -29,7 +35,7 @@ public class BaseActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.menuLogout:
-                getSharedPreferences("prefs",0).edit().putString("Id_User", "").commit();//logout by removing logged-in user's ID
+                getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();//logout by removing logged-in user's ID
 
                 //taken back to Login screen
                 i = new Intent(this, Login.class);

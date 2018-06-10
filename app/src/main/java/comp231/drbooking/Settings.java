@@ -9,6 +9,6 @@ public class Settings extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle("Settings");//getActionBar() gives null err
     }
 }
