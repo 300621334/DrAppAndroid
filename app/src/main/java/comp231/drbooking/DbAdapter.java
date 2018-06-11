@@ -17,8 +17,11 @@ import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progress,result>
@@ -122,10 +125,26 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 int len = jsonArrDrNames.length();
                 VariablesGlobal.DrNamesList.clear();//clear dummy Dr names like "Un-Known Doctor"
                 VariablesGlobal.DrNamesList.add("~~ Please Select a Doctor ~~");
+
+                JSONObject jObj;
+                Model_DrProfile dr;// = new Model_DrProfile();
                 for (int j = 0; j < len; j++)
                 {
-                    VariablesGlobal.DrNamesList.add(jsonArrDrNames.get(j).toString());
+                    dr = new Model_DrProfile();//MUST create a new dr ea time or else WHOLE List contains the very last dr add()ed
+
+                    jObj = jsonArrDrNames.getJSONObject(j);
+                    dr.id_doc      =jObj.getInt("id_doc");
+                    dr.Id_User     =jObj.getInt("Id_User");
+                    dr.name        =jObj.getString("name");
+                    dr.phone       =jObj.getString("phone");
+                    dr.email       =jObj.getString("email");
+                    dr.specialty   =jObj.getString("specialty");
+
+                    VariablesGlobal.DrNamesList.add(dr.name + " (" + dr.specialty + ")");
+                    VariablesGlobal.DrProfiles.add(dr);
                 }
+                //Collections.reverse(VariablesGlobal.DrProfiles);//reverses the List
+
                 VariablesGlobal.spinAdapter.notifyDataSetChanged();
                 callBk.onResponseFromServer(null, ctx);//reset Dr name on spinner
             }
@@ -134,6 +153,43 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 e.printStackTrace();
             }
             return;
+
+            /*
+            [
+    {
+        "id_doc": 1,
+        "Id_User": 111,
+        "name": "Dr.John Doe",
+        "phone": "111",
+        "email": "doc1@e.e",
+        "specialty": "General Physician"
+    },
+    {
+        "id_doc": 2,
+        "Id_User": 222,
+        "name": "Dr.Elizabeth Dianne",
+        "phone": "222",
+        "email": "doc2@e.e",
+        "specialty": "Gynecologist"
+    },
+    {
+        "id_doc": 3,
+        "Id_User": 333,
+        "name": "Dr.Miney Moe",
+        "phone": "333",
+        "email": "doc3@e.e",
+        "specialty": "Pediatrician"
+    },
+    {
+        "id_doc": 4,
+        "Id_User": 444,
+        "name": "Dr.Amelia Byng",
+        "phone": "444",
+        "email": "doc4@e.e",
+        "specialty": "General Physician"
+    }
+]
+            */
         }
         //endregion
 

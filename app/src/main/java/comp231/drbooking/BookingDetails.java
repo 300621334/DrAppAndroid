@@ -335,4 +335,12 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         {
             spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
         }    }
+
+    public void clk_drProfile(View view)
+    {
+        int DrSelectedIndex = spinDrList.getSelectedItemPosition();
+        i = new Intent(this, DrProfile.class);
+        i.putExtra("DrSelectedIndex", DrSelectedIndex);
+        startActivity(i);
+    }
 }

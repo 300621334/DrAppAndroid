@@ -18,6 +18,7 @@ public class VariablesGlobal
 
     //CANNOT .add() to static List. Workaround is : https://alvinalexander.com/source-code/java/how-create-populate-static-list-arraylist-linkedlist-syntax-in-java
     public static   List<String> DrNamesList = new ArrayList<String>(){{add("Please Wait"); add("Fetching List of Doctors");}};
+    public static List<Model_DrProfile> DrProfiles =new ArrayList<Model_DrProfile>();
 
 public static ArrayAdapter spinAdapter;
 }
