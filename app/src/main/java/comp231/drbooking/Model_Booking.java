@@ -7,6 +7,7 @@ public class Model_Booking
 {
     int Id_Appointment;//PK
     int Id_User;//Foreign Key
+    int Id_Doc = 0;
     String Clinic;
     String Doctor;
     String AppointmentTime;

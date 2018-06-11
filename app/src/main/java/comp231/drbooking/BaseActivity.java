@@ -44,8 +44,8 @@ public class BaseActivity extends AppCompatActivity
                 break;
             case R.id.menuDashboard:
                 //only if logged-in then show Dashboard
-                if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
-                    break;
+                /*if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
+                    break;*/
                 i = new Intent(this, Dashboard.class);
                 startActivity(i);
                 finish();

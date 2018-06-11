@@ -50,6 +50,14 @@ public class Login extends BaseActivity
         //String dummyForBreakPoint = "";
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();
+
+    }
+
     private void getCurrentLoc() //grant permissions for "Location" from phone/emulator
     {
 /*        //https://stackoverflow.com/questions/2227292/how-to-get-latitude-and-longitude-of-the-mobile-device-in-android

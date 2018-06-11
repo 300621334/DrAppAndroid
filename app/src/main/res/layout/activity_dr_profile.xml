@@ -32,5 +32,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text='@{dr.specialty}' />
+    <TextView
+        android:id="@+id/txtDrEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text='@{"Email: " + dr.email}' />
+    <TextView
+        android:id="@+id/txtDrPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text='@{"Phone: " + dr.phone}' />
 </LinearLayout>
 </layout>

@@ -105,6 +105,7 @@ if(BookingDetails.instance != null)
                 b = new Model_Booking();
                 b.Id_Appointment = Integer.parseInt( j.getString("Id_Appointment") );
                 b.Id_User = Integer.parseInt( j.getString("Id_User") );
+                b.Id_Doc = Integer.parseInt( j.getString("Id_Doc") );
                 b.Clinic =  j.getString("Clinic");
                 b.Doctor =  j.getString("Doctor");
                 b.AppointmentTime =  j.getString("AppointmentTime");

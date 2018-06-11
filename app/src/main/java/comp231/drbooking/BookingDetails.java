@@ -183,8 +183,19 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
             dateTxtV.setText(sdf.format(dt));
             sdf = new SimpleDateFormat("hh:mm aaa");
             timeTxtV.setText(sdf.format(dt));
-            //spinDrList.setSelection(Arrays.asList(DrNamesArray).indexOf(app.Doctor));
+
+
+ /*            //do this in "onResponseFromServer()"
+              //spinDrList.setSelection(Arrays.asList(DrNamesArray).indexOf(app.Doctor));
+            for (Model_DrProfile dr : VariablesGlobal.DrProfiles)
+            {
+                if(dr.id_doc == app.Id_Doc)
+                {
+                    spinDrList.setSelection(VariablesGlobal.DrProfiles.indexOf(dr) + 1);
+                }
+            }*/
             spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));//GetDrArray() is slower so this line of code fixed selected index to '0' unless return bk to list of appoints & come bk
+
 
             //region >>> trying to get correct dr selected on spinner - doesn't work
             /*spinDrList.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
@@ -276,7 +287,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
             Snackbar.make(view, "Select a doctor", Snackbar.LENGTH_LONG).show();
             return;
         }
-        bModel.Doctor = (String) spinDrList.getSelectedItem();
+        bModel.Doctor = VariablesGlobal.DrProfiles.get(spinDrList.getSelectedItemPosition() -1).name; //(String) spinDrList.getSelectedItem();//this adds specialty as part of Dr name in appoint tbl
         bModel.DRAVAILABLE = "1";
 
         //make json from model
@@ -333,8 +344,17 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     {
         if(app != null)
         {
-            spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
-        }    }
+            //spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
+            for (Model_DrProfile dr : VariablesGlobal.DrProfiles)
+            {
+                if(dr.id_doc == app.Id_Doc)
+                {
+                    spinDrList.setSelection(VariablesGlobal.DrProfiles.indexOf(dr) + 1);
+                    break;//wout break, only 1st appoint detail shows correct Dr, all next attempt show LAST Dr in List!!!
+                }
+            }
+        }
+    }
 
     public void clk_drProfile(View view)
     {
