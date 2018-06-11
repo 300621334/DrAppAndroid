@@ -289,6 +289,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         }
         bModel.Doctor = VariablesGlobal.DrProfiles.get(spinDrList.getSelectedItemPosition() -1).name; //(String) spinDrList.getSelectedItem();//this adds specialty as part of Dr name in appoint tbl
         bModel.DRAVAILABLE = "1";
+        bModel.Id_Doc = (VariablesGlobal.DrProfiles.get(spinDrList.getSelectedItemPosition() - 1)).id_doc;
 
         //make json from model
         formData = gson.toJson(bModel);
@@ -351,6 +352,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
                 {
                     spinDrList.setSelection(VariablesGlobal.DrProfiles.indexOf(dr) + 1);
                     break;//wout break, only 1st appoint detail shows correct Dr, all next attempt show LAST Dr in List!!!
+                    //prolly bcoz BEFORE spinner gets a chance to set selected item, the next iteration of "dr" changes reference & .indexOf(dr) get WRONG pos
                 }
             }
         }
