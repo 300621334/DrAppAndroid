@@ -4,7 +4,10 @@ import android.util.Base64;
 import java.security.Key;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
+/*
+ * By: SHAFIQ-UR-REHMAN
+ * Purpose: to encrypt & decrypt password
+ */
 public class AESCrypt
 {
     //https://stackoverflow.com/questions/41223937/how-can-i-encrypte-my-password-android-studio?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa

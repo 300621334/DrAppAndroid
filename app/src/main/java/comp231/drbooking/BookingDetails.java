@@ -6,32 +6,27 @@ package comp231.drbooking;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
-import android.view.TextureView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 /*Model_Booking sample JSON:
 {"AppointmentTime":"Sun, 20 May 2018 10:27 PM","Clinic":"Address : 940 progress Ave Toronto","CreationTime":"Sun, 20 May 2018 10:27 PM","Doctor":"Lady Doctor 1","Id_Appointment":0,"Id_User":1}
@@ -40,6 +35,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
 {
 
     //region Variables
+    boolean isYES = false;
     TextView dateTxtV, timeTxtV, txtV;
     Button btnCancelApp;
     Spinner spinDrList;
@@ -255,7 +251,14 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         dateTimeUnix = cal.getTimeInMillis() / 1000L;
     }
 
-    public void clk_SaveAppoint(View view)
+    public void clk_SaveAppoint(View btn_v)
+    {
+        //CustomDialogClass dialog = new CustomDialogClass(this);
+        //dialog.show();
+        alert("","save", btn_v);
+    }
+
+    private void SaveAppoint(View view)
     {
         //chk if user is logged in:
         String userIdStr = getSharedPreferences("prefs",0).getString("Id_User", "");
@@ -322,11 +325,19 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
 
         //pass args to AsyncTask to read db
         dbAdapter.execute(paramsApiUri);
-        Bookings_All.instance.finish();
+        if(Bookings_All.instance != null)
+        {
+            Bookings_All.instance.finish();
+        }
     }
 
+    public void clk_CancelAppoint(View btn_v)
+    {
+        //
+        alert("", "cancel", btn_v);
+    }
 
-    public void clk_CancelAppoint(View view)
+    private void CancelAppoint(View btn_v)
     {
         dbAdapter = new DbAdapter(this);
         int appointId = getSharedPreferences("prefs", 0).getInt("Id_Appointment", 0);
@@ -336,8 +347,6 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         paramsApiUri[2] = "POST";
         dbAdapter.execute(paramsApiUri);
         Bookings_All.instance.finish();
-
-
     }
 
     @Override
@@ -364,5 +373,62 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         i = new Intent(this, DrProfile.class);
         i.putExtra("DrSelectedIndex", DrSelectedIndex);
         startActivity(i);
+    }
+
+    public void alert(String txtMsg, final String action, final View btn_view)
+    {
+        //region (1) set custom view for dialog
+        //https://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+       LayoutInflater inflator = LayoutInflater.from(BookingDetails.this);
+       final View yourCustomView = inflator.inflate(R.layout.custom_dialog, null);
+        //endregion
+
+        //region (2) init dialogue
+        final AlertDialog dialog = new AlertDialog.Builder(BookingDetails.this)
+               .setTitle("Do you want to proceed ?")//replace w "txtMsg"
+               .setView(yourCustomView)
+               /*.setPositiveButton("YES", new DialogInterface.OnClickListener()
+               {
+                   @Override
+                   public void onClick(DialogInterface dialog, int whichButton)
+                   {
+
+                   }
+               })
+               .setNegativeButton("NO", null)*/
+               .create();
+        //endregion
+
+        //region (3) set onClicks for custom dialog btns
+        yourCustomView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                switch (action)
+                {
+                    case "save":
+                        SaveAppoint(btn_view);
+                        break;
+                    case "cancel":
+                        CancelAppoint(btn_view);
+                        break;
+                }
+            }
+        });
+        yourCustomView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialog.dismiss();
+            }
+        });
+        //endregion
+
+        //region (4) Display dialogue
+        dialog.show();
+        //endregion
     }
 }

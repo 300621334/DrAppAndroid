@@ -21,4 +21,6 @@ public class VariablesGlobal
     public static List<Model_DrProfile> DrProfiles =new ArrayList<Model_DrProfile>();
 
 public static ArrayAdapter spinAdapter;
+
+
 }

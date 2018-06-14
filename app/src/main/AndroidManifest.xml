@@ -52,7 +52,9 @@
         <activity android:name=".Settings" />
         <activity android:name=".VerifyEmail" />
         <activity android:name=".DrProfile" />
-        <activity android:name=".Dashboard"></activity>
+        <activity android:name=".Dashboard" />
+        <service android:name=".ServiceIntro" />
+
     </application>
 
 </manifest>
