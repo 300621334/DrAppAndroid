@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Dashboard">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +51,8 @@
         <activity android:name=".Bookings_All" />
         <activity android:name=".Settings" />
         <activity android:name=".VerifyEmail" />
-        <activity android:name=".DrProfile"></activity>
+        <activity android:name=".DrProfile" />
+        <activity android:name=".Dashboard"></activity>
     </application>
 
 </manifest>
