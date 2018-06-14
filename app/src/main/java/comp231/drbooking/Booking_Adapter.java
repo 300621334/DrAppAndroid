@@ -41,7 +41,7 @@ public class Booking_Adapter extends ArrayAdapter<Model_Booking>
     static class ViewHolder
     {
         protected TextView rowTime;
-        protected TextView rowDrName;
+        protected TextView rowDrName, rowPtName;
         protected TextView rowClinic;
 
     }
@@ -61,6 +61,7 @@ public class Booking_Adapter extends ArrayAdapter<Model_Booking>
         viewHolder.rowTime = (TextView) view.findViewById(R.id.rowTime);
         viewHolder.rowDrName = (TextView) view.findViewById(R.id.rowDrName);
         viewHolder.rowClinic = (TextView) view.findViewById(R.id.rowClinic);
+        viewHolder.rowPtName = view.findViewById(R.id.rowPtName);
 
         //viewHolder.rowTime.setText(list.get(position).);
         view.setTag(viewHolder);
@@ -71,6 +72,7 @@ public class Booking_Adapter extends ArrayAdapter<Model_Booking>
         holder.rowTime.setText(app.AppointmentTime);
         holder.rowDrName.setText(app.Doctor);
         holder.rowClinic.setText(app.Clinic);
+        holder.rowPtName.setText(app.User);
 
        //click Listener
         myClkListener listener = new myClkListener(context, app);

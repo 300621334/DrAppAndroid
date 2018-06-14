@@ -200,6 +200,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
                 Log.i(TAG, "This device is not supported.");
+                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_LONG);
                 finish();
             }
             return false;
