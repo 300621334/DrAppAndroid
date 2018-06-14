@@ -10,8 +10,12 @@ To use maps in WebView on devices wout Play-Services => use Play Service "Librar
 or AirBnb library : https://github.com/airbnb/AirMapView/blob/master/README.md#how-to-use
 */
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.IntentService;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -23,6 +27,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -83,7 +89,7 @@ https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=43.7811609
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     //region >>> Vars
-    int PROXIMITY_RADIUS = 2000;
+    int PROXIMITY_RADIUS = 2000, GPS_ENABLE_REQUEST = 1, ACCESS_FINE_LOCATION_REQUEST = 2;
     double longitude, latitude;
     private GoogleMap mMap;
     private static final String TAG = "CurrentLocation";
@@ -92,9 +98,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Bitmap bmp;
     InfoWinAdapter infoWinAdapter;
     public static MapsActivity instance = null;
+    AlertDialog mGPSDialog;
     //endregion
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +109,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!isGooglePlayServicesAvailable()) {
             return;
         }
+        /*(ctrl+2) => chk for permission
+        * (ctrl+3) => chk for GPS
+        */
+        isLocPermissionGiven(); //ctrl + 2
+        isGpsOn(); //ctrl + 4
+
         //inflate layout
         setContentView(R.layout.activity_maps);
 
@@ -118,6 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         infoWinAdapter = new InfoWinAdapter(getLayoutInflater()/*, bmp*/);//custom info window adapter
 
     }
+
 
 
     /**
@@ -143,11 +155,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         */
     }
 
-    private void displayCurrentLocation(GoogleMap mMap) {
+    private void displayCurrentLocation(GoogleMap mMap)
+    {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED)
+        {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -177,9 +191,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
-    private boolean isGooglePlayServicesAvailable() {
+    private boolean isGooglePlayServicesAvailable()
+    {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
@@ -194,7 +207,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return true;
     }
 
-    @Override    public void onLocationChanged(Location location) {
+    @Override    public void onLocationChanged(Location location)
+    {
          latitude = location.getLatitude();
          longitude = location.getLongitude();
 
@@ -214,8 +228,81 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    @Override
-    public void onProviderDisabled(String s) {
+    private void isLocPermissionGiven()
+    {
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            return;
+        }
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_REQUEST);
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, this);
+    }
+
+    private void isGpsOn()
+    {
+        //https://stackoverflow.com/questions/7713478/how-to-prompt-user-to-enable-gps-provider-and-or-network-provider/7713511?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+        try
+        {
+            int off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);//import android.provider.Settings; <> there's a comp231.DrApp.Settings too w doesn't have .Secure in it
+            if(off == 0)//LOCATION_MODE will be LOCATION_MODE_OFF if GPS is off, which will return value 0.
+            {
+                /*Intent turnOnGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(turnOnGPS);*/
+                onProviderDisabled(LocationManager.GPS_PROVIDER);
+            }
+        }
+        catch (Settings.SettingNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override//GPS activation - watch for GPS being disabled
+    public void onProviderDisabled(String provider)
+    {
+
+        //https://stackoverflow.com/questions/7713478/how-to-prompt-user-to-enable-gps-provider-and-or-network-provider/7713511?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+        if(provider.equals(LocationManager.GPS_PROVIDER))
+        {
+           showGPSDiabledDialog();
+        }
+    }
+
+    private void showGPSDiabledDialog()//called as soon as previously enabled GPS is disabled - called from onProviderDisabled()
+    {
+        Log.d(TAG, "howGPSDiabledDialog() ===>>> entered ");
+        //https://stackoverflow.com/questions/7713478/how-to-prompt-user-to-enable-gps-provider-and-or-network-provider/7713511?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this);
+        dlgBuilder.setTitle("GPS disabled !").setMessage("GPS is disabled, in order to use the application properly you need to enable GPS of your device")
+                .setPositiveButton("Enable GPS", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+                        //open location settings //ctrl+F11 fo neumonic bookmark
+                        startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS) , GPS_ENABLE_REQUEST);
+                        //callbk => onActivityResult()
+                    }
+                })
+        .setNegativeButton("No, just exit", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                //MapsActivity.this.finish();
+                Toast.makeText(MapsActivity.this, "You won't be able to see nearby clinics", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Log.d(TAG, "howGPSDiabledDialog() ===>>> btns done ");
+
+        mGPSDialog  = dlgBuilder.create();
+
+        Log.d(TAG, "howGPSDiabledDialog() ===>>> going to dosplay dlg ");
+        mGPSDialog.show();
+        Log.d(TAG, "howGPSDiabledDialog() ===>>> dlg showing");
+
 
     }
 
@@ -364,8 +451,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }*/
 
-
-
     //fn
     private String getUrl(double latitude, double longitude, String nearbyPlace)//
     {
@@ -383,4 +468,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return googlePlaceUrl.toString();
 
     }
+
+    @Override//(ctrl+1) callbk from Location settings screen (to create bookmark ctrl+F11)
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        //https://stackoverflow.com/questions/7713478/how-to-prompt-user-to-enable-gps-provider-and-or-network-provider/7713511?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+        if(requestCode == GPS_ENABLE_REQUEST)
+        {
+            if (locationManager != null)
+            {
+                locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            }
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            {
+                showGPSDiabledDialog();
+            }
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == ACCESS_FINE_LOCATION_REQUEST)
+        {
+            for (int i = 0; i < permissions.length; i++)
+            {
+                String permission = permissions[i];
+                int grantResult = grantResults[i];
+
+                if(permission.equals(Manifest.permission.ACCESS_FINE_LOCATION))
+                {
+                    if(grantResult == PackageManager.PERMISSION_GRANTED)
+                    {
+                    }
+                    else
+                    {
+                        Toast.makeText(MapsActivity.this, "You won't be able to see nearby clinics", Toast.LENGTH_SHORT).show();
+                        //requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_REQUEST);
+                    }
+
+                }
+
+            }
+        }
+    }
 }
+
