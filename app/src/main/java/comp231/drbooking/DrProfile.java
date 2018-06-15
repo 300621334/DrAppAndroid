@@ -16,6 +16,7 @@ public class DrProfile extends AppCompatActivity {
 
     //region >>> Vars
     int DrSelectedPos;
+    String DrSelectedName;
     Model_DrProfile dr;
     //endregion
 
@@ -30,9 +31,18 @@ public class DrProfile extends AppCompatActivity {
         //
         dr = new Model_DrProfile();
         DrSelectedPos = getIntent().getIntExtra("DrSelectedIndex", 0);
+        DrSelectedName = getIntent().getStringExtra("DrSelectedName");
+
         if(DrSelectedPos != 0)
         {
-            dr = VariablesGlobal.DrProfiles.get(DrSelectedPos - 1);
+            //dr = VariablesGlobal.DrProfiles.get(DrSelectedPos - 1);
+            for (Model_DrProfile Dr : VariablesGlobal.DrProfiles)
+            {
+                if(Dr.name.equals(DrSelectedName))
+                {
+                    dr = Dr;
+                }
+            }
         }
         else
         {

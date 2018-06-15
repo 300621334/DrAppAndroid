@@ -125,6 +125,9 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 int len = jsonArrDrNames.length();
                 VariablesGlobal.DrNamesList.clear();//clear dummy Dr names like "Un-Known Doctor"
                 VariablesGlobal.DrNamesList.add("~~ Please Select a Doctor ~~");
+                VariablesGlobal.DrNamesListFiltered.clear();
+                VariablesGlobal.DrNamesListFiltered.add("~~ Please Select a Doctor ~~");
+                VariablesGlobal.DrProfiles.clear();
 
                 JSONObject jObj;
                 Model_DrProfile dr;// = new Model_DrProfile();
@@ -140,13 +143,14 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     dr.email       =jObj.getString("email");
                     dr.specialty   =jObj.getString("specialty");
 
-                    VariablesGlobal.DrNamesList.add(dr.name + " (" + dr.specialty + ")");
+                    VariablesGlobal.DrNamesList.add(dr.name/* + " (" + dr.specialty + ")"*/);
+                    VariablesGlobal.DrNamesListFiltered.add(dr.name/* + " (" + dr.specialty + ")"*/);
                     VariablesGlobal.DrProfiles.add(dr);
                 }
                 //Collections.reverse(VariablesGlobal.DrProfiles);//reverses the List
 
                 VariablesGlobal.spinAdapter.notifyDataSetChanged();
-                callBk.onResponseFromServer(null, ctx);//reset Dr name on spinner
+                callBk.onResponseFromServer(null, ctx);//reset Dr name on spinner - only is coming from list of bookings
             }
             catch (JSONException e)
             {

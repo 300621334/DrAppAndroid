@@ -1,5 +1,6 @@
 package comp231.drbooking;
 
+import android.support.v4.content.ContextCompat;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -19,8 +20,11 @@ public class VariablesGlobal
     //CANNOT .add() to static List. Workaround is : https://alvinalexander.com/source-code/java/how-create-populate-static-list-arraylist-linkedlist-syntax-in-java
     public static   List<String> DrNamesList = new ArrayList<String>(){{add("Please Wait"); add("Fetching List of Doctors");}};
     public static List<Model_DrProfile> DrProfiles =new ArrayList<Model_DrProfile>();
+    public static String filterDrNamesBy = "All";
+    public static   List<String> DrNamesListFiltered = new ArrayList<String>();
 
-public static ArrayAdapter spinAdapter;
+
+    public static ArrayAdapter spinAdapter;
 
 
 }

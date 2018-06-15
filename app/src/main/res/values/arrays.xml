@@ -10,4 +10,12 @@
         <item>Pediatrician</item>
     </string-array>
 
+    <string-array name="DrSpecialty" >
+        <item>All</item>
+        <item>General Physician</item>
+        <item>Gynecologist</item>
+        <item>Pediatrician</item>
+        <item>Surgeon</item>
+    </string-array>
+
 </resources>

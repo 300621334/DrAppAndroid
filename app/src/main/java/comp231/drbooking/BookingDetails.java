@@ -14,10 +14,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -38,7 +41,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     boolean isYES = false;
     TextView dateTxtV, timeTxtV, txtV;
     Button btnCancelApp;
-    Spinner spinDrList;
+    Spinner spinDrList, spinSpecialtyList;
     Calendar cal;
     String formData, dateStr, timeStr,AppointmentTime, dateTimeStr, descriptionStr;
     Long dateTimeUnix, rowsIdCreated, rowsAffected;
@@ -48,6 +51,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     Object[] paramsApiUri;
     String[] DrNamesArray;
     public static BookingDetails instance;
+    AdapterView.OnItemSelectedListener spinListener;
 
     //endregion
 
@@ -60,21 +64,41 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
         //
         paramsApiUri = new Object[3];
         gson = new Gson();//util to convert JSON
-
-        //get list of all Drs from API
-        //DrNamesArray = getResources().getStringArray(R.array.DrNames);
-        GetDrArray();//populate static array of names of Drs loc in VariablesGlobal.java
-        //List<String> DrNamesArrayList = VariablesGlobal.DrNamesList;
-
+        //
+        VariablesGlobal.DrNamesListFiltered.clear();
         //ref to views
         txtV = findViewById(R.id.txtBookingActivity);
         spinDrList = findViewById(R.id.spinDrList);
-        VariablesGlobal.spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, VariablesGlobal.DrNamesList);
+        spinSpecialtyList = findViewById(R.id.spinSpecialtyList);
+        //VariablesGlobal.spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, VariablesGlobal.DrNamesList);
+        VariablesGlobal.spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, VariablesGlobal.DrNamesListFiltered);
         spinDrList.setAdapter(VariablesGlobal.spinAdapter);
 
         btnCancelApp = (Button)findViewById(R.id.btnCancelApp);
         btnCancelApp.setVisibility(View.INVISIBLE);
 
+        //Listener for spinner - will be attached & removed
+        spinListener = new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+            {
+                VariablesGlobal.filterDrNamesBy = parentView.getSelectedItem().toString();//default filter is "All"
+                filteredDrList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        };
+
+        //get list of all Drs from API
+        //DrNamesArray = getResources().getStringArray(R.array.DrNames);
+        //List<String> DrNamesArrayList = VariablesGlobal.DrNamesList;
+        GetSpecialtyList(spinSpecialtyList);
+        GetDrArray();//populate static array of names of Drs loc in VariablesGlobal.java
 
         //get Extras passed from InfoWindow of marker
         txtV.setText("Address : " + getIntent().getStringExtra("infoWinTitle") /*+ "\n\n\nAddress: " + getIntent().getStringExtra("infoWinAddress")*/);
@@ -215,6 +239,15 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
 
     }
 
+    private void GetSpecialtyList(Spinner spinSpecialtyList)
+    {
+        ArrayAdapter<CharSequence> fieldsListAdapter = ArrayAdapter.createFromResource(this, R.array.DrSpecialty, android.R.layout.simple_spinner_item);
+        fieldsListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinSpecialtyList.setAdapter(fieldsListAdapter);
+
+        //set listener
+        spinSpecialtyList.setOnItemSelectedListener(spinListener);
+    }
 
     private void GetDrArray()
     {
@@ -352,7 +385,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     @Override
     public void onResponseFromServer(String result, Context ctx)
     {
-        if(app != null)
+        if(app != null)//only is coming from list of bookings
         {
             //spinDrList.setSelection(VariablesGlobal.DrNamesList.indexOf(app.Doctor));
             for (Model_DrProfile dr : VariablesGlobal.DrProfiles)
@@ -365,13 +398,60 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
                 }
             }
         }
+
+        //filter DrNames by Specialty
+        filteredDrList();
+    }
+
+    private void filteredDrList()
+    {
+        spinSpecialtyList.setEnabled(false);
+        VariablesGlobal.DrNamesListFiltered.clear();
+        VariablesGlobal.DrNamesListFiltered.add("~~ Please Select a Doctor ~~");
+        for (int j = 0; j < VariablesGlobal.DrProfiles.size(); j++)
+        {
+            Model_DrProfile Dr = VariablesGlobal.DrProfiles.get(j);
+            if(!VariablesGlobal.filterDrNamesBy.equals("All"))
+            {
+                if(Dr.specialty.equals(VariablesGlobal.filterDrNamesBy))
+                {
+                    VariablesGlobal.DrNamesListFiltered.add(Dr.name/* + " (" + Dr.specialty + ")"*/);
+                    //VariablesGlobal.spinAdapter;
+                }
+            }
+            else //"All"
+            {
+                VariablesGlobal.DrNamesListFiltered.add(Dr.name/* + " (" + Dr.specialty + ")"*/);
+            }
+        }
+
+   /*     //////
+        for (String Dr : VariablesGlobal.DrNamesList)
+        {
+            if(!VariablesGlobal.filterDrNamesBy.equals("All"))
+            {
+                if(Dr.equals(VariablesGlobal.filterDrNamesBy))
+                {
+                    VariablesGlobal.DrNamesListFiltered.add(Dr);
+                    //VariablesGlobal.spinAdapter;
+                }
+            }
+            else //"All"
+            {
+                VariablesGlobal.DrNamesListFiltered.add(Dr);
+            }
+        }*/
+        VariablesGlobal.spinAdapter.notifyDataSetChanged();
+        spinSpecialtyList.setEnabled(true);
     }
 
     public void clk_drProfile(View view)
     {
         int DrSelectedIndex = spinDrList.getSelectedItemPosition();
+        String DrSelectedName = spinDrList.getSelectedItem().toString();
         i = new Intent(this, DrProfile.class);
         i.putExtra("DrSelectedIndex", DrSelectedIndex);
+        i.putExtra("DrSelectedName", DrSelectedName);
         startActivity(i);
     }
 
