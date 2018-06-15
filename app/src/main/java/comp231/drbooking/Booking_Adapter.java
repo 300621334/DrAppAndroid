@@ -6,8 +6,11 @@ package comp231.drbooking;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +37,6 @@ public class Booking_Adapter extends ArrayAdapter<Model_Booking>
         super(ctx, layoutId, list);
         this.context = ctx;
         this.list = list;
-
         gson = new Gson();
     }
 
@@ -69,10 +71,18 @@ public class Booking_Adapter extends ArrayAdapter<Model_Booking>
         Model_Booking app = list.get(position);
 
         ViewHolder holder = (ViewHolder) view.getTag();
+        holder.rowPtName.setText(app.User);
         holder.rowTime.setText(app.AppointmentTime);
         holder.rowDrName.setText(app.Doctor);
         holder.rowClinic.setText(app.Clinic);
-        holder.rowPtName.setText(app.User);
+        if(app.User.equals(app.Doctor))//Dr created appoint for oneself = unavailable slot
+        {
+            view.setBackgroundColor(ContextCompat.getColor(context,  R.color.dashboard_segment2));//err:https://stackoverflow.com/questions/13989319/resolved-color-instead-of-a-resource-id
+            holder.rowPtName.setText(R.string.strDrUnAvailable);//"*** Un-Available***"
+            holder.rowDrName.setText(R.string.strDrUnAvailable);
+            holder.rowClinic.setText(R.string.strDrUnAvailable);
+            holder.rowPtName.setBackgroundColor(ContextCompat.getColor(context, R.color.dashboard_segment4));
+        }
 
        //click Listener
         myClkListener listener = new myClkListener(context, app);
