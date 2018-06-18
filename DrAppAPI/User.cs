@@ -11,15 +11,18 @@ namespace DrAppAPI
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
             this.Appointments = new HashSet<Appointment>();
+            this.doctors = new HashSet<doctor>();
         }
-    
+
+        [Key]
         public int Id_User { get; set; }
         public string nameOfUser { get; set; }
         public string loginName { get; set; }
@@ -27,8 +30,11 @@ namespace DrAppAPI
         public string address { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
+        public string role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<doctor> doctors { get; set; }
     }
 }
