@@ -25,4 +25,8 @@
 
     <string name="starting_from_intent">STARTING_FROM_INTENT</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="dashOpen">Open Dashboard</string>
+    <string name="dashClose">Close Dashboard</string>
+
 </resources>

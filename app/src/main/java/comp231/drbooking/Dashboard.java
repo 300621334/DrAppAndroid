@@ -193,4 +193,10 @@ public class Dashboard extends BaseActivity {
         i = new Intent(this, Settings.class);
         startActivity(i);
     }
+
+    public void clk_Testing(View view)
+    {
+        i = new Intent(this, FindClinic.class);
+        startActivity(i);
+    }
 }

@@ -1,10 +1,16 @@
 package comp231.drbooking;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+
 /*
  * By: SHAFIQ-UR-REHMAN
  * Purpose: Base class for all activities that will show a menuoptions (three dots) on top right corner. e.g. to logout etc
@@ -12,6 +18,25 @@ import android.view.MenuItem;
 public class BaseActivity extends AppCompatActivity
 {
     Intent i;
+ /*   DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mToggle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        //https://stackoverflow.com/questions/2271570/android-findviewbyid-finding-view-by-id-when-view-is-not-on-the-same-layout-in
+        LayoutInflater inflater = getLayoutInflater();
+        View mDrawerLayV = inflater.inflate(R.layout.activity_find_clinic, null);
+        mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);
+
+        //https://www.youtube.com/watch?v=dpE8kzZznAU
+        //mDrawerLayout = (DrawerLayout) findViewById(R.id.layNavDrawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+    }*/
 
     //https://stackoverflow.com/questions/3270206/same-option-menu-in-all-activities-in-android?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     @Override
