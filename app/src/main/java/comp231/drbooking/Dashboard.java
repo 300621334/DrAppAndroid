@@ -10,12 +10,17 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -40,6 +45,12 @@ public class Dashboard extends BaseActivity {
     double longitude,latitude;
     Intent i;
     public static Dashboard instance;
+
+    //drawer vars
+    android.support.v7.widget.Toolbar mToolbar;//as opp to android.widget.Toolbar
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mToggle;
+
  /*   String formData;
     DbAdapter dbAdapter;
     Model_Booking bModel;
@@ -54,17 +65,48 @@ public class Dashboard extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         instance = this;
-        getSupportActionBar().setTitle("Dashboard");
+        //getSupportActionBar().setTitle("Dashboard");
+        drawer_navigation_setup();
+
     }
 
+    private void drawer_navigation_setup()
+    {
+        //https://stackoverflow.com/questions/2271570/android-findviewbyid-finding-view-by-id-when-view-is-not-on-the-same-layout-in
+      /*LayoutInflater inflater = getLayoutInflater();
+        View mDrawerLayV = inflater.inflate(R.layout.activity_find_clinic, null);
+        mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);*/
+
+        mToolbar = findViewById(R.id.drawerActBar);
+        mToolbar.setTitle("Dashboard");
+        setSupportActionBar(mToolbar);
+
+        //https://www.youtube.com/watch?v=dpE8kzZznAU
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//back arrow
+
+        //watch 3:15+ clk doesn't open drawer : https://www.youtube.com/watch?v=dpE8kzZznAU
+    }
+
+    @Override //MUST to open drawer on-clk on menu bars
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(mToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void clk_newAppMap(View v)
     {
         //go to MapActivity
         i = new Intent(this, MapsActivity.class);
         startActivity(i);
-
-
     }
 
     public void clk_newAppPlacePicker(View view)

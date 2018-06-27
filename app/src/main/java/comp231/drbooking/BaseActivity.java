@@ -18,6 +18,8 @@ import android.view.View;
 public class BaseActivity extends AppCompatActivity
 {
     Intent i;
+    android.support.v7.widget.Toolbar mToolbar;//as opp to android.widget.Toolbar
+
  /*   DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
 
