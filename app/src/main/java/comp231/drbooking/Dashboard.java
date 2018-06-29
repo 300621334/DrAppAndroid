@@ -82,11 +82,11 @@ public class Dashboard extends BaseActivity {
         setSupportActionBar(mToolbar);
 
         //https://www.youtube.com/watch?v=dpE8kzZznAU
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
+      /*  mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-
+*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//back arrow
 
         //watch 3:15+ clk doesn't open drawer : https://www.youtube.com/watch?v=dpE8kzZznAU

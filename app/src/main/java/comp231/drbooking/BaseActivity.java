@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 /*
  * By: SHAFIQ-UR-REHMAN
@@ -19,6 +20,23 @@ public class BaseActivity extends AppCompatActivity
 {
     Intent i;
     android.support.v7.widget.Toolbar mToolbar;//as opp to android.widget.Toolbar
+    protected DrawerLayout fullLayout;
+    protected FrameLayout frameLayout;
+
+
+    @Override
+    public void setContentView(int layoutResID) {
+
+        fullLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
+        frameLayout = (FrameLayout) fullLayout.findViewById(R.id.drawer_frame);
+
+        getLayoutInflater().inflate(layoutResID, frameLayout, true);
+
+        super.setContentView(fullLayout);
+
+        //Your drawer content...
+
+    }
 
  /*   DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;

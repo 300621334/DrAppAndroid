@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".BaseActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Gooood : https://stackoverflow.com/questions/4922641/sliding-drawer-appear-in-all-activities#-->
+    <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
+    <FrameLayout
+        android:id="@+id/drawer_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
+    <!--https://developer.android.com/training/implementing-navigation/nav-drawer-->
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/drawer_drawer"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        app:menu="@menu/menuoptions"
+        app:headerLayout="@layout/drawer_header"
+        />
+    <!--icons & header for navigation = https://www.youtube.com/watch?v=A-AI5AbLVqo-->
+
+</android.support.v4.widget.DrawerLayout>
