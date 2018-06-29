@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Bookings_All">
+    tools:context=".Bookings_All"
+    android:orientation="vertical">
 
+    <!-- Action Bar custom = https://www.youtube.com/watch?v=u9gDooP8IhU-->
+<!--
+    <include layout="@layout/drawer_actionbar" />
+-->
+
+    <!-- Action Bar custom = https://www.youtube.com/watch?v=u9gDooP8IhU-->
     <ListView
         android:id="@+id/listAllAppoints"
         android:layout_width="match_parent"

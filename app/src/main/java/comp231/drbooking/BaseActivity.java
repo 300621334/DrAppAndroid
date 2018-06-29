@@ -50,13 +50,15 @@ public class BaseActivity extends AppCompatActivity
         //View mDrawerLayV = inflater.inflate(R.layout.activity_find_clinic, null);
         //mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);
 
-        mToolbar = findViewById(R.id.drawerActBar);//works on 1st act but for next act becomes NULL!!!
-        mToolbar.setTitle("Dashboard");
+        //mToolbar  = (Toolbar)getLayoutInflater().inflate(R.layout.drawer_actionbar, null);//only from main launcher act findViewById() worked, from nect acts it gave NULL : https://stackoverflow.com/questions/28821018/findviewbyid-not-working-when-using-a-seperate-class
+
+        mToolbar = findViewById(R.id.drawerActBar);//bcoz of missing <include>, this line works on 1st act but for next act becomes NULL!!!
         setSupportActionBar(mToolbar);
 
+
         //https://www.youtube.com/watch?v=dpE8kzZznAU
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);//last 2 args for accessibility
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
@@ -105,12 +107,15 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        //FOR DRAWER
         if(mToggle.onOptionsItemSelected(item))
         {
             return true;
         }
-        return super.onOptionsItemSelected(item);
-/*
+        //return super.onOptionsItemSelected(item);
+
+
+        //FOR MENU
         switch (item.getItemId())
         {
             case R.id.menuLogout:
@@ -130,6 +135,6 @@ public class BaseActivity extends AppCompatActivity
                 finish();
                 break;
         }
-        return super.onOptionsItemSelected(item);*/
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -40,6 +40,7 @@ public class Login extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        drawer_navigation_setup();
         getSupportActionBar().setTitle("Login or Create New Account");
         getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();
         //get references

@@ -67,6 +67,8 @@ public class Dashboard extends BaseActivity {
         instance = this;
         //getSupportActionBar().setTitle("Dashboard");
         drawer_navigation_setup();//MUST be "public" in base
+        getSupportActionBar().setTitle("Dashboard");//call AFTER drawer_navigation_setup()
+
 
     }
 

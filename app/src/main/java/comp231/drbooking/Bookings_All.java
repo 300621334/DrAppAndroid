@@ -44,6 +44,8 @@ public class Bookings_All extends BaseActivity implements ICallBackFromDbAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings_all);
+        drawer_navigation_setup();//MUST be "public" in base
+        getSupportActionBar().setTitle("All Bookings");//call AFTER drawer_navigation_setup(). Even thou actionBar appears bcoz of <include> but it doesn't fn as actionBar unless explicitly done so
 
         instance = this;
         listAllAppV = (ListView)findViewById(R.id.listAllAppoints);
@@ -77,13 +79,7 @@ if(BookingDetails.instance != null)
 
     }
 
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-        drawer_navigation_setup();//MUST be "public" in base
 
-    }
 /*    private void drawer_navigation_setup()
     {
         //https://stackoverflow.com/questions/2271570/android-findviewbyid-finding-view-by-id-when-view-is-not-on-the-same-layout-in
