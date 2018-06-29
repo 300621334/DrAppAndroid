@@ -2,9 +2,11 @@ package comp231.drbooking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,9 @@ public class BaseActivity extends AppCompatActivity
     android.support.v7.widget.Toolbar mToolbar;//as opp to android.widget.Toolbar
     protected DrawerLayout fullLayout;
     protected FrameLayout frameLayout;
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mToggle;
+
 
 
     @Override
@@ -38,7 +43,30 @@ public class BaseActivity extends AppCompatActivity
 
     }
 
- /*   DrawerLayout mDrawerLayout;
+    public void drawer_navigation_setup()
+    {
+        //https://stackoverflow.com/questions/2271570/android-findviewbyid-finding-view-by-id-when-view-is-not-on-the-same-layout-in
+      //LayoutInflater inflater = getLayoutInflater();
+        //View mDrawerLayV = inflater.inflate(R.layout.activity_find_clinic, null);
+        //mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);
+
+        mToolbar = findViewById(R.id.drawerActBar);//works on 1st act but for next act becomes NULL!!!
+        mToolbar.setTitle("Dashboard");
+        setSupportActionBar(mToolbar);
+
+        //https://www.youtube.com/watch?v=dpE8kzZznAU
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//back arrow
+
+        //watch 3:15+ clk doesn't open drawer : https://www.youtube.com/watch?v=dpE8kzZznAU
+    }
+
+
+    /*   DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
 
     @Override
@@ -77,6 +105,12 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        if(mToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+/*
         switch (item.getItemId())
         {
             case R.id.menuLogout:
@@ -89,13 +123,13 @@ public class BaseActivity extends AppCompatActivity
                 break;
             case R.id.menuDashboard:
                 //only if logged-in then show Dashboard
-                /*if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
-                    break;*/
+                if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
+                    break;
                 i = new Intent(this, Dashboard.class);
                 startActivity(i);
                 finish();
                 break;
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);*/
     }
 }

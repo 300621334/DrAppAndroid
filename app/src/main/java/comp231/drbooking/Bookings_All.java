@@ -5,9 +5,14 @@ package comp231.drbooking;
  */
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -39,6 +44,7 @@ public class Bookings_All extends BaseActivity implements ICallBackFromDbAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings_all);
+
         instance = this;
         listAllAppV = (ListView)findViewById(R.id.listAllAppoints);
         gson = new Gson();
@@ -68,7 +74,47 @@ if(BookingDetails.instance != null)
         }
 
 
+
     }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        drawer_navigation_setup();//MUST be "public" in base
+
+    }
+/*    private void drawer_navigation_setup()
+    {
+        //https://stackoverflow.com/questions/2271570/android-findviewbyid-finding-view-by-id-when-view-is-not-on-the-same-layout-in
+        LayoutInflater inflater = getLayoutInflater();
+        View mDrawerLayV = inflater.inflate(R.layout.activity_find_clinic, null);
+        mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);
+
+        mToolbar = findViewById(R.id.drawerActBar);
+        mToolbar.setTitle("All Bookings");
+        setSupportActionBar(mToolbar);
+
+        //https://www.youtube.com/watch?v=dpE8kzZznAU
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//back arrow
+
+        //watch 3:15+ clk doesn't open drawer : https://www.youtube.com/watch?v=dpE8kzZznAU
+    }
+
+    @Override //MUST to open drawer on-clk on menu bars
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(mToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }*/
 
     //ICallBackFromDbAdapter's fn
     @Override

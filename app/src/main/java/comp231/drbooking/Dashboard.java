@@ -66,27 +66,27 @@ public class Dashboard extends BaseActivity {
         setContentView(R.layout.activity_dashboard);
         instance = this;
         //getSupportActionBar().setTitle("Dashboard");
-        drawer_navigation_setup();
+        drawer_navigation_setup();//MUST be "public" in base
 
     }
 
-    private void drawer_navigation_setup()
+/*    private void drawer_navigation_setup()
     {
         //https://stackoverflow.com/questions/2271570/android-findviewbyid-finding-view-by-id-when-view-is-not-on-the-same-layout-in
-      /*LayoutInflater inflater = getLayoutInflater();
+      LayoutInflater inflater = getLayoutInflater();
         View mDrawerLayV = inflater.inflate(R.layout.activity_find_clinic, null);
-        mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);*/
+        mDrawerLayout = (DrawerLayout)mDrawerLayV.findViewById(R.id.layNavDrawer);
 
         mToolbar = findViewById(R.id.drawerActBar);
         mToolbar.setTitle("Dashboard");
         setSupportActionBar(mToolbar);
 
         //https://www.youtube.com/watch?v=dpE8kzZznAU
-      /*  mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_Dashboard);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-*/
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//back arrow
 
         //watch 3:15+ clk doesn't open drawer : https://www.youtube.com/watch?v=dpE8kzZznAU
@@ -100,7 +100,7 @@ public class Dashboard extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     public void clk_newAppMap(View v)
     {
