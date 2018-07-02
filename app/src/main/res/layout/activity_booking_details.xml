@@ -92,27 +92,45 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.5"
+                android:text="Date:"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/txtDate"
-                style="@style/mTxtViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
                 android:hint="Wed,4 Apr 2018"
-                android:textAlignment="center"
+                android:textAlignment="inherit"
                 android:textSize="20sp"
-                />
+                android:background="@drawable/date_picker_bg" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="0.5"
+                android:text="Time:"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtTime"
-                style="@style/mTxtViewStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
                 android:hint="hh:mm  AM/PM"
-                android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textAlignment="inherit"
+                android:textSize="20sp"
+                android:background="@drawable/time_picker_bg"/>
 
 
         </LinearLayout>
@@ -120,7 +138,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:layout_weight="0.5"
             android:orientation="vertical">
 

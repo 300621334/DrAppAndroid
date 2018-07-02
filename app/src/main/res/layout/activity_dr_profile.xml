@@ -12,37 +12,97 @@
         type="comp231.drbooking.Model_DrProfile" />
     <!--props MUST be PUBLIC on ViewModel class to be accessed here-->
 </data>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".DrProfile"
-    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".DrProfile">
 
 
-    <TextView
-        android:id="@+id/txtDrName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text='@{dr.name}' />
+        <TextView
+            android:id="@+id/txtDrName"
+            style="@style/mTxtViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widgetMargLeft"
+            android:layout_marginRight="@dimen/widgetMargLeft"
+            android:layout_weight="1"
+            android:text='@{dr.name}' />
 
-    <TextView
-        android:id="@+id/txtDrSpecialty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text='@{dr.specialty}' />
-    <TextView
-        android:id="@+id/txtDrEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text='@{"Email: " + dr.email}' />
-    <TextView
-        android:id="@+id/txtDrPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text='@{"Phone: " + dr.phone}' />
-</LinearLayout>
+        <TextView
+            android:id="@+id/txtDrSpecialty"
+            style="@style/mTxtViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widgetMargLeft"
+            android:layout_marginRight="@dimen/widgetMargLeft"
+            android:layout_weight="1"
+            android:text='@{dr.specialty}' />
+
+        <TextView
+            android:id="@+id/txtDrEmail"
+            style="@style/mTxtViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widgetMargLeft"
+            android:layout_marginRight="@dimen/widgetMargLeft"
+            android:layout_weight="1"
+            android:text='@{"Email: " + dr.email}' />
+
+        <TextView
+            android:id="@+id/txtDrPhone"
+            style="@style/mTxtViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widgetMargLeft"
+            android:layout_marginRight="@dimen/widgetMargLeft"
+            android:layout_weight="1"
+            android:text='@{"Phone: " + dr.phone}' />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/widgetMargLeft"
+                android:layout_marginRight="@dimen/widgetMargLeft"
+                android:text="Education:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="@dimen/widgetMargLeft"
+                android:layout_marginRight="@dimen/widgetMargLeft"
+                tools:text="The University of Western Ontario" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/widgetMargLeft"
+                android:layout_marginRight="@dimen/widgetMargLeft"
+                android:text="Experience:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="@dimen/widgetMargLeft"
+                android:layout_marginRight="@dimen/widgetMargLeft"
+                android:text="Fourteen years of experience at various hospitals and clinics." />
+        </LinearLayout>
+    </LinearLayout>
+
 </layout>
