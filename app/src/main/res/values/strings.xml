@@ -4,8 +4,8 @@
     <string name="app_name">Book Doctor Appointment</string>
     <string name="strDrUnAvailable">"*** Un-Available***"</string>
 
-    <string name="userName">User Name: </string>
-    <string name="password">Pasword:</string>
+    <string name="userName">User Name</string>
+    <string name="password">Password</string>
     <string name="bioData">Enter Student Bio-Data</string>
     <string name="lblFName">First Name:</string>
     <string name="lblLName">Last Name:</string>

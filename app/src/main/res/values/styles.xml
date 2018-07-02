@@ -1,4 +1,33 @@
 <resources>
+    <!--https://developer.android.com/guide/topics/ui/look-and-feel/themes-->
+
+    <!--btn style that will be used by "AppTheme" style -->
+    <style name="mBtnStyle" parent="android:style/Widget.Button">
+        <!--Inherited from default btn style & now override attrs as needed-->
+        <item name="android:background">@color/colorBtn</item>
+        <item name="android:textColor">@color/colorBtnTxt</item>
+    </style>
+
+    <style name="mEditTxtStyle" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/edit_txt_bg</item>
+        <item name="android:textColor">@color/colorTxtBxTxt</item>
+        <item name="android:layout_marginTop">500dp</item>
+    </style>
+
+    <style name="mTxtViewStyle" parent="android:Widget.TextView">
+        <item name="android:background">@drawable/edit_txt_bg</item>
+        <item name="android:textColor">@color/colorTxtBxTxt</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+
+
+    <style name="Widget.App.Spinner" parent="@style/Widget.AppCompat.Spinner">
+        <!--https://stackoverflow.com/questions/20422802/how-to-set-dropdown-arrow-in-spinner-->
+        <item name="overlapAnchor">true</item>
+        <item name="android:background">@drawable/spinner_background</item>
+    </style>
+
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,6 +35,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+<!--THIS PARTICULAR LINE CAUSES BUILD ERR !!!
+        <item name="windowBackground">@color/colorBg</item>
+-->
+        <!--btn style overriding-->
+        <item name="buttonStyle">@style/mBtnStyle</item>
+        <item name="android:buttonStyle">@style/mBtnStyle</item>
+
+        <!--txtBx style overriding-->
+        <item name="android:editTextStyle">@style/mEditTxtStyle</item>
+        <item name="editTextStyle">@style/mEditTxtStyle</item>
+        <!--Spinner Style-->
+        <item name="spinnerStyle">@style/Widget.App.Spinner</item>
+        <item name="android:spinnerStyle">@style/Widget.App.Spinner</item>
     </style>
+
+
 
 </resources>

@@ -16,26 +16,27 @@
         android:id="@+id/txtBookingActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dashboard_segment1"
-        android:text=""
+        android:background="@color/colorBorders"
+        android:gravity="top|left"
         android:hint="Hospital Name &amp; Address Appears Here"
         android:inputType="textMultiLine"
-        android:minLines="5"
         android:maxLines="10"
-        android:scrollbars="vertical"
-        android:gravity="top|left"
+        android:minLines="5"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
 
-        />
+        android:scrollbars="vertical"
+        android:text="" />
 
     <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent" android:paddingTop="10dp"><!--android:entries="@array/DrNames"-->
         <Spinner
             android:id="@+id/spinSpecialtyList"
-
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight=".8"
-            android:background="@color/dashboard_segment4_h"
-            tools:listitem="@layout/support_simple_spinner_dropdown_item" />
+            android:background="@drawable/spinner_background"
+            tools:listitem="@layout/support_simple_spinner_dropdown_item"
+            />
         <TextView
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -50,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight=".8"
-            android:background="@color/dashboard_segment4_h"
+            android:background="@drawable/spinner_background"
             tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
         <Button
@@ -79,7 +80,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight=".07"
         android:orientation="vertical"
         android:paddingTop="10dp">
@@ -87,26 +88,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/txtDate"
-                android:layout_width="0dip"
+                style="@style/mTxtViewStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
-                android:background="@color/dashboard_segment3"
                 android:hint="Wed,4 Apr 2018"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                />
 
             <TextView
                 android:id="@+id/txtTime"
-                android:layout_width="0dip"
+                style="@style/mTxtViewStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
-                android:background="@color/dashboard_segment4"
                 android:hint="hh:mm  AM/PM"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -117,25 +120,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="50dp"
             android:layout_weight="0.5"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/btnBookApp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/btnHt"
                 android:layout_gravity="center"
-                android:text="S A V E"
-                android:onClick="clk_SaveAppoint"/>
+                android:layout_marginLeft="@dimen/widgetMargLeft"
+                android:layout_marginRight="@dimen/widgetMargLeft"
+                android:layout_marginTop="20dp"
+                android:onClick="clk_SaveAppoint"
+                android:text="S A V E" />
 
             <Button
                 android:id="@+id/btnCancelApp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cancel Appointment"
+                android:layout_height="@dimen/btnHt"
+                android:layout_marginLeft="@dimen/widgetMargLeft"
+                android:layout_marginRight="@dimen/widgetMargLeft"
+                android:layout_marginTop="10dp"
                 android:onClick="clk_CancelAppoint"
-                />
+                android:text="Cancel Appointment" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mMargins">10dp</dimen>
+    <dimen name="widgetMargLeft">50dp</dimen>
+    <dimen name="btnHt">30dp</dimen>
+    <dimen name="lblWidth">80dp</dimen>
+
+</resources>

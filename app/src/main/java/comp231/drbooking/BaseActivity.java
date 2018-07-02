@@ -52,11 +52,13 @@ public class BaseActivity extends AppCompatActivity
 
         //mToolbar  = (Toolbar)getLayoutInflater().inflate(R.layout.drawer_actionbar, null);//only from main launcher act findViewById() worked, from nect acts it gave NULL : https://stackoverflow.com/questions/28821018/findviewbyid-not-working-when-using-a-seperate-class
 
+
+        //SET ACTION-BAR:
         mToolbar = findViewById(R.id.drawerActBar);//bcoz of missing <include>, this line works on 1st act but for next act becomes NULL!!!
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(mToolbar);//sets a Toolbar obj to be an ActionBar for act
 
-
-        //https://www.youtube.com/watch?v=dpE8kzZznAU
+        //MAKE HAMBURGER-ICON TOGGLE THE DRAWER:
+        //https://www.youtube.com/watch?v=dpE8kzZznAU         //watch 3:15+ to open drawer on clk : https://www.youtube.com/watch?v=dpE8kzZznAU
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.dashOpen, R.string.dashClose);//last 2 args for accessibility
         mDrawerLayout.addDrawerListener(mToggle);
@@ -64,7 +66,6 @@ public class BaseActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//back arrow
 
-        //watch 3:15+ clk doesn't open drawer : https://www.youtube.com/watch?v=dpE8kzZznAU
     }
 
 

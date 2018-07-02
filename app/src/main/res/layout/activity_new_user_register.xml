@@ -13,14 +13,38 @@
     <include layout="@layout/drawer_actionbar" />
 -->
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="@dimen/widgetMargLeft"
+        android:layout_marginTop="10dp"
+        android:inputType="textPersonName"
+        android:text="Register"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="User Name: "
             android:textAlignment="viewStart" />
@@ -35,14 +59,17 @@
             android:inputType="textPersonName"
             android:text="Name" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="Password: " />
 
@@ -56,14 +83,17 @@
             android:inputType="textPersonName"
             android:text="Name" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="First Name:" />
 
@@ -77,14 +107,17 @@
             android:inputType="textPersonName"
             android:text="Name" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="Last Name:" />
 
@@ -98,14 +131,17 @@
             android:inputType="textPersonName"
             android:text="Name" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="Address:" />
 
@@ -119,14 +155,17 @@
             android:inputType="textPersonName"
             android:text="Name" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="Email:" />
 
@@ -140,14 +179,17 @@
             android:inputType="textPersonName"
             android:text="Name@e.e" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/widgetMargLeft"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/lblWidth"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="Phone:" />
 
@@ -172,6 +214,7 @@
             android:id="@+id/radRolePt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:layout_weight=".3"
             android:text="Patient" />
 
@@ -194,18 +237,24 @@
     <Button
         android:id="@+id/btnCreateNewUser"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/btnHt"
+        android:layout_marginLeft="@dimen/widgetMargLeft"
+        android:layout_marginRight="@dimen/widgetMargLeft"
+        android:layout_marginTop="10dp"
         android:onClick="btnClk_CreateNewUser"
-        android:text="Create New User"
-        />
+        android:text="Create New User" />
 
     <Button
         android:id="@+id/btnVerifyEmail"
+        style="@style/mBtnStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verify Email"
+        android:layout_height="@dimen/btnHt"
+        android:layout_marginLeft="@dimen/widgetMargLeft"
+        android:layout_marginRight="@dimen/widgetMargLeft"
+        android:layout_marginTop="10dp"
+        android:enabled="false"
         android:onClick="clk_verifyEmail"
-        android:enabled="false"/>
+        android:text="Verify Email" />
 
     <EditText
         android:id="@+id/txtVerifyEmail"

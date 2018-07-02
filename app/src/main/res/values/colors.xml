@@ -2,8 +2,8 @@
 <resources>
     <color name="colorActionBar">#c5c8d1</color>
     <color name="colorBtn">#7b818f</color>
-    <color name="colorBtnTxt">#fdfdfe</color>
-    <color name="colorTxt">#7b818f</color>
+    <color name="colorBtnTxt">#e4e4e4</color>
+    <color name="colorTxtBxTxt">#7b818f</color>
     <color name="colorBg">#fdfdfe</color>
     <color name="colorBorders">#a7aab3</color>
 
