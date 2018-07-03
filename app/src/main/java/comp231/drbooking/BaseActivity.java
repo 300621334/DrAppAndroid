@@ -2,7 +2,10 @@ package comp231.drbooking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +21,7 @@ import android.widget.FrameLayout;
  * By: SHAFIQ-UR-REHMAN
  * Purpose: Base class for all activities that will show a menuoptions (three dots) on top right corner. e.g. to logout etc
  */
-public class BaseActivity extends AppCompatActivity
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     Intent i;
     android.support.v7.widget.Toolbar mToolbar;//as opp to android.widget.Toolbar
@@ -26,8 +29,15 @@ public class BaseActivity extends AppCompatActivity
     protected FrameLayout frameLayout;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
+    View inflatedView;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        //setNavigationViewListener();//calling it here gives NULL bcoz inflate not happened yet. Call this in EACH act inheriting from base
 
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -36,6 +46,8 @@ public class BaseActivity extends AppCompatActivity
         frameLayout = (FrameLayout) fullLayout.findViewById(R.id.drawer_frame);
 
         getLayoutInflater().inflate(layoutResID, frameLayout, true);
+
+        //setNavigationViewListener();//even here inflate not happened fully so still get null
 
         super.setContentView(fullLayout);
 
@@ -138,4 +150,43 @@ public class BaseActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
+        //Drawer clk = https://stackoverflow.com/questions/42297381/onclick-event-in-navigation-drawer
+
+        //FOR DRAWER-MENU
+        switch (item.getItemId())
+        {
+            case R.id.menuLogout:
+                getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();//logout by removing logged-in user's ID
+
+                //taken back to Login screen
+                i = new Intent(this, Login.class);
+                startActivity(i);
+                finish();
+                break;
+            case R.id.menuDashboard:
+                //only if logged-in then show Dashboard
+                if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
+                    break;
+                i = new Intent(this, Dashboard.class);
+                startActivity(i);
+                finish();
+                break;
+        }
+
+        //close navigation drawer
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return false;
+    }
+
+    public void setNavigationViewListener()
+    {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.drawer_drawer);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
 }

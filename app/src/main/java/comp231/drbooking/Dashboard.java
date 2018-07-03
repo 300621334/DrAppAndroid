@@ -64,6 +64,7 @@ public class Dashboard extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        setNavigationViewListener();
         instance = this;
         //getSupportActionBar().setTitle("Dashboard");
         drawer_navigation_setup();//MUST be "public" in base

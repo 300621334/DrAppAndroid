@@ -44,6 +44,7 @@ public class Bookings_All extends BaseActivity implements ICallBackFromDbAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings_all);
+        setNavigationViewListener();
         drawer_navigation_setup();//MUST be "public" in base
         getSupportActionBar().setTitle("All Bookings");//call AFTER drawer_navigation_setup(). Even thou actionBar appears bcoz of <include> but it doesn't fn as actionBar unless explicitly done so
 

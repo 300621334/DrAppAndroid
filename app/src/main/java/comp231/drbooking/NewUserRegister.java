@@ -53,6 +53,7 @@ public class NewUserRegister extends BaseActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user_register);
+        setNavigationViewListener();
         drawer_navigation_setup();
         getSupportActionBar().setTitle("Create New Account");
         //

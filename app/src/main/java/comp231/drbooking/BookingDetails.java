@@ -60,6 +60,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+        setNavigationViewListener();
         drawer_navigation_setup();
         getSupportActionBar().setTitle("Booking Details");
         instance = this;
