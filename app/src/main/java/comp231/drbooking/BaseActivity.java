@@ -129,6 +129,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 
         //FOR MENU
+        WhichItemClked(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void WhichItemClked(MenuItem item)
+    {
         switch (item.getItemId())
         {
             case R.id.menuLogout:
@@ -148,7 +154,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 finish();
                 break;
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -157,25 +162,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         //Drawer clk = https://stackoverflow.com/questions/42297381/onclick-event-in-navigation-drawer
 
         //FOR DRAWER-MENU
-        switch (item.getItemId())
-        {
-            case R.id.menuLogout:
-                getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();//logout by removing logged-in user's ID
-
-                //taken back to Login screen
-                i = new Intent(this, Login.class);
-                startActivity(i);
-                finish();
-                break;
-            case R.id.menuDashboard:
-                //only if logged-in then show Dashboard
-                if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
-                    break;
-                i = new Intent(this, Dashboard.class);
-                startActivity(i);
-                finish();
-                break;
-        }
+        WhichItemClked(item);
 
         //close navigation drawer
         mDrawerLayout.closeDrawer(GravityCompat.START);

@@ -43,6 +43,7 @@ public class Login extends BaseActivity
         setNavigationViewListener();
         drawer_navigation_setup();
         getSupportActionBar().setTitle("Login or Create New Account");
+        //clear any existing log-in
         getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();
         //get references
         uNameView = (EditText) findViewById(R.id.txtLoginName);
@@ -56,6 +57,7 @@ public class Login extends BaseActivity
     protected void onResume()
     {
         super.onResume();
+        //clear any existing log-in
         getSharedPreferences("prefs",0).edit().putString("Id_User", "").putString("role", "").commit();
 
     }
@@ -120,11 +122,11 @@ public class Login extends BaseActivity
             //paramsApiUri[0] = "https://jsonplaceholder.typicode.com/posts/3";//works
         paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/login";
         paramsApiUri[1] = formData;
-            paramsApiUri[2] = "POST";
+        paramsApiUri[2] = "POST";
 
 
         //pass args to AsyncTask to read db
-            dbAdapter.execute(paramsApiUri);
+        dbAdapter.execute(paramsApiUri);
 
             //Store user_id in Shared-Prefs
 
