@@ -38,7 +38,7 @@ public class NewUserRegister extends BaseActivity {
     EditText txtVeriCodeV, txtVerifyEmailV;
     RadioButton radRoleDr, radRoleAdmin;
     RadioGroup radGrpRole;
-    LinearLayout lay;
+    View lay;
     DbAdapter dbAdapter;
     Model_User uModel;
     Object[] paramsApiUri;
@@ -56,7 +56,7 @@ public class NewUserRegister extends BaseActivity {
         getSupportActionBar().setTitle("Create New Account");
         //
         txtVeriCodeV = (EditText)findViewById(R.id.txtVerifyEmail);
-        lay = (LinearLayout) findViewById(R.id.layNewUser);
+        lay = findViewById(R.id.layNewUser);
         btnVerifyEmail = (Button)findViewById(R.id.btnVerifyEmail);
         txtVerifyEmailV = (EditText)findViewById(R.id.txtVerifyEmail);
         radGrpRole = (RadioGroup)findViewById(R.id.radGrpRole);
