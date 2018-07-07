@@ -4,96 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="comp231.drbooking.Login"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context="comp231.drbooking.Login">
 
-
-<!--    <RadioGroup
-        android:id="@+id/radGp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <RadioButton
-            android:id="@+id/radStudent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="Student" />
-
-        <RadioButton
-            android:id="@+id/radAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="Faculty" />
-    </RadioGroup>-->
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="Login"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/userName" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="20px"
+        android:layout_marginTop="20px"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:stretchColumns="1">
 
         <EditText
             android:id="@+id/txtLoginName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="@string/userName"
-            android:text="name" />
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text_border"
+            android:hint="Username"
+            android:padding="5dp"
+            android:text="" />
+
+
+        <EditText
+            android:id="@+id/txtLoginPass"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_text_border"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:text="" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/password" />
+            android:layout_marginBottom="10dp"
+            android:onClick="clk_Login"
+            android:text="Log In" />
 
-        <EditText
-            android:id="@+id/txtLoginPass"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btn_CreateAcc"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:text="name" />
+            android:onClick="clk_NewUserRegister"
+            android:text="Create Account" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        android:onClick="clk_Login"/>
-
-    <Button
-        android:id="@+id/btn_CreateAcc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Account"
-        android:onClick="clk_NewUserRegister"/>
-
-<!--    <Button
-        android:id="@+id/btnTest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Map"
-        android:onClick="clk_btnTest"/>-->
+    <!--    <Button
+            android:id="@+id/btnTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Map"
+            android:onClick="clk_btnTest"/>-->
 
     <!--   <Button
            android:id="@+id/btnAllPref"
@@ -111,7 +100,4 @@
            android:onClick="DeleteWholeDB"
            android:text="Delete Database"
            android:visibility="invisible" />-->
-
-
-
 </LinearLayout>

@@ -2,212 +2,242 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layNewUser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewUserRegister"
     android:orientation="vertical"
-    android:id="@+id/layNewUser">
+    android:padding="10dp"
+    tools:context=".NewUserRegister">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="User Name: "
-            android:textAlignment="viewStart" />
-
-        <EditText
-            android:id="@+id/txtUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a user name"
-            android:inputType="textPersonName"
-            android:text="Name" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Password: " />
-
-        <EditText
-            android:id="@+id/txtPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a pasword"
-            android:inputType="textPersonName"
-            android:text="Name" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="First Name:" />
-
-        <EditText
-            android:id="@+id/txtFName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a user name"
-            android:inputType="textPersonName"
-            android:text="Name" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Last Name:" />
-
-        <EditText
-            android:id="@+id/txtLName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a user name"
-            android:inputType="textPersonName"
-            android:text="Name" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Address:" />
-
-        <EditText
-            android:id="@+id/txtAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a user name"
-            android:inputType="textPersonName"
-            android:text="Name" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Email:" />
-
-        <EditText
-            android:id="@+id/txtEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a user name"
-            android:inputType="textPersonName"
-            android:text="Name@e.e" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Phone:" />
-
-        <EditText
-            android:id="@+id/txtPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Enter a user name"
-            android:inputType="number"
-            android:text="Name" />
-    </LinearLayout>
-
-    <RadioGroup
-        android:id="@+id/radGrpRole"
+        android:id="@+id/newUserHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radRolePt"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:text="Patient" />
+            android:text="Register"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-        <RadioButton
-            android:id="@+id/radRoleDr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:text="Provider" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="20px"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/radRoleAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:text="Admin"
-            android:visibility="gone"/>
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/btnCreateNewUser"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="btnClk_CreateNewUser"
-        android:text="Create New User"
-        />
+        android:layout_below="@+id/newUserHeader"
+        android:stretchColumns="*">
 
-    <Button
-        android:id="@+id/btnVerifyEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verify Email"
-        android:onClick="clk_verifyEmail"
-        android:enabled="false"/>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/txtVerifyEmail"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:hint="Enter code sent to your email"
-        android:inputType="number"
-        android:enabled="false"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:width="100dp"
+                android:text="User Name: "
+                android:textAlignment="viewStart" />
 
+            <EditText
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter a user name"
+                android:inputType="textPersonName"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password: " />
+
+            <EditText
+                android:id="@+id/txtPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter a password"
+                android:inputType="textPersonName"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="First Name:" />
+
+            <EditText
+                android:id="@+id/txtFName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter your first name"
+                android:inputType="textPersonName"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Name:" />
+
+            <EditText
+                android:id="@+id/txtLName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter your last name"
+                android:inputType="textPersonName"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address:" />
+
+            <EditText
+                android:id="@+id/txtAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter your address"
+                android:inputType="textPersonName"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email:" />
+
+            <EditText
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter email"
+                android:inputType="textPersonName"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone:" />
+
+            <EditText
+                android:id="@+id/txtPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter phone number"
+                android:inputType="number"
+                android:text="" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:text="Type: " />
+
+            <RadioGroup
+                android:id="@+id/radGrpRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radRolePt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Patient" />
+
+                <RadioButton
+                    android:id="@+id/radRoleDr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Provider" />
+
+                <RadioButton
+                    android:id="@+id/radRoleAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:text="Admin"
+                    android:visibility="gone" />
+            </RadioGroup>
+        </TableRow>
+
+        <TableRow android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/btnCreateNewUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:onClick="btnClk_CreateNewUser"
+                android:text="Create New User" />
+
+            <Button
+                android:id="@+id/btnVerifyEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:onClick="clk_verifyEmail"
+                android:text="Verify Email"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/txtVerifyEmail"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:enabled="false"
+                android:hint="Enter code sent to your email"
+                android:inputType="number"
+                android:visibility="gone" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
