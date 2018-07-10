@@ -35,7 +35,7 @@ public class SplashScreen extends AppCompatActivity
                 catch(InterruptedException e){
                     e.printStackTrace();
                 } finally {
-                    Intent i = new Intent(SplashScreen.this, Dashboard.class);
+                    Intent i = new Intent(SplashScreen.this, MapsActivity.class);
                     startActivity(i);
                     finish();
                 }
