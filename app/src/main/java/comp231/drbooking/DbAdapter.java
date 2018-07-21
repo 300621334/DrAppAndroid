@@ -278,6 +278,7 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 }
                 */
             break;
+            //
             case "BookingDetails":
                 if(jsonResponse.equals("0"))//booking time unavailable
                 {
@@ -305,20 +306,23 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     so rather use STATIC.instance for all acts & .finish em once newer act onCreates
                     https://stackoverflow.com/a/37248558*/
                 }
+             break;
+            //
+            case "Bookings_All"://calling ctx was "Bookings_All"
+                callBk.onResponseFromServer(jsonResponse, ctx);
                 break;
-                case "Bookings_All"://calling ctx was "Bookings_All"
-                    callBk.onResponseFromServer(jsonResponse, ctx);
-                    break;
+            //
             case "Settings"://calling ctx was "Settings"
-                if(callBk != null)
+                if(callBk != null)//called from fn btnClk_EditUserProfile()
                 {
                     callBk.onResponseFromServer(jsonResponse, ctx);
                 }
-                else
+                else//called from fn btnClk_UpdateUser()
                 {
                     Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
                 }
-                break;
+            break;
+            //
             default:
                 Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
                 break;

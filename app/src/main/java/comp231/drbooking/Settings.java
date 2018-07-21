@@ -1,5 +1,6 @@
 package comp231.drbooking;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,13 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
     public void btnClk_EditUserProfile(View view)
     {
         //
+        dbAdapter = new DbAdapter(Settings.this, new Settings());//new Settings() just to give access to DbAdapter to onResponseFromServer() via implementing ICallBackFromDbAdapter
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/getuserdetail/" + userIdStr;
+        paramsApiUri[1] = "";//formData not needed for this GET req since user_id is appended to URL
+        paramsApiUri[2] = "GET";
+        //pass args to AsyncTask to read db
+        dbAdapter.execute(paramsApiUri);
+
 
     }
 
@@ -112,11 +120,30 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         dbAdapter.execute(paramsApiUri);//if uName already exists, a TOAST will b displayed. If not then Dashboard launched & User_Id stored in Prefs
     }
 
-
     //populate detail of user in EditText boxes
     @Override
     public void onResponseFromServer(String result, Context ctx)
     {
+        //global vars that were init in onCeate() r NOT available here as this fn is being called by DbAdapter
+        // so have to create new Model_User & Gson
+        Model_User u;
+        Gson gson = new Gson();
+        //need to get refs AGAIN via ctx
+        loginNameV = ((Activity)ctx).findViewById(R.id.txtEditUserName);
+        fNameV =((Activity)ctx).findViewById(R.id.txtEditFName);
+        //lNameV = ((Activity)ctx).findViewById(R.id.txtEditLName);//NOT allowing changing of Last Name.
+        addressV = ((Activity)ctx).findViewById(R.id.txtEditAdd);
+        emailV = ((Activity)ctx).findViewById(R.id.txtEditEmail);
+        phoneV = ((Activity)ctx).findViewById(R.id.txtEditPhone);
 
+        //map user-JSON to user-obj
+        u = gson.fromJson(result, Model_User.class);
+
+        //populate EditTexts w details of retrieved user
+        loginNameV.setText(u.loginName);
+        fNameV.setText(u.nameOfUser);
+        addressV.setText(u.address);
+        emailV.setText(u.email);
+        phoneV.setText(u.phone);
     }
 }
