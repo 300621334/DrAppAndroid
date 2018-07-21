@@ -40,6 +40,7 @@ public class Dashboard extends BaseActivity {
     double longitude,latitude;
     Intent i;
     public static Dashboard instance;
+    String userIdStr, roleStr;
  /*   String formData;
     DbAdapter dbAdapter;
     Model_Booking bModel;
@@ -190,7 +191,13 @@ public class Dashboard extends BaseActivity {
 
     public void clk_Settings(View view)
     {
+        //get ID & role-code of the logged-in user
+        userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
+        roleStr = getSharedPreferences("prefs", 0).getString("role", "");
+
         i = new Intent(this, Settings.class);
+        i.putExtra("Id_User", userIdStr);
+        //i.putExtra("role", roleStr);//API does NOT update role & Id_User so those 2 can remain "0" in the obj being sent
         startActivity(i);
     }
 
