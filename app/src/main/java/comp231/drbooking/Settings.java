@@ -1,5 +1,6 @@
 package comp231.drbooking;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 
-public class Settings extends BaseActivity {
+public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
 
     //region Class Variables
     String userIdStr, roleStr, formData, uName, uPass,fName, lName, add;
@@ -17,7 +18,7 @@ public class Settings extends BaseActivity {
     SharedPreferences pref;
     Gson gson;
     Object[] paramsApiUri;
-
+    EditText loginNameV, fNameV, lNameV, addressV, emailV, phoneV;
 
     //endregion
 
@@ -28,6 +29,15 @@ public class Settings extends BaseActivity {
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setTitle("Update User Profile");//getActionBar() gives null err
 
+        //get refs to EditText views
+        loginNameV = (EditText)findViewById(R.id.txtEditUserName);
+        fNameV = (EditText)findViewById(R.id.txtEditFName);
+        //lNameV = (EditText)findViewById(R.id.txtEditLName);//NOT allowing changing of Last Name.
+        addressV = (EditText)findViewById(R.id.txtEditAdd);
+        emailV = (EditText)findViewById(R.id.txtEditEmail);
+        phoneV = (EditText)findViewById(R.id.txtEditPhone);
+
+        //init vars
         paramsApiUri = new Object[3];
         gson = new Gson();
         uModel = new Model_User();
@@ -42,6 +52,8 @@ public class Settings extends BaseActivity {
     //http://drappapi.azurewebsites.net/api/values/getuserdetail/1
     public void btnClk_EditUserProfile(View view)
     {
+        //
+
     }
 
     //POST new user-details to db
@@ -62,13 +74,13 @@ public class Settings extends BaseActivity {
         dbAdapter = new DbAdapter(this);
 
         //references to EditText & bind model
-        uModel.loginName = uName  = ((EditText)findViewById(R.id.txtEditUserName)).getText().toString();
-        fName   = ((EditText)findViewById(R.id.txtEditFName)).getText().toString();
-        lName   = ((EditText)findViewById(R.id.txtEditLName)).getText().toString();
+        uModel.loginName = uName  = (loginNameV).getText().toString();
+        fName   = (fNameV).getText().toString();
+        //lName   = (lNameV).getText().toString();
         uModel.nameOfUser = fName;
-        uModel.address = add     = ((EditText)findViewById(R.id.txtEditAdd)).getText().toString();
-        uModel.email = ((EditText)findViewById(R.id.txtEditEmail)).getText().toString();
-        uModel.phone = ((EditText)findViewById(R.id.txtEditPhone)).getText().toString();
+        uModel.address = add     = (addressV).getText().toString();
+        uModel.email = (emailV).getText().toString();
+        uModel.phone = (phoneV).getText().toString();
         //uModel.role = roleStr;//API does NOT update role & Id_User so those 2 can remain "0" in the obj being sent
 
         //encrypt pw
@@ -101,4 +113,10 @@ public class Settings extends BaseActivity {
     }
 
 
+    //populate detail of user in EditText boxes
+    @Override
+    public void onResponseFromServer(String result, Context ctx)
+    {
+
+    }
 }

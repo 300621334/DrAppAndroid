@@ -309,6 +309,16 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 case "Bookings_All"://calling ctx was "Bookings_All"
                     callBk.onResponseFromServer(jsonResponse, ctx);
                     break;
+            case "Settings"://calling ctx was "Settings"
+                if(callBk != null)
+                {
+                    callBk.onResponseFromServer(jsonResponse, ctx);
+                }
+                else
+                {
+                    Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
+                }
+                break;
             default:
                 Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
                 break;
