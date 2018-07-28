@@ -84,6 +84,8 @@ public class Login extends BaseActivity
     //Login btn clk
     public void clk_Login(View view)
     {
+        String testing = uPassView.getText().toString();
+
         //get form data into class
         Model_User uModel = new Model_User();
         uModel.loginName = uNameView.getText().toString();

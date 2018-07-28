@@ -19,7 +19,7 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
     SharedPreferences pref;
     Gson gson;
     Object[] paramsApiUri;
-    EditText loginNameV, fNameV, lNameV, addressV, emailV, phoneV;
+    EditText loginNameV, fNameV, lNameV, addressV, emailV, phoneV, pwV;
 
     //endregion
 
@@ -135,9 +135,20 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         addressV = ((Activity)ctx).findViewById(R.id.txtEditAdd);
         emailV = ((Activity)ctx).findViewById(R.id.txtEditEmail);
         phoneV = ((Activity)ctx).findViewById(R.id.txtEditPhone);
+        pwV = ((Activity)ctx).findViewById(R.id.txtEditPass);
 
         //map user-JSON to user-obj
         u = gson.fromJson(result, Model_User.class);
+
+        //de-crypt pw
+        try
+        {
+            uPass   = AESCrypt.decrypt(u.pw); //encrypt(((EditText)findViewById(R.id.txtEditPass)).getText().toString());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         //populate EditTexts w details of retrieved user
         loginNameV.setText(u.loginName);
@@ -145,5 +156,9 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         addressV.setText(u.address);
         emailV.setText(u.email);
         phoneV.setText(u.phone);
+        pwV.setText(uPass);
+
+
+
     }
 }
