@@ -42,6 +42,10 @@ public class AdminDashboard extends AppCompatActivity implements ICallBackFromDb
     public void onSearchClick(View v) {
         etUserName = (EditText) findViewById(R.id.etUserName);
         stUserName = etUserName.getText().toString();
+        if(stUserName.trim().isEmpty())
+        {
+            return;
+        }
         dbAdapter = new DbAdapter(AdminDashboard.this, new AdminDashboard());//new Bookings_All() just to give access to DbAdapter to onResponseFromServer()
 
         //At college WiFi, IP given by Conveyer extendion of VS is different than the one from ipconfig. Use latter ip but use port from Conveyer.
