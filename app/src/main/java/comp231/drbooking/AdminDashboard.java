@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AdminDashboard extends AppCompatActivity implements ICallBackFromDbAdapter {
+public class AdminDashboard extends BaseActivity implements ICallBackFromDbAdapter {
     Object[] paramsApiUri;
     EditText etUserName;
     String stUserName;

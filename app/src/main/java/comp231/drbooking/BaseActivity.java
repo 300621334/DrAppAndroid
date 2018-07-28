@@ -18,6 +18,8 @@ import android.view.View;
 public class BaseActivity extends AppCompatActivity
 {
     Intent i;
+    String userIdStr, roleStr;
+
  /*   DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
 
@@ -42,6 +44,9 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        userIdStr = getSharedPreferences("prefs", 0).getString("Id_User", "1");
+        roleStr = getSharedPreferences("prefs", 0).getString("role", "");
+
         MenuInflater inflator = getMenuInflater();
         inflator.inflate(R.menu.menuoptions, menu);
         //alter bw "Login / Register" & "Logout" on menu item; based on whether user is loggedin or not
@@ -71,7 +76,15 @@ public class BaseActivity extends AppCompatActivity
                 //only if logged-in then show Dashboard
                 /*if(getSharedPreferences("prefs",0).getString("Id_User", "").equals(""))
                     break;*/
-                i = new Intent(this, Dashboard.class);
+                if(roleStr.equals("3"))//admin is logged in
+                {
+                    i = new Intent(this, AdminDashboard.class);
+
+                }
+                else
+                {
+                    i = new Intent(this, Dashboard.class);
+                }
                 startActivity(i);
                 finish();
                 break;
