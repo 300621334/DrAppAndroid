@@ -53,8 +53,10 @@
         <activity android:name=".VerifyEmail" />
         <activity android:name=".DrProfile" />
         <activity android:name=".Dashboard" />
+
         <service android:name=".ServiceIntro" />
 
+        <activity android:name=".AdminDashboard"></activity>
     </application>
 
 </manifest>

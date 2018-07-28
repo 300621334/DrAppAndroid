@@ -230,8 +230,16 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 String roleStr = jsonResponse.equals("")?"1":String.valueOf(u.role);
                 prefs.edit().putString("Id_User", UserIdStr).putString("role", roleStr).commit();
                 //Go to dashboard
-                i = new Intent(ctx, Dashboard.class);
-                ctx.startActivity(i);
+                if(roleStr.equals("3"))
+                {
+                    i = new Intent(ctx, AdminDashboard.class);
+                    ctx.startActivity(i);
+                }
+                else
+                {
+                    i = new Intent(ctx, Dashboard.class);
+                    ctx.startActivity(i);
+                }
             }
             break;
             //
@@ -322,6 +330,10 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
                 }
             break;
+            //
+            case "AdminDashboard":
+                callBk.onResponseFromServer(jsonResponse, ctx);
+                break;
             //
             default:
                 Toast.makeText(ctx, jsonResponse + ctx.getClass().getSimpleName() , Toast.LENGTH_LONG).show();
