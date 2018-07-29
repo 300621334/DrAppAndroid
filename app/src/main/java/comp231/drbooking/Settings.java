@@ -3,8 +3,10 @@ package comp231.drbooking;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -184,7 +186,13 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
     }
 
     //only ADMIN an delete a user
-    public void btnClk_DeleteUser(View view)
+    public void btnClk_DeleteUser(View btn_v)
+    {
+        alert("", "Action_DeleteUser", btn_v);
+        //DeleteUser(btn_v);
+    }
+
+    private void DeleteUser(View btn_v)
     {
         //get Id_User from hidden ctrl
         String Id_UserEditing = getSharedPreferences("prefs", 0).getString("Id_UserEditing", "");
@@ -195,5 +203,63 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         paramsApiUri[1] = formData = "";
         paramsApiUri[2] = "GET";
 
+    }
+
+    public void alert(String txtMsg, final String action, final View btn_view)
+    {
+        //region (1) set custom view for dialog
+        //https://stackoverflow.com/questions/4279787/how-can-i-pass-values-between-a-dialog-and-an-activity?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+        LayoutInflater inflator = LayoutInflater.from(Settings.this);
+        final View yourCustomView = inflator.inflate(R.layout.custom_dialog, null);
+        //endregion
+
+        //region (2) init dialogue
+        final AlertDialog dialog = new AlertDialog.Builder(Settings.this)
+                .setTitle("Do you want to proceed ?")//replace w "txtMsg"
+                .setView(yourCustomView)
+                /*.setPositiveButton("YES", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton)
+                    {
+
+                    }
+                })
+                .setNegativeButton("NO", null)*/
+                .create();
+        //endregion
+
+        //region (3) set onClicks for custom dialog btns
+        yourCustomView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                switch (action)
+                {
+                 /*   case "Action_UpdateUser":
+                        SaveAppoint(btn_view);
+                        break;*/
+                    case "Action_DeleteUser":
+                        DeleteUser(btn_view);
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        });
+        yourCustomView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialog.dismiss();
+            }
+        });
+        //endregion
+
+        //region (4) Display dialogue
+        dialog.show();
+        //endregion
     }
 }
