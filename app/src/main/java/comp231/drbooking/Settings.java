@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -19,7 +20,8 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
     SharedPreferences pref;
     Gson gson;
     Object[] paramsApiUri;
-    EditText loginNameV, fNameV, lNameV, addressV, emailV, phoneV, pwV;
+    EditText loginNameV, fNameV, lNameV, addressV, emailV, phoneV, pwV, Id_UserV;
+    Button btnDeleteUserV;
 
     //endregion
 
@@ -37,6 +39,13 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         addressV = (EditText)findViewById(R.id.txtEditAdd);
         emailV = (EditText)findViewById(R.id.txtEditEmail);
         phoneV = (EditText)findViewById(R.id.txtEditPhone);
+        Id_UserV = (EditText)findViewById(R.id.txtEditId);
+        //disable the update btn & make del btn invisi
+        ((Button)findViewById(R.id.btnUpdateUser)).setEnabled(false);
+        ((Button)findViewById(R.id.btnDeleteUser)).setVisibility(View.INVISIBLE);
+
+        //get role of logedin person
+        roleStr = getSharedPreferences("prefs", 0).getString("role", "");
 
         //init vars
         paramsApiUri = new Object[3];
@@ -136,6 +145,8 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         emailV = ((Activity)ctx).findViewById(R.id.txtEditEmail);
         phoneV = ((Activity)ctx).findViewById(R.id.txtEditPhone);
         pwV = ((Activity)ctx).findViewById(R.id.txtEditPass);
+        //Id_UserV = ((Activity)ctx).findViewById(R.id.txtEditId);
+        btnDeleteUserV = ((Activity)ctx).findViewById(R.id.btnDeleteUser);
 
         //map user-JSON to user-obj
         u = gson.fromJson(result, Model_User.class);
@@ -156,9 +167,33 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         addressV.setText(u.address);
         emailV.setText(u.email);
         phoneV.setText(u.phone);
+        //Id_UserV.setText(u.Id_User);//cannot set txt of visibility.GONE ctrl. So use prefs instead
+        ((Activity)ctx).getSharedPreferences("prefs", 0).edit().putString("Id_UserEditing",String.valueOf(u.Id_User)).commit();
         pwV.setText(uPass);
 
+        //activate the btn
+        ((Activity)ctx).findViewById(R.id.btnUpdateUser).setEnabled(true);
+        //if ADMIN enable del btn too
+        //get role of logedin person
+        String roleStr = ((Activity)ctx).getSharedPreferences("prefs", 0).getString("role", "");
+        if(roleStr.equals("3"))//admin is logged in
+        {
+            btnDeleteUserV.setVisibility(View.VISIBLE);
+        }
 
+    }
+
+    //only ADMIN an delete a user
+    public void btnClk_DeleteUser(View view)
+    {
+        //get Id_User from hidden ctrl
+        String Id_UserEditing = getSharedPreferences("prefs", 0).getString("Id_UserEditing", "");
+
+        //send id to be deleted to API
+        dbAdapter = new DbAdapter(this);
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/............." + Id_UserEditing;
+        paramsApiUri[1] = formData = "";
+        paramsApiUri[2] = "GET";
 
     }
 }
