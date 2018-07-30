@@ -27,6 +27,11 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:onClick="onSearchClick"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create New User"
+        android:onClick="onNewUserClick"/>
 
     <ListView
         android:id="@+id/lvUserList"

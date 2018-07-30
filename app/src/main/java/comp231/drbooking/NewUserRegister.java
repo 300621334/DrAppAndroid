@@ -29,7 +29,7 @@ import java.util.Random;
 public class NewUserRegister extends BaseActivity {
 
     //region Class Variables
-    String ROLE_CODE = "0", txtVeriCode,formData, uName, uPass,fName, lName, add, city, postC, isAdmin, key_uName, key_uPass;
+    String ROLE_CODE = "0", roleStr, txtVeriCode,formData, uName, uPass,fName, lName, add, city, postC, key_uName, key_uPass;
     SharedPreferences pref;
     Map<String, ?> allPrefs;
     int numOfPrefs;
@@ -46,6 +46,7 @@ public class NewUserRegister extends BaseActivity {
     Gson gson;
     int emailCode = 999;
     Intent i;
+    boolean isAdmin;
     //endregion
 
     @Override
@@ -54,6 +55,9 @@ public class NewUserRegister extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user_register);
         getSupportActionBar().setTitle("Create New Account");
+        //chk if admin is creating a new user
+        roleStr = getSharedPreferences("prefs", 0).getString("role", "");
+        isAdmin = roleStr.equals("3")?true:false;
         //
         txtVeriCodeV = (EditText)findViewById(R.id.txtVerifyEmail);
         lay = findViewById(R.id.layNewUser);
@@ -113,11 +117,27 @@ public class NewUserRegister extends BaseActivity {
                 dbAdapter.execute(paramsApiUri);
             }
         });*/
+
+        //for admin hide verify email etc
+        if(isAdmin)
+        {
+            btnVerifyEmail.setVisibility(View.INVISIBLE);
+            txtVerifyEmailV.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void btnClk_CreateNewUser(View view)
     {
-
+        //for admin by-pass email verification - assume admin enters correct email
+        if(isAdmin)
+        {
+            disableTextBoxes(lay);
+            clk_verifyEmail(null);//bypass email verifi for admin
+            //btnVerifyEmail.setVisibility(View.INVISIBLE);
+            //txtVerifyEmailV.setVisibility(View.INVISIBLE);
+            return;
+        }
+        //for non-admin
         disableTextBoxes(lay);//disable all TextViews & send email with verification code
         sendCodeByEmail(getRandomCode());
         btnVerifyEmail.setEnabled(true);
@@ -182,9 +202,14 @@ public class NewUserRegister extends BaseActivity {
 
     public void clk_verifyEmail(View view)
     {
-        txtVeriCode = txtVeriCodeV.getText().toString();
+        //for non-admin, read verifi code
+        if(!isAdmin)
+        {
+            txtVeriCode = txtVeriCodeV.getText().toString();
+        }
 
-        if(String.valueOf(emailCode).equals(txtVeriCode))//verification code matches
+        //if admin, bypass matching of verifi code
+        if(isAdmin || String.valueOf(emailCode).equals(txtVeriCode))//verification code matches
         {
 
             dbAdapter = new DbAdapter(this);
@@ -220,7 +245,7 @@ public class NewUserRegister extends BaseActivity {
             //prep args
             //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
             //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newUser?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
-                paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newUser";
+            paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newUser";
             paramsApiUri[1] = formData;
             paramsApiUri[2] = "POST";
             //pass args to AsyncTask to read db

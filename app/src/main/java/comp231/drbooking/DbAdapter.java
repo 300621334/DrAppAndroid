@@ -27,14 +27,14 @@ import java.util.List;
 public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progress,result>
 {
     //region Class Variables
-    String jsonResponse, url, formData, httpMethod;
+    String jsonResponse, url, formData, httpMethod, roleStr;
     Context ctx;
     Intent i;
     SharedPreferences prefs;
     ICallBackFromDbAdapter callBk;
     Gson gson;
     //String[] DrNamesList;
-    boolean isGettingDrList = false;
+    boolean isGettingDrList = false, isAdmin = false;;
     //endregion
 
     //constructor just to receive ctx needed for TOAST
@@ -45,6 +45,9 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
     {
         this.ctx = ctx;
         gson = new Gson();
+        //chk if admin is creating a new user
+        roleStr = ctx.getSharedPreferences("prefs", 0).getString("role", "");
+        isAdmin = roleStr.equals("3")?true:false;
     }
     //constructor # 2 = pass a callBack fn
     public DbAdapter(Context ctx, ICallBackFromDbAdapter callBk)
@@ -259,7 +262,10 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                     Toast.makeText(ctx, jsonResponse + " No Response From Server!", Toast.LENGTH_LONG).show();
 
                     //------------For testing without login server---
-                    //go to Dashboard
+                    //go to regular Dashboard or admin-dash
+                    if(isAdmin)
+                        i = new Intent(ctx, AdminDashboard.class);
+                    else
                     i = new Intent(ctx, Dashboard.class);
                     ctx.startActivity(i);
                     //----------------------------------------------
@@ -269,6 +275,10 @@ public class DbAdapter extends AsyncTask<Object, Integer, String>//<args,progres
                 {
                     //go to Dashboard
                     Toast.makeText(ctx, jsonResponse + " User Created", Toast.LENGTH_LONG).show();//jsonResponse is user_id
+                    //go to regular Dashboard or admin-dash
+                    if(isAdmin)
+                        i = new Intent(ctx, AdminDashboard.class);
+                    else
                     i = new Intent(ctx, Dashboard.class);
                     ctx.startActivity(i);
                 }
