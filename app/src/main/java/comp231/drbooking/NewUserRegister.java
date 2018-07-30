@@ -223,37 +223,52 @@ public class NewUserRegister extends BaseActivity {
             uModel.email = ((EditText)findViewById(R.id.txtEmail)).getText().toString();
             uModel.phone = ((EditText)findViewById(R.id.txtPhone)).getText().toString();
             uModel.role = ROLE_CODE;
-            //encrypt pw
-            try
+            uModel.pw = ((EditText)findViewById(R.id.txtPass)).getText().toString();
+
+            //if uName & pw & email r empty, -> prompt
+            if(uModel.email.equals("") || uModel.nameOfUser.equals("") || uModel.loginName.equals("") || uModel.pw.equals(""))
             {
-                uModel.pw = uPass   = AESCrypt.encrypt(((EditText)findViewById(R.id.txtPass)).getText().toString());
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
+                Toast.makeText(this,"Required fields are empty" , Toast.LENGTH_LONG).show();
+                /*finish();
+                return;*/
             }
 
-            //city    = ((EditText)findViewById(R.id.txtCity)).getText().toString();
-            //postC   = ((EditText)findViewById(R.id.txtPostC)).getText().toString();
-            //isAdmin = getIntent().getStringExtra("isAdmin");
 
-            //get shared preference
-            pref = getSharedPreferences("prefs", 0);
+            else
+                {
+                //encrypt pw
+                try
+                {
+                    uModel.pw = uPass   = AESCrypt.encrypt(uModel.pw/*((EditText)findViewById(R.id.txtPass)).getText().toString()*/);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
-            //make json from model
-            formData = gson.toJson(uModel);
-            //prep args
-            //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
-            //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newUser?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
-            paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newUser";
-            paramsApiUri[1] = formData;
-            paramsApiUri[2] = "POST";
-            //pass args to AsyncTask to read db
-            dbAdapter.execute(paramsApiUri);//if uName already exists, a TOAST will b displayed. If not then Dashboard launched & User_Id stored in Prefs
-            //err (the task has already been executed (a task can be executed only once) => due to re-using same instance of AsyncTask so create a new instance on ea clk.
-            //err causing Login scrn to load was => TextView.getText()' on a null object reference
 
-            //Snackbar.make(view, "Loading Weather", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                //city    = ((EditText)findViewById(R.id.txtCity)).getText().toString();
+                //postC   = ((EditText)findViewById(R.id.txtPostC)).getText().toString();
+                //isAdmin = getIntent().getStringExtra("isAdmin");
+
+                //get shared preference
+                pref = getSharedPreferences("prefs", 0);
+
+                //make json from model
+                formData = gson.toJson(uModel);
+                //prep args
+                //paramsApiUri[0] = "http://10.0.2.2:45455/api/values/newUser"; //emulator uses this
+                //paramsApiUri[0] = "http://192.168.1.6:45455/api/values/newUser?login=xxx&pw=xxx";//VS extension to allow access to localhost(10.0.2.2 in emulator)https://marketplace.visualstudio.com/items?itemName=vs-publisher-1448185.ConveyorbyKeyoti
+                paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/newUser";
+                paramsApiUri[1] = formData;
+                paramsApiUri[2] = "POST";
+                //pass args to AsyncTask to read db
+                dbAdapter.execute(paramsApiUri);//if uName already exists, a TOAST will b displayed. If not then Dashboard launched & User_Id stored in Prefs
+                //err (the task has already been executed (a task can be executed only once) => due to re-using same instance of AsyncTask so create a new instance on ea clk.
+                //err causing Login scrn to load was => TextView.getText()' on a null object reference
+
+                //Snackbar.make(view, "Loading Weather", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
         }
         else
         {
