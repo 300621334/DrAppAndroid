@@ -39,7 +39,15 @@ public class AdminDashboard extends BaseActivity implements ICallBackFromDbAdapt
         paramsApiUri = new Object[3];
     }
 
-    public void onSearchClick(View v) {
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        onSearchClick(null);
+    }
+
+    public void onSearchClick(View v)
+    {
         etUserName = (EditText) findViewById(R.id.etUserName);
         stUserName = etUserName.getText().toString();
         if(stUserName.trim().isEmpty())
@@ -60,7 +68,8 @@ public class AdminDashboard extends BaseActivity implements ICallBackFromDbAdapt
     }
 
     @Override
-    public void onResponseFromServer(String result, Context ctx) {
+    public void onResponseFromServer(String result, Context ctx)
+    {
         //Toast NOT work here??? Null err!! but Log.e works. Even chk (isFinishing) on Actvity doesn't help :
         //So I SOLVED it by passing ctx from this-to-DbAdapter-&-bk-here
         if (!AdminDashboard.this.isFinishing()) {

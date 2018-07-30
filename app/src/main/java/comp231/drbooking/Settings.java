@@ -204,7 +204,7 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
         paramsApiUri[1] = formData = "";
         paramsApiUri[2] = "POST";
         dbAdapter.execute(paramsApiUri);
-
+        finish();
     }
 
     public void alert(String txtMsg, final String action, final View btn_view)
