@@ -199,9 +199,11 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
 
         //send id to be deleted to API
         dbAdapter = new DbAdapter(this);
-        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/............." + Id_UserEditing;
+        //e.g. /api/values/DeleteUser/13
+        paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/DeleteUser/" + Id_UserEditing;
         paramsApiUri[1] = formData = "";
-        paramsApiUri[2] = "GET";
+        paramsApiUri[2] = "POST";
+        dbAdapter.execute(paramsApiUri);
 
     }
 
