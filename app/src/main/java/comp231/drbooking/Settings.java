@@ -2,6 +2,7 @@ package comp231.drbooking;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -64,6 +65,15 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
     //http://drappapi.azurewebsites.net/api/values/getuserdetail/1
     public void btnClk_EditUserProfile(View view)
     {
+        //chk if user is logged in:
+        String userIdStr = getSharedPreferences("prefs",0).getString("Id_User", "");
+        if(userIdStr.equals(""))
+        {
+            Intent i = new Intent(this, Login.class);
+            startActivity(i);
+            finish();
+            return;
+        }
         //
         dbAdapter = new DbAdapter(Settings.this, new Settings());//new Settings() just to give access to DbAdapter to onResponseFromServer() via implementing ICallBackFromDbAdapter
         paramsApiUri[0] = VariablesGlobal.API_URI + "/api/values/getuserdetail/" + userIdStr;
