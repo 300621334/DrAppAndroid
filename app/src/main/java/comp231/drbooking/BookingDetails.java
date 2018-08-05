@@ -407,7 +407,7 @@ public class BookingDetails extends BaseActivity implements ICallBackFromDbAdapt
     {
         spinSpecialtyList.setEnabled(false);
         VariablesGlobal.DrNamesListFiltered.clear();
-        VariablesGlobal.DrNamesListFiltered.add("~~ Please Select a Doctor ~~");
+        VariablesGlobal.DrNamesListFiltered.add("~Select Doctor~");
         for (int j = 0; j < VariablesGlobal.DrProfiles.size(); j++)
         {
             Model_DrProfile Dr = VariablesGlobal.DrProfiles.get(j);

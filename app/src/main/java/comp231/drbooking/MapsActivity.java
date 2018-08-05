@@ -187,7 +187,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
         }
 
-        locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+        locationManager.requestLocationUpdates(bestProvider, 1800000, 0, this);//originaly it was 20sec, but it was adding a new marker q time! so I changed it to 30min
 
     }
 
@@ -311,7 +311,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
     {
         //Toast.makeText(this, "onClick fn entered", Toast.LENGTH_LONG).show();
 
-        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(this);
         Object dataTransfer[] = new Object[2];//will hold 2 objs
 
 
@@ -328,12 +328,14 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     Geocoder geocoder = new Geocoder(this);
 
                     try {
-                        addressList = geocoder.getFromLocationName(location, 5);
+                        addressList = geocoder.getFromLocationName(location, 1);
 
                         if(addressList != null)
                         {
                             for(int i = 0;i<addressList.size();i++)
                             {
+                                latitude = addressList.get(i).getLatitude();
+                                longitude = addressList.get(i).getLongitude();
                                 //https://developer.android.com/reference/android/location/Address
                                 /*
                                     street_address = getThoroughfare() e.g. "1600 Ampitheater Parkway"
@@ -397,6 +399,15 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
                 Toast.makeText(this, "Showing nearby hospitals", Toast.LENGTH_LONG).show();
                 break;
+                /*If quota limits reached, get err from Google Places like:
+                    {
+                   "error_message" : "You have exceeded your daily request quota for this API.",
+                   "html_attributions" : [],
+                   "results" : [],
+                   "status" : "OVER_QUERY_LIMIT"
+                    }
+                  */
+
             case R.id.B_restaurants:
                 mMap.clear();
                 String school = "school";
@@ -461,9 +472,11 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
         googlePlaceUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlaceUrl.append("&type=" + nearbyPlace);
         googlePlaceUrl.append("&sensor=true");
-        googlePlaceUrl.append("&key=" + "AIzaSyBDV5k9vHipVPgZimt0zMZnodMHmvWXa3Q");//diff key for Place search than from Map API
+        googlePlaceUrl.append("&key=" + "AIzaSyA3WABbO18GPtvg3VTl-TosotiD6Zba5kE");//diff key for Place search than from Map API
 
         Log.d("MapsActivity", "url = "+googlePlaceUrl.toString());
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=43.7839848,-79.2330439&radius=2000&type=hospital&sensor=true&key=AIzaSyAn5RWheV7c0-dk2USdW8ZOQn6rP3tojZ4
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=0.0,0.0&radius=10000&type=hospital&sensor=true&key=AIzaSyC0NcrWiTD7AcTjHzygF3MCnDFcCltr_88
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=0.0,0.0&radius=10000&type=hospital&sensor=true&key=AIzaSyBDV5k9vHipVPgZimt0zMZnodMHmvWXa3Q
 
         return googlePlaceUrl.toString();
