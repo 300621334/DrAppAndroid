@@ -66,8 +66,8 @@ public class Settings extends BaseActivity implements ICallBackFromDbAdapter {
     public void btnClk_EditUserProfile(View view)
     {
         //chk if user is logged in:
-        String userIdStr = getSharedPreferences("prefs",0).getString("Id_User", "");
-        if(userIdStr.equals(""))
+        String logedinUserIdStr = getSharedPreferences("prefs",0).getString("Id_User", "");
+        if(logedinUserIdStr.equals(""))
         {
             Intent i = new Intent(this, Login.class);
             startActivity(i);
