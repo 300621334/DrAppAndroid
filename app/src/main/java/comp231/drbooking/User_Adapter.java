@@ -1,8 +1,8 @@
 package comp231.drbooking;
 
 /*
- * By: SHAFIQ-UR-REHMAN
- * Purpose: ListView will use this adapter to display customized view for each item in the list of bookings
+ * By: David Tyler
+ * Purpose: custom adapter to display result-set when admin searches for users by a part of username
  */
 import android.app.Activity;
 import android.content.Context;
